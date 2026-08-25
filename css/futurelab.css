@@ -183,6 +183,57 @@ body.cine-on #camera{animation:cameraBreathe 6s ease-in-out infinite alternate}
 .boot-site:hover{color:var(--cyan)}
 .boot-foot{font-size:10.5px;color:var(--faint);letter-spacing:.06em;margin-top:6px}
 
+/* ---------- boot intro entrance ---------- */
+.boot-badge{animation:bootMarkIn .9s cubic-bezier(.2,.9,.25,1.2) both}
+.boot-inner .kicker{animation:fadeUp .7s var(--ease) .15s both}
+.boot-title{animation:fadeUp .8s var(--ease) .3s both}
+.boot-sub{animation:fadeUp .8s var(--ease) .45s both}
+.boot-form{animation:fadeUp .8s var(--ease) .6s both}
+.boot-lang,.boot-site,.boot-foot{animation:fadeUp .8s var(--ease) .75s both}
+@keyframes bootMarkIn{0%{opacity:0;transform:scale(.6) rotate(-14deg);filter:blur(8px)}60%{opacity:1;transform:scale(1.08) rotate(2deg);filter:blur(0)}100%{transform:scale(1) rotate(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ---------- PLAY button pulse ---------- */
+.btn-pulse{animation:pulseGlow 2.4s ease-in-out infinite}
+@keyframes pulseGlow{
+  0%,100%{box-shadow:0 8px 26px -8px rgba(45,107,255,.65)}
+  50%{box-shadow:0 8px 40px -6px rgba(77,243,255,.85)}
+}
+
+/* ---------- quick start tutorial ---------- */
+.tutorial{
+  position:fixed;inset:0;z-index:9200;display:grid;place-items:center;padding:24px;
+  background:rgba(3,3,6,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  animation:tutBack .35s var(--ease) both;
+}
+.tutorial[hidden]{display:none}
+@keyframes tutBack{from{opacity:0}to{opacity:1}}
+.tut-card{
+  width:min(480px,100%);padding:34px 30px 30px;text-align:center;border-radius:22px;
+  animation:tutCard .5s cubic-bezier(.2,.9,.25,1.15) both;
+}
+@keyframes tutCard{from{opacity:0;transform:translateY(26px) scale(.96)}to{opacity:1;transform:none}}
+.tut-mark{
+  width:58px;height:58px;margin:0 auto 14px;display:grid;place-items:center;border-radius:16px;
+  background:var(--grad-brand);color:#fff;font-family:var(--font-display);font-weight:800;font-size:26px;
+  box-shadow:0 14px 34px -10px rgba(45,107,255,.8);animation:bootMarkIn .8s cubic-bezier(.2,.9,.25,1.2) .1s both;
+}
+.tut-card h2{font-size:clamp(20px,3vw,26px);margin:6px 0 18px}
+.tut-steps{list-style:none;display:grid;gap:12px;text-align:left;margin:0 0 22px;padding:0}
+.tut-steps li{
+  display:flex;gap:14px;align-items:center;padding:13px 16px;border-radius:14px;
+  background:rgba(255,255,255,.035);border:1px solid var(--border);
+  animation:fadeUp .5s var(--ease) both;animation-delay:calc(.15s + var(--ti,0)*.12s);
+}
+.tut-steps li:nth-child(1){--ti:0}.tut-steps li:nth-child(2){--ti:1}.tut-steps li:nth-child(3){--ti:2}
+.tut-steps i{
+  flex:none;width:34px;height:34px;display:grid;place-items:center;border-radius:10px;font-style:normal;
+  font-family:var(--font-display);font-weight:700;font-size:15px;color:#fff;
+  background:linear-gradient(140deg,#2d6bff,#1a3f9e);box-shadow:0 6px 16px -6px rgba(45,107,255,.7);
+}
+.tut-steps b{display:block;font-size:13.5px;letter-spacing:.04em}
+.tut-steps span{color:var(--faint);font-size:12px;line-height:1.45}
+
 /* ---------- hub ---------- */
 .hub-layout{
   display:grid;grid-template-columns:minmax(260px,330px) 1fr;gap:26px;

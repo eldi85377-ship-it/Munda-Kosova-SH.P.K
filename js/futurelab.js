@@ -111,30 +111,52 @@
   var ENVS = ['city', 'tunnel', 'showroom', 'night-city', 'arena'];
 
   /* =====================================================================
-     BOOT
+     BOOT — one screen, one button: PLAY
+     Open the game → short intro → PLAY → straight into Challenge 1.
      ===================================================================== */
   function bootInit() {
     var start = $('boot-start'), name = $('boot-name');
     if (!start || !name) return;
-    // pre-fill from saved player
+    // pre-fill from saved player; default ENGINEER so the button always works
     if (window.Progress) {
       var d = Progress.data;
-      if (d && d.player) { name.value = d.player; }
+      if (d && d.player) name.value = d.player;
     }
+    if (!name.value) name.value = 'ENGINEER';
     name.addEventListener('keydown', function (e) { if (e.key === 'Enter') start.click(); });
     start.addEventListener('click', function () {
       sfx('select');
-      var val = name.value.trim();
-      var err = $('boot-err');
-      if (!val) {
-        if (err) err.hidden = false;
-        sfx('error');
-        return;
-      }
-      if (err) err.hidden = true;
+      var val = name.value.trim() || 'ENGINEER';
       if (window.Progress) safe(function () { Progress.setPlayer(val.slice(0, 14)); });
-      if (window.Sound) safe(function () { Sound.unlock(); Sound.music('menu'); });
-      goScreen('hub');
+      if (window.Sound) safe(function () { Sound.unlock(); });
+      startBuild();          // straight into Challenge 1 (DESIGN phase, 1:30 clock)
+      maybeTutorial();       // 3-step quick start, first time only
+    });
+  }
+
+  /* Quick 3-step tutorial overlay (first build only) */
+  function maybeTutorial() {
+    var seen = false;
+    try { seen = localStorage.getItem('munda_tutorial') === '1'; } catch (e) {}
+    if (seen) return;
+    var tut = $('tutorial');
+    if (!tut) return;
+    stopTimer(); // the 1:30 clock waits for the player to read
+    tut.hidden = false;
+    sfx('reveal');
+    if (window.FX) safe(function () {
+      FX.burst(window.innerWidth / 2, window.innerHeight * 0.3,
+        { count: 28, colors: ['#2d6bff', '#4df3ff', '#ffc861'], speed: 3.2 });
+    });
+    var go = $('tut-go');
+    if (go) go.addEventListener('click', function () {
+      sfx('achievement');
+      tut.hidden = true;
+      try { localStorage.setItem('munda_tutorial', '1'); } catch (e) {}
+      startTimer(); // clock starts — the challenge begins now
+      if (window.FX) safe(function () {
+        FX.confetti({ count: 70, colors: ['#2d6bff', '#4df3ff', '#ffc861'] });
+      });
     });
   }
 
