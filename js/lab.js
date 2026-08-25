@@ -1,16 +1,46 @@
-/* MUNDA — storytelling interactions: textile lab, technology explorer, kosova map */
+/* =====================================================================
+   MUNDA — storytelling interactions: textile story, technology explorer,
+   kosova map. Updated for the FUTURE LAB experience (bilingual).
+   ===================================================================== */
 (function () {
   'use strict';
 
+  /* ---------- i18n for dynamic story text ---------- */
+  if (window.I18N) {
+    I18N.register({
+      en: {
+        'story.s0': 'It starts as a simple textile — soft, woven, flexible.',
+        'story.s1': 'MUNDA weaves micro-circuitry directly into the fibres.',
+        'story.s2': 'Flexible LED emitters turn the fabric into light.',
+        'story.s3': 'The glowing textile becomes part of a vehicle interior.',
+        'story.s4': 'A living fabric. Light, woven into matter.',
+        'tech.led': 'Micro-LEDs thinner than a hair, embedded directly into the fabric.',
+        'tech.textile': 'A specialised weave that conducts light — not just threads.',
+        'tech.flex': 'Soft circuits that bend, fold and wrap any surface of the cabin.',
+        'tech.design': 'Infinite colours, patterns and moods — generated on demand.',
+        'tech.auto': 'Integrated into dashboards, doors and seats as one seamless light.'
+      },
+      sq: {
+        'story.s0': 'Fillon si një tekstil i thjeshtë — i butë, i endur, fleksibël.',
+        'story.s1': 'MUNDA end mikro-qarqet drejtpërdrejt në fije.',
+        'story.s2': 'Emitterët fleksibël LED e kthejnë pëlhurën në dritë.',
+        'story.s3': 'Tekstili i ndriçuar bëhet pjesë e interiorit të automjetit.',
+        'story.s4': 'Një pëlhurë e gjallë. Dritë, e endur në materie.',
+        'tech.led': 'Mikro-LED më të hollë se një fije floku, të ngulitura direkt në pëlhurë.',
+        'tech.textile': 'Një endje e specializuar që përcjell dritën — jo vetëm fije.',
+        'tech.flex': 'Qarqe të buta që përkulen, palosen dhe mbështjellin çdo sipërfaqe të kabinës.',
+        'tech.design': 'Ngjyra, modele dhe gjendje të pafundme — të krijuara sipas kërkesës.',
+        'tech.auto': 'Të integruara në pult, dyer dhe vende si një dritë e vetme e pandërprerë.'
+      }
+    });
+  }
+
+  function t(key, fb) { return window.I18N ? I18N.t(key, fb) : (fb != null ? fb : key); }
+  function sfx(n) { if (window.Sound) { try { Sound.sfx(n); } catch (e) {} } }
+
   /* ============ TEXTILE STORY ============ */
   var stage = 0;
-  var STAGE_DESC = [
-    'It starts as a simple textile — soft, woven, flexible.',
-    'MUNDA weaves micro-circuitry directly into the fibres.',
-    'Flexible LED emitters turn the fabric into light.',
-    'The glowing textile becomes part of a vehicle interior.',
-    'A living fabric. Light, woven into matter.'
-  ];
+  var STAGE_DESC = ['story.s0', 'story.s1', 'story.s2', 'story.s3', 'story.s4'];
   var STAGE_LABEL = ['TEXTILE', 'TECHNOLOGY', 'LIGHT', 'AUTOMOTIVE', 'FUTURE'];
 
   function setStage(n) {
@@ -20,12 +50,12 @@
     var label = document.getElementById('fabric-label');
     var desc = document.getElementById('stage-desc');
     var wow = document.getElementById('wow-panel');
-    var next = document.getElementById('textile-next');
+    var next = document.getElementById('story-next');
 
     if (label) label.textContent = STAGE_LABEL[stage];
-    if (desc) desc.textContent = STAGE_DESC[stage];
+    if (desc) desc.textContent = t(STAGE_DESC[stage]);
 
-    document.querySelectorAll('#screen-textile .pipe-step').forEach(function (el) {
+    document.querySelectorAll('#screen-story .pipe-step').forEach(function (el) {
       var i = parseInt(el.getAttribute('data-stage'), 10);
       el.classList.toggle('active', i === stage);
       el.classList.toggle('done', i < stage);
@@ -63,6 +93,7 @@
 
     if (wow) wow.hidden = stage !== 4;
     if (next) next.hidden = stage < 3;
+    if (stage > 0) sfx('textile');
   }
 
   function bindTextile() {
@@ -84,7 +115,7 @@
     fabric.addEventListener('pointercancel', stop);
     fabric.addEventListener('dragstart', function (e) { e.preventDefault(); });
 
-    document.querySelectorAll('#screen-textile .pipe-step').forEach(function (el) {
+    document.querySelectorAll('#screen-story .pipe-step').forEach(function (el) {
       el.addEventListener('click', function () {
         setStage(parseInt(el.getAttribute('data-stage'), 10));
       });
@@ -93,22 +124,24 @@
     var discover = document.getElementById('btn-discover');
     if (discover) {
       discover.addEventListener('click', function () {
+        sfx('reveal');
         var glow = document.getElementById('fabric-glow');
-        glow.style.transition = 'transform 1.3s cubic-bezier(0.22,1,0.36,1), opacity 1.3s';
-        glow.style.transform = 'scale(2.6)';
-        glow.style.opacity = '0';
+        if (glow) {
+          glow.style.transition = 'transform 1.3s cubic-bezier(0.22,1,0.36,1), opacity 1.3s';
+          glow.style.transform = 'scale(2.6)';
+          glow.style.opacity = '0';
+        }
         fabric.style.transition = 'transform 1.3s cubic-bezier(0.22,1,0.36,1), box-shadow 1.3s';
         fabric.style.transform = 'scale(1.06)';
         fabric.style.boxShadow = '0 0 160px 20px var(--accent)';
         setTimeout(function () {
-          if (window.App) window.App.go('lab');
+          if (window.App) App.go('hub'); else if (window.FutureLab) FutureLab.startBuild();
         }, 1500);
       });
     }
   }
 
   function enterTextile() {
-    // reset fabric to a neutral state on re-entry
     setStage(0);
     var glow = document.getElementById('fabric-glow');
     if (glow) { glow.style.transition = ''; glow.style.transform = ''; glow.style.opacity = ''; }
@@ -118,11 +151,11 @@
 
   /* ============ TECHNOLOGY EXPLORER ============ */
   var TECH = {
-    led: { name: 'LED', desc: 'Micro-LEDs thinner than a hair, embedded directly into the fabric.' },
-    textile: { name: 'TEXTILE', desc: 'A specialised weave that conducts light — not just threads.' },
-    flex: { name: 'FLEXIBILITY', desc: 'Soft circuits that bend, fold and wrap any surface of the cabin.' },
-    design: { name: 'DESIGN', desc: 'Infinite colours, patterns and moods — generated on demand.' },
-    auto: { name: 'AUTOMOTIVE', desc: 'Integrated into dashboards, doors and seats as one seamless light.' }
+    led: { name: 'LED', desc: 'tech.led' },
+    textile: { name: 'TEXTILE', desc: 'tech.textile' },
+    flex: { name: 'FLEXIBILITY', desc: 'tech.flex' },
+    design: { name: 'DESIGN', desc: 'tech.design' },
+    auto: { name: 'AUTOMOTIVE', desc: 'tech.auto' }
   };
 
   function bindTech() {
@@ -132,15 +165,16 @@
     document.querySelectorAll('.tech-node').forEach(function (node) {
       node.addEventListener('click', function () {
         var key = node.getAttribute('data-tech');
-        var t = TECH[key];
-        if (!t) return;
+        var tech = TECH[key];
+        if (!tech) return;
         document.querySelectorAll('.tech-node').forEach(function (n) { n.classList.remove('active'); });
         node.classList.add('active');
-        coreLabel.textContent = t.name;
-        coreDesc.textContent = t.desc;
+        if (coreLabel) coreLabel.textContent = tech.name;
+        if (coreDesc) coreDesc.textContent = t(tech.desc);
         core.style.animation = 'none';
         void core.offsetWidth;
         core.style.animation = '';
+        sfx('select');
       });
     });
   }

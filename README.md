@@ -1,79 +1,118 @@
-# MUNDA — FUTURE LIGHT LAB
+# MUNDA — FUTURE LAB
 
-**“Design the light. Shape the future.”**
+**"Design the light. Shape the future."**
 
-An interactive, premium automotive-technology experience for **MUNDA Kosova** and the Digital School competition. It demonstrates how textile + flexible-LED technology becomes part of a modern vehicle interior.
+An interactive, bilingual (EN/SQ) automotive-technology experience for **MUNDA Kosova** and the Digital School competition. You become a MUNDA design engineer and build the illuminated interior of tomorrow's premium vehicle — the way the real product works: **DESIGN → LIGHT → CONNECT → TEST → SHOWCASE**.
 
-> The vehicle interior is a **concept / demo**. MUNDA and Audi are **not** official partners; the Audi-inspired cabin is presented purely as a design concept.
+> The vehicle interior is a **design concept** created for this experience. MUNDA is presented as the technology maker; no brand partnership is implied.
 
 ---
 
-## Run it locally
+## 🚀 Run it locally
 
 No build step — just serve the folder:
 
 ```bash
-cd Finalproject
 python -m http.server 8123
 ```
 
-Then open **http://localhost:8123** (or `http://localhost:8123/?fresh=2` to force a reload).
+Then open:
 
-> Needs internet for the Google Fonts (`Space Grotesk`, `Inter`, `JetBrains Mono`) — everything else is self-contained. The experience gracefully falls back to system fonts offline.
-
----
-
-## What's inside
-
-| Screen | What it does |
+| URL | What it is |
 |---|---|
-| **Landing** | Cinematic "ENTER THE LIGHT" — light line draws the MUNDA wordmark. |
-| **From Textile to Light** | Drag across the fabric to advance TEXTILE → TECHNOLOGY → LIGHT → AUTOMOTIVE → FUTURE, ending in the *"What if light could be fabric?"* reveal. |
-| **Interior Lab** | The full configurator: 6 interior zones, color (8 incl. custom gradient), 7 patterns, brightness, 6 animations, speed, 4 textile materials, and CITY/SPORT/NIGHT/ECO drive modes — all live. |
-| **Technology Explorer** | Five nodes (LED, Textile, Flexibility, Design, Automotive) that activate short explanations. |
-| **Made in Kosova** | A light line radiates from Kosovo across Europe — *“Innovation made in Kosovo.”* |
-| **Design Challenge** | 3:00 timed game with DESIGN → TEST → REVIEW → FINAL progress. |
-| **Jury Mode** | Live 3-minute jury control, then the cinematic darken → 3·2·1 → full interior light-up → *“You just designed the future.”* |
-| **Beat the Designer** | Your design vs. the MUNDA Concept design, scored on the same engine (labeled *Concept Evaluation*). |
-| **My Design** | Showcase with score ring, tags, SAVE / REPLAY LIGHT SHOW / NEW. |
-| **Gallery** | Saved designs (localStorage), sortable by top score / innovation / latest. |
-| **Finale** | *“MUNDA — LIGHTING THE EXPERIENCE. Made in Kosovo. Designed for the future.”* |
+| **http://localhost:8123** | The marketing website (hero, interactive car, technology, the game, MUNDA SCORE demo, gallery, about, CTA) |
+| **http://localhost:8123/experience.html** | **THE GAME** — MUNDA FUTURE LAB |
+
+> Needs internet for Google Fonts (Space Grotesk / Inter / JetBrains Mono) — everything else is fully self-contained and works offline. All audio is **synthesized live in the browser** (Web Audio API) — zero external sound files, 100% safe for a competition.
 
 ---
 
-## Key interactions
+## 🎮 The Game — MUNDA FUTURE LAB
 
-- **Controls** (`data-ctl`, `data-zone`, `data-mode`) are wired globally — every swatch, chip, slider, zone button and mode button actually changes the interior, instantly.
-- **Light show** — temporarily hides the UI and cycles the interior through a cinematic color/pattern sequence.
-- **Presentation mode** — the **PRESENT** button hides the chrome and enters fullscreen for a clean live demo.
-- **Scoring** — deterministic and choice-driven (design, innovation, energy efficiency, integration, UX); not random.
-- **Jury Mode** — reachable instantly from the top navigation.
+You are a **MUNDA design engineer**. Build the interior lighting of a premium vehicle through 5 phases:
 
-### Keyboard
-- `Esc` — exit the light show / close the finale.
+1. **DESIGN** — pick the illuminated textile (Carbon Weave, Soft Knit, Tech Mesh, Lumen Silk — each with real specs).
+2. **LIGHT** — activate the 6 interior zones, choose colour, pattern, brightness, animation, drive mode and environment (City, Tunnel, Showroom, Night City — all rendered live behind the windshield).
+3. **CONNECT** — wire every LED module to its controller port (beams on success, shake on mistakes).
+4. **TEST** — run 5 automotive tests: LIGHT OUTPUT, VIBRATION, TEMPERATURE, DURABILITY, ENERGY EFFICIENCY.
+5. **SHOWCASE** — the cinematic WOW moment: lights die, the arena appears, the cabin illuminates section by section, the MUNDA light-logo draws itself, then your **MUNDA SCORE** is revealed.
+
+### MUNDA SCORE
+`lighting·0.24 + precision·0.20 + efficiency·0.18 + durability·0.18 + design·0.20` → 0–100, with the rank ladder:
+
+`ROOKIE (0–39) → ENGINEER (40–59) → DESIGNER (60–74) → SENIOR ENGINEER (75–89) → MUNDA MASTER (90–99) → FUTURE ARCHITECT (100)`
+
+### Progression system
+- **XP + levels** (quadratic curve, max level 20) — every build pays out
+- **Credits** — earned per run, level bonuses
+- **14 achievements**, **9 missions**, **10 unlockables** (gradient colour, Lumen Silk, Tech Mesh, custom/dynamic patterns, tunnel/showroom/night-city/arena environments, Neon HUD theme)
+- **Local leaderboard** — best runs per engineer
+- Everything persists in `localStorage` (`munda_progress_v1`)
+
+### Feedback everywhere
+Every action has sound + particles: button clicks, hovers, collects, wiring success/failure, tests, level-ups, achievements, rank-ups. Volume controls (master/music/SFX + toggles) live in the 🔊 panel.
+
+### Other screens
+- **Story** — "From Textile to Light" drag-to-advance sequence
+- **Technology** — 5-node explorer (LED, Textile, Flexibility, Design, Automotive)
+- **Made in Kosova** — light radiating from the factory in Obiliq
+- **Jury Mode** — live 3-minute jury control + cinematic 3·2·1 reveal (great for the presentation)
+- **Gallery** — saved designs with mini interior previews
 
 ---
 
-## Structure
+## 🌐 The Website
+
+A premium automotive-tech brand site (dark, cinematic, glassmorphism):
+
+1. **Hero** — animated illuminated-car backdrop, parallax, particles
+2. **Interactive Car** — hover/click the 6 zones, change colour & brightness live
+3. **How It Works** — 4 illustrated steps (Design → Illuminate → Test → Innovate)
+4. **Technology** — 4 cards (Illuminated Textiles, LED Integration, Automotive Interior Technology, Innovation)
+5. **The Game** — 4 crafted gameplay mockups + features + rank ladder
+6. **MUNDA SCORE Demo** — live score calculator with the same formula as the game
+7. **Gallery** — 8 CSS/SVG artworks with lightbox
+8. **About** — MUNDA Kosova, the project, stats, disclaimer
+9. **Final CTA** — "Ready to design the future?"
+10. **Footer** — links + language switch
+
+Bilingual **EN/SQ** with a working switcher on both surfaces.
+
+---
+
+## 🔧 Structure
 
 ```
-Finalproject/
-├── index.html      # all screens + the SVG interior
-├── css/style.css   # design system
+Munda-Kosova-SH.P.K/
+├── index.html           # marketing website
+├── experience.html      # the game
+├── css/
+│   ├── tokens.css       # shared design system (one brand, both surfaces)
+│   ├── site.css         # website styles
+│   ├── style.css        # game legacy screens
+│   └── futurelab.css    # game chrome (HUD, hub, build, cinematic)
 └── js/
-    ├── particles.js  # ambient light-mote canvas
-    ├── interior.js   # lighting engine + design state
-    ├── lab.js        # textile / technology / kosova interactions
-    ├── game.js       # scoring, challenge, jury, light show, reveal
-    └── app.js        # navigation, wiring, gallery, presentation mode
+    ├── i18n.js          # bilingual engine
+    ├── i18n-experience.js / site.js dicts
+    ├── audio.js         # 100% synthesized Web Audio engine (music + SFX)
+    ├── fx.js            # particle / FX engine
+    ├── progress.js      # XP, levels, missions, achievements, unlocks, leaderboard
+    ├── interior.js      # SVG lighting engine (6 zones)
+    ├── futurelab.js     # the 5-phase build flow + MUNDA SCORE + WOW moment
+    ├── game.js          # jury mode, light show, reveal, finale
+    ├── lab.js           # story / technology / kosova screens
+    ├── particles.js     # ambient motes
+    └── app.js           # navigation, gallery, wiring
 ```
 
----
+## 🎤 Notes for the jury
 
-## Notes for the jury
+1. Open the site → **PLAY THE EXPERIENCE**.
+2. Type your engineer name → **ENTER THE LAB**.
+3. **START NEW BUILD** and walk DESIGN → LIGHT → CONNECT → TEST.
+4. Press **BEGIN FINAL SHOWCASE** for the cinematic WOW moment and your MUNDA SCORE.
+5. Check the **Lab** screen for the career (missions, leaderboard, achievements, unlockables).
+6. **Jury Mode** from the top bar for a live 3-minute interactive demo with the cinematic reveal.
+7. Toggle **EN/SQ** anywhere; adjust sound in the 🔊 panel.
 
-1. Open the experience → **ENTER THE LIGHT LAB**.
-2. Walk the story: *From Textile to Light* → *Interior Lab* → *Technology* → *Kosova*.
-3. Press **Jury Mode** in the top bar, hand control to the jury.
-4. Let them design, then **ACTIVATE LIGHT SHOW** (or *YOUR DESIGN IS READY*) for the darken → 3·2·1 → full light-up moment.
-5. Finish with **FINISH → LIGHTING THE EXPERIENCE**.
+*Made in Kosovo. Designed for the future.*

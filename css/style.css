@@ -1,34 +1,8 @@
 /* =====================================================================
-   MUNDA — FUTURE LIGHT LAB
-   Premium automotive textile-lighting experience
+   MUNDA — FUTURE LIGHT LAB (experience.html)
+   Legacy screen styles. Design tokens live in css/tokens.css.
+   The new game chrome lives in css/futurelab.css.
    ===================================================================== */
-
-/* ---------- Tokens ---------- */
-:root{
-  --bg:#050507;
-  --bg-2:#0a0a0e;
-  --surface:rgba(255,255,255,0.045);
-  --surface-2:rgba(255,255,255,0.08);
-  --border:rgba(255,255,255,0.09);
-  --border-soft:rgba(255,255,255,0.05);
-  --ink:#ececf2;
-  --muted:#9a9aa6;
-  --faint:#5d5d6a;
-  --accent:#2d6bff;
-  --accent-2:#e6ddc8;
-  --danger:#ff2d55;
-
-  --font-display:'Space Grotesk','Segoe UI',system-ui,sans-serif;
-  --font-body:'Inter','Segoe UI',system-ui,sans-serif;
-  --font-mono:'JetBrains Mono','SF Mono',Consolas,monospace;
-
-  --ease:cubic-bezier(0.22,1,0.36,1);
-  --ease-io:cubic-bezier(0.65,0,0.35,1);
-
-  --radius:16px;
-  --radius-sm:10px;
-  --glow:0 0 24px -4px var(--accent);
-}
 
 /* ---------- Reset / base ---------- */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}

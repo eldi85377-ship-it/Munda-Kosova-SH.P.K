@@ -22,6 +22,9 @@
   var ZONE_LABELS = { dashboard: 'Dashboard', doors: 'Door Panels', console: 'Center Console', footwell: 'Footwell', seats: 'Seats', roof: 'Roof / Ambient' };
   var ZONES = ['dashboard', 'doors', 'console', 'footwell', 'seats', 'roof'];
 
+  /* bilingual zone labels for the build UI */
+  var ZONE_LABELS_SQ = { dashboard: 'Pulti', doors: 'Dyer', console: 'Konsola', footwell: 'Hapësira e këmbëve', seats: 'Vendet', roof: 'Çatia / Ambient' };
+
   var PATTERNS = {
     linear: { dash: 'none' },
     wave: { dash: '26 16' },
@@ -177,7 +180,9 @@
         el.value = state.brightness;
         el.style.setProperty('--fill', state.brightness + '%');
       } else {
-        el.classList.toggle('active', state[key] === val);
+        var locked = el.hasAttribute('data-unlock') &&
+          window.Progress && !Progress.isUnlocked(el.getAttribute('data-unlock'));
+        el.classList.toggle('active', !locked && state[key] === val);
       }
     }
     var modes = document.querySelectorAll('[data-mode]');
@@ -202,6 +207,15 @@
     state[key] = value;
     applyLighting();
     syncControls();
+    if (key === 'brightness') {
+      var hint = document.getElementById('bright-hint');
+      if (hint) {
+        hint.style.color = value > 78 ? 'var(--warn)' : '';
+        hint.textContent = value > 78
+          ? (window.I18N ? I18N.t('light.brightWarn', 'High brightness looks great — but costs energy and heat.') : 'High brightness looks great — but costs energy and heat.')
+          : (window.I18N ? I18N.t('light.brightHint', 'High brightness looks great — but costs energy and heat.') : 'High brightness looks great — but costs energy and heat.');
+      }
+    }
     if (window.onDesignChange) window.onDesignChange();
   }
 
@@ -334,6 +348,11 @@
     ZONE_LABELS: ZONE_LABELS,
     ZONES: ZONES,
     MODES: MODES,
-    defaultState: defaultState
+    defaultState: defaultState,
+    zoneLabel: function (z) {
+      var sq = ZONE_LABELS_SQ[z];
+      if (sq && window.I18N && I18N.lang === 'sq') return sq;
+      return ZONE_LABELS[z] || z;
+    }
   };
 })();

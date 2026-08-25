@@ -1,0 +1,154 @@
+/* =====================================================================
+   MUNDA — SHARED BRAND TOKENS
+   One design language for the website (index.html) and the game
+   (experience.html). Import this FIRST, before site.css / style.css.
+   ===================================================================== */
+
+:root{
+  /* ---- surfaces ---- */
+  --bg:#050507;
+  --bg-2:#0a0a0e;
+  --bg-3:#0f1016;
+  --surface:rgba(255,255,255,0.045);
+  --surface-2:rgba(255,255,255,0.08);
+  --surface-3:rgba(255,255,255,0.12);
+  --glass:rgba(16,18,26,0.55);
+  --glass-2:rgba(22,24,34,0.72);
+  --border:rgba(255,255,255,0.09);
+  --border-soft:rgba(255,255,255,0.05);
+  --border-strong:rgba(255,255,255,0.16);
+
+  /* ---- ink ---- */
+  --ink:#ececf2;
+  --ink-dim:#c3c3ce;
+  --muted:#9a9aa6;
+  --faint:#5d5d6a;
+  --ghost:#33333d;
+
+  /* ---- brand ---- */
+  --brand:#2d6bff;          /* MUNDA electric blue — never overwritten */
+  --brand-deep:#1440c8;
+  --brand-soft:rgba(45,107,255,0.14);
+  --accent:#2d6bff;         /* live accent — the game re-tints this */
+  --accent-2:#e6ddc8;
+  --cyan:#4df3ff;
+  --gold:#ffc861;
+  --gold-deep:#c9902b;
+  --danger:#ff2d55;
+  --success:#35e07f;
+  --warn:#ffb03a;
+
+  /* ---- rank identity ---- */
+  --rank-rookie:#8b93a7;
+  --rank-challenger:#4df3ff;
+  --rank-elite:#9a4dff;
+  --rank-champion:#ffc861;
+  --rank-legend:#ff4d8d;
+
+  /* ---- type ---- */
+  --font-display:'Space Grotesk','Segoe UI',system-ui,sans-serif;
+  --font-body:'Inter','Segoe UI',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono','SF Mono',Consolas,monospace;
+
+  --fs-hero:clamp(2.6rem,7.2vw,6.2rem);
+  --fs-h1:clamp(2rem,4.6vw,3.6rem);
+  --fs-h2:clamp(1.5rem,3vw,2.4rem);
+  --fs-h3:clamp(1.15rem,2vw,1.5rem);
+  --fs-body:clamp(0.95rem,1.1vw,1.06rem);
+  --fs-small:0.82rem;
+  --fs-micro:0.7rem;
+
+  --track-wide:0.18em;
+  --track-mega:0.42em;
+
+  /* ---- motion ---- */
+  --ease:cubic-bezier(0.22,1,0.36,1);
+  --ease-io:cubic-bezier(0.65,0,0.35,1);
+  --ease-back:cubic-bezier(0.34,1.56,0.64,1);
+  --t-fast:.18s;
+  --t:.32s;
+  --t-slow:.7s;
+
+  /* ---- shape ---- */
+  --radius-xs:8px;
+  --radius-sm:12px;
+  --radius:18px;
+  --radius-lg:26px;
+  --radius-xl:34px;
+  --radius-pill:999px;
+
+  /* ---- depth ---- */
+  --glow:0 0 24px -4px var(--accent);
+  --glow-brand:0 0 28px -6px var(--brand);
+  --glow-gold:0 0 30px -6px var(--gold);
+  --shadow-sm:0 4px 14px rgba(0,0,0,0.35);
+  --shadow:0 18px 46px rgba(0,0,0,0.5);
+  --shadow-lg:0 34px 90px rgba(0,0,0,0.62);
+
+  /* ---- layout ---- */
+  --max:1240px;
+  --gutter:clamp(18px,4vw,54px);
+  --sec-pad:clamp(64px,9vw,140px);
+}
+
+/* ---------- gradients as reusable values ---------- */
+:root{
+  --grad-brand:linear-gradient(135deg,#2d6bff,#4df3ff);
+  --grad-gold:linear-gradient(135deg,#ffc861,#c9902b);
+  --grad-legend:linear-gradient(135deg,#ff4d8d,#9a4dff 50%,#2d6bff);
+  --grad-surface:linear-gradient(160deg,rgba(255,255,255,0.07),rgba(255,255,255,0.015));
+  --grad-fade:linear-gradient(180deg,transparent,rgba(5,5,7,0.9));
+}
+
+/* ---------- shared primitives ---------- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a{color:inherit;text-decoration:none}
+em{font-style:normal;color:var(--accent)}
+::selection{background:rgba(45,107,255,0.3);color:#fff}
+:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:6px}
+
+/* film grain + vignette, shared by both surfaces */
+.grain{
+  position:fixed;inset:0;pointer-events:none;opacity:.04;mix-blend-mode:overlay;z-index:2;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+.vignette{
+  position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(120% 90% at 50% 40%,transparent 40%,rgba(0,0,0,0.55) 100%);
+}
+
+/* glass card primitive */
+.glass{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  backdrop-filter:blur(18px) saturate(1.2);
+  -webkit-backdrop-filter:blur(18px) saturate(1.2);
+}
+
+/* kicker / eyebrow label */
+.kicker{
+  font-family:var(--font-mono);
+  font-size:var(--fs-micro);
+  letter-spacing:var(--track-mega);
+  text-transform:uppercase;
+  color:var(--accent);
+}
+
+/* rank colour helper — set data-rank on any element */
+[data-rank="rookie"]{--rank:var(--rank-rookie)}
+[data-rank="challenger"]{--rank:var(--rank-challenger)}
+[data-rank="elite"]{--rank:var(--rank-elite)}
+[data-rank="champion"]{--rank:var(--rank-champion)}
+[data-rank="legend"]{--rank:var(--rank-legend)}
+
+/* ---------- accessibility ---------- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+}

@@ -4,707 +4,722 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#050507">
-<title>MUNDA — FUTURE LIGHT LAB</title>
-<meta name="description" content="Design the light. Shape the future. MUNDA Kosova — interactive automotive textile lighting experience.">
+<title>MUNDA FUTURE LAB — Design the Light. Shape the Future.</title>
+<meta name="description" content="MUNDA Kosova — illuminated textile systems for the automotive industry. Enter the Future Lab and design the lighting experience of tomorrow's mobility.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/site.css">
 </head>
-<body data-screen="landing">
+<body>
 
-<!-- Ambient canvas particle field -->
-<canvas id="particles" aria-hidden="true"></canvas>
-<div class="vignette" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
 
-<!-- ===================== TOP BAR ===================== -->
-<header id="topbar">
-  <button class="brand" data-nav="landing" aria-label="MUNDA home">
+<!-- ===================== NAV ===================== -->
+<header class="site-nav" id="site-nav">
+  <a class="site-brand" href="#hero" data-scroll>
     <span class="brand-mark">M</span>
-    <span class="brand-text">MUNDA <em>KOSOVA</em></span>
-  </button>
-  <nav id="nav">
-    <a href="#" data-nav="textile">Textile</a>
-    <a href="#" data-nav="lab" class="nav-lab">Interior Lab</a>
-    <a href="#" data-nav="tech">Technology</a>
-    <a href="#" data-nav="kosova">Kosova</a>
-    <a href="#" data-nav="challenge" class="nav-game">Challenge</a>
-    <a href="#" data-nav="jury" class="nav-jury">Jury Mode</a>
-    <a href="#" data-nav="gallery">Gallery</a>
+    <span class="site-brand-text">MUNDA <em>KOSOVA</em></span>
+  </a>
+  <nav class="site-links" id="site-links" aria-label="Main">
+    <a href="#interior" data-scroll data-i18n="nav.tech">Technology</a>
+    <a href="#how" data-scroll data-i18n="nav.how">How it works</a>
+    <a href="#game" data-scroll data-i18n="nav.game">The Game</a>
+    <a href="#score" data-scroll data-i18n="nav.score">MUNDA Score</a>
+    <a href="#gallery" data-scroll data-i18n="nav.gallery">Gallery</a>
+    <a href="#about" data-scroll data-i18n="nav.about">About</a>
   </nav>
-  <div class="topbar-right">
-    <button id="btn-present" class="ghost" title="Presentation mode">PRESENT</button>
+  <div class="site-nav-right">
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button data-lang-set="en">EN</button>
+      <button data-lang-set="sq">SQ</button>
+    </div>
+    <a class="btn btn-primary btn-sm" href="experience.html" data-i18n="nav.play">PLAY</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
-<!-- ===================== STAGE (persistent interior) ===================== -->
-<div id="stage">
-  <svg id="interior" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="MUNDA concept vehicle interior">
-    <defs>
-      <!-- surfaces -->
-      <radialGradient id="g-bg" cx="50%" cy="38%" r="75%">
-        <stop offset="0%" stop-color="#101118"/>
-        <stop offset="45%" stop-color="#09090d"/>
-        <stop offset="100%" stop-color="#040405"/>
-      </radialGradient>
-      <linearGradient id="g-glass" x1="0" y1="0" x2="0.35" y2="1">
-        <stop offset="0%" stop-color="#0a0d16"/>
-        <stop offset="55%" stop-color="#05060b"/>
-        <stop offset="100%" stop-color="#0b0c12"/>
-      </linearGradient>
-      <linearGradient id="g-headliner" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#0d0e13"/>
-        <stop offset="100%" stop-color="#07080b"/>
-      </linearGradient>
-      <linearGradient id="g-dash-top" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#1b1d24"/>
-        <stop offset="100%" stop-color="#0e0f13"/>
-      </linearGradient>
-      <linearGradient id="g-dash" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#14161c"/>
-        <stop offset="100%" stop-color="#0a0b0f"/>
-      </linearGradient>
-      <linearGradient id="g-door" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="#0b0c10"/>
-        <stop offset="100%" stop-color="#17181e"/>
-      </linearGradient>
-      <linearGradient id="g-door-r" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="#17181e"/>
-        <stop offset="100%" stop-color="#0b0c10"/>
-      </linearGradient>
-      <linearGradient id="g-console" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#1a1b21"/>
-        <stop offset="100%" stop-color="#0c0d11"/>
-      </linearGradient>
-      <linearGradient id="g-seat" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#1e2027"/>
-        <stop offset="100%" stop-color="#101116"/>
-      </linearGradient>
-      <linearGradient id="g-trim" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#464a55"/>
-        <stop offset="45%" stop-color="#1c1e25"/>
-        <stop offset="100%" stop-color="#2c2f38"/>
-      </linearGradient>
-      <radialGradient id="g-wheel" cx="50%" cy="42%" r="60%">
-        <stop offset="0%" stop-color="#1a1b20"/>
-        <stop offset="70%" stop-color="#0b0c10"/>
-        <stop offset="100%" stop-color="#050508"/>
-      </radialGradient>
-      <radialGradient id="g-footwell" cx="50%" cy="100%" r="90%">
-        <stop offset="0%" stop-color="rgba(120,140,180,0.22)"/>
-        <stop offset="100%" stop-color="rgba(120,140,180,0)"/>
-      </radialGradient>
+<main>
 
-      <!-- glow filters -->
-      <filter id="f-glow" x="-60%" y="-60%" width="220%" height="220%">
-        <feGaussianBlur stdDeviation="7" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <filter id="f-glow-soft" x="-80%" y="-80%" width="260%" height="260%">
-        <feGaussianBlur stdDeviation="16"/>
-      </filter>
-      <filter id="f-blur6"><feGaussianBlur stdDeviation="6"/></filter>
+<!-- ===================== 1. HERO ===================== -->
+<section class="hero" id="hero">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
 
-      <!-- material patterns -->
-      <pattern id="p-carbon" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-        <rect width="14" height="14" fill="transparent"/>
-        <path d="M0 4 H14 M0 12 H14" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1.4"/>
-        <path d="M4 0 V14 M12 0 V14" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
-      </pattern>
-      <pattern id="p-knit" width="16" height="16" patternUnits="userSpaceOnUse">
-        <rect width="16" height="16" fill="transparent"/>
-        <path d="M0 0 L16 16 M16 0 L0 16" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
-        <circle cx="8" cy="8" r="1.2" fill="#ffffff" fill-opacity="0.12"/>
-      </pattern>
-      <pattern id="p-mesh" width="18" height="18" patternUnits="userSpaceOnUse">
-        <rect width="18" height="18" fill="transparent"/>
-        <circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.14"/>
-        <circle cx="11" cy="11" r="1" fill="#ffffff" fill-opacity="0.10"/>
-        <path d="M0 9 H18 M9 0 V18" stroke="#ffffff" stroke-opacity="0.05" stroke-width="0.6"/>
-      </pattern>
-      <pattern id="p-silk" width="24" height="24" patternUnits="userSpaceOnUse">
-        <rect width="24" height="24" fill="transparent"/>
-        <path d="M0 6 Q12 0 24 6 M0 18 Q12 12 24 18" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1" fill="none"/>
-      </pattern>
-    </defs>
-
-    <!-- ===== CABIN (static surfaces) ===== -->
-    <g id="cabin">
-      <rect x="-40" y="-40" width="1280" height="840" fill="url(#g-bg)"/>
-      <!-- windshield -->
-      <polygon points="260,64 940,64 1048,356 152,356" fill="url(#g-glass)"/>
-      <polyline points="286,120 320,200 348,260" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="14"/>
-      <polyline points="560,96 610,220 700,320" fill="none" stroke="#ffffff" stroke-opacity="0.03" stroke-width="18"/>
-      <!-- headliner / roof -->
-      <rect x="176" y="52" width="848" height="44" rx="8" fill="url(#g-headliner)"/>
-      <!-- A-pillar trims -->
+  <div class="hero-svg" id="hero-svg" aria-hidden="true">
+    <!-- cinematic car interior silhouette with breathing light strips -->
+    <svg viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <linearGradient id="hs-glass" x1="0" y1="0" x2="0.35" y2="1">
+          <stop offset="0%" stop-color="#0b1120"/><stop offset="100%" stop-color="#05060b"/>
+        </linearGradient>
+        <linearGradient id="hs-dash" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#171a22"/><stop offset="100%" stop-color="#0a0b10"/>
+        </linearGradient>
+        <linearGradient id="hs-seat" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1c1f27"/><stop offset="100%" stop-color="#101117"/>
+        </linearGradient>
+        <radialGradient id="hs-bg" cx="50%" cy="40%" r="75%">
+          <stop offset="0%" stop-color="#10131d"/><stop offset="60%" stop-color="#08090f"/><stop offset="100%" stop-color="#040406"/>
+        </radialGradient>
+        <filter id="hs-glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="14"/></filter>
+      </defs>
+      <rect x="-40" y="-40" width="1280" height="840" fill="url(#hs-bg)"/>
+      <!-- city glow behind glass -->
+      <polygon points="260,64 940,64 1048,356 152,356" fill="#0a1424"/>
+      <g fill="#0d1626">
+        <rect x="300" y="210" width="46" height="146"/><rect x="356" y="176" width="34" height="180"/>
+        <rect x="400" y="232" width="52" height="124"/><rect x="466" y="196" width="30" height="160"/>
+        <rect x="508" y="244" width="60" height="112"/><rect x="580" y="186" width="38" height="170"/>
+        <rect x="630" y="228" width="48" height="128"/><rect x="800" y="214" width="40" height="142"/>
+      </g>
+      <g class="hero-wins" fill="#4df3ff" fill-opacity="0.5">
+        <rect x="308" y="222" width="4" height="6"/><rect x="364" y="196" width="4" height="6"/>
+        <rect x="412" y="250" width="4" height="6"/><rect x="474" y="214" width="4" height="6"/>
+        <rect x="520" y="262" width="4" height="6"/><rect x="588" y="206" width="4" height="6"/>
+        <rect x="642" y="246" width="4" height="6"/><rect x="810" y="232" width="4" height="6"/>
+      </g>
+      <polygon points="260,64 940,64 1048,356 152,356" fill="url(#hs-glass)" opacity="0.6"/>
+      <!-- headliner -->
+      <rect x="176" y="52" width="848" height="44" rx="8" fill="#0d0e13"/>
+      <!-- A pillars -->
       <polygon points="152,356 232,356 210,120 176,64" fill="#0a0b0f"/>
       <polygon points="1048,356 968,356 990,120 1024,64" fill="#0a0b0f"/>
-      <!-- dashboard shelf -->
-      <polygon points="140,356 1060,356 1130,432 70,432" fill="url(#g-dash-top)"/>
-      <!-- dashboard front face -->
-      <polygon points="70,432 1130,432 1150,592 50,592" fill="url(#g-dash)"/>
-      <!-- trim line -->
-      <polyline points="86,452 1114,452" fill="none" stroke="url(#g-trim)" stroke-width="5" stroke-linecap="round"/>
-      <!-- vents -->
-      <g stroke="#000" stroke-opacity="0.45" stroke-width="3" stroke-linecap="round">
-        <path d="M250 480 H470"/>
-        <path d="M730 480 H950"/>
-      </g>
-      <!-- center console -->
-      <path d="M560 432 Q555 420 560 414 L640 414 Q645 420 640 432 L646 640 L554 640 Z" fill="url(#g-console)"/>
-      <!-- door panels -->
-      <polygon points="52,340 156,340 156,600 52,600" fill="url(#g-door)"/>
-      <polygon points="1148,340 1044,340 1044,600 1148,600" fill="url(#g-door-r)"/>
-      <!-- door armrests -->
-      <rect x="60" y="470" width="88" height="16" rx="8" fill="url(#g-trim)"/>
-      <rect x="1052" y="470" width="88" height="16" rx="8" fill="url(#g-trim)"/>
-      <!-- seats (headrests through glass) -->
-      <g>
-        <rect x="352" y="272" width="108" height="90" rx="26" fill="url(#g-seat)"/>
-        <rect x="352" y="272" width="108" height="90" rx="26" fill="none" stroke="#2a2c34" stroke-width="1.5"/>
-        <rect x="740" y="272" width="108" height="90" rx="26" fill="url(#g-seat)"/>
-        <rect x="740" y="272" width="108" height="90" rx="26" fill="none" stroke="#2a2c34" stroke-width="1.5"/>
-      </g>
+      <!-- dash -->
+      <polygon points="140,356 1060,356 1130,432 70,432" fill="url(#hs-dash)"/>
+      <polygon points="70,432 1130,432 1150,592 50,592" fill="url(#hs-dash)"/>
+      <polyline points="86,452 1114,452" fill="none" stroke="#3a3f4c" stroke-width="5" stroke-linecap="round"/>
+      <!-- doors -->
+      <polygon points="52,340 156,340 156,600 52,600" fill="#0b0c10"/>
+      <polygon points="1148,340 1044,340 1044,600 1148,600" fill="#0b0c10"/>
+      <!-- seats -->
+      <rect x="352" y="272" width="108" height="90" rx="26" fill="url(#hs-seat)"/>
+      <rect x="740" y="272" width="108" height="90" rx="26" fill="url(#hs-seat)"/>
       <!-- steering wheel -->
-      <g>
-        <circle cx="356" cy="510" r="96" fill="url(#g-wheel)"/>
-        <circle cx="356" cy="510" r="96" fill="none" stroke="url(#g-trim)" stroke-width="7"/>
-        <circle cx="356" cy="510" r="96" fill="none" stroke="#050507" stroke-width="1.2"/>
-        <path d="M356 414 L356 606 M270 552 Q356 596 442 552" fill="none" stroke="#1c1e25" stroke-width="10" stroke-linecap="round"/>
-        <rect x="340" y="470" width="32" height="66" rx="12" fill="#121319"/>
-      </g>
-      <!-- footwell floor -->
+      <circle cx="356" cy="510" r="96" fill="#0b0c11"/>
+      <circle cx="356" cy="510" r="96" fill="none" stroke="#333947" stroke-width="7"/>
+      <!-- console -->
+      <path d="M560 432 Q555 420 560 414 L640 414 Q645 420 640 432 L646 640 L554 640 Z" fill="#0d0e13"/>
+      <!-- footwell -->
       <rect x="50" y="600" width="1100" height="118" fill="#050608"/>
-      <rect x="50" y="600" width="1100" height="118" fill="url(#g-footwell)"/>
-    </g>
 
-    <!-- ===== MATERIAL OVERLAY ===== -->
-    <g id="material-layer" style="mix-blend-mode:soft-light; opacity:0.5; pointer-events:none">
-      <polygon points="140,356 1060,356 1130,432 70,432"/>
-      <polygon points="70,432 1130,432 1150,592 50,592"/>
-      <polygon points="52,340 156,340 156,600 52,600"/>
-      <polygon points="1148,340 1044,340 1044,600 1148,600"/>
-      <rect x="352" y="272" width="108" height="90" rx="26"/>
-      <rect x="740" y="272" width="108" height="90" rx="26"/>
-      <path d="M560 432 Q555 420 560 414 L640 414 Q645 420 640 432 L646 640 L554 640 Z"/>
-    </g>
+      <!-- BREATHING LIGHT STRIPS (the brand moment) -->
+      <g class="hs-strip">
+        <path class="hs-halo" d="M246 88 Q600 72 954 88" fill="none" stroke="#2d6bff" stroke-width="30" stroke-linecap="round" filter="url(#hs-glow)" opacity="0.5"/>
+        <path class="hs-core" d="M246 88 Q600 72 954 88" fill="none" stroke="#4df3ff" stroke-width="5" stroke-linecap="round"/>
+      </g>
+      <g class="hs-strip hs-delay">
+        <path class="hs-halo" d="M214 394 Q600 380 986 394" fill="none" stroke="#2d6bff" stroke-width="30" stroke-linecap="round" filter="url(#hs-glow)" opacity="0.5"/>
+        <path class="hs-core" d="M214 394 Q600 380 986 394" fill="none" stroke="#4df3ff" stroke-width="5" stroke-linecap="round"/>
+      </g>
+      <g class="hs-strip hs-delay2">
+        <path class="hs-halo" d="M190 372 L190 604" fill="none" stroke="#2d6bff" stroke-width="26" stroke-linecap="round" filter="url(#hs-glow)" opacity="0.5"/>
+        <path class="hs-core" d="M190 372 L190 604" fill="none" stroke="#4df3ff" stroke-width="5" stroke-linecap="round"/>
+        <path class="hs-halo" d="M1010 372 L1010 604" fill="none" stroke="#2d6bff" stroke-width="26" stroke-linecap="round" filter="url(#hs-glow)" opacity="0.5"/>
+        <path class="hs-core" d="M1010 372 L1010 604" fill="none" stroke="#4df3ff" stroke-width="5" stroke-linecap="round"/>
+      </g>
+    </svg>
+  </div>
 
-    <!-- ===== LIGHTS ===== -->
-    <g id="lights">
-      <!-- ROOF -->
-      <g class="zone" data-zone="roof">
-        <path class="strip-bloom" d="M246 88 Q600 72 954 88" fill="none" stroke="#2d6bff" stroke-width="16" stroke-linecap="round" filter="url(#f-glow-soft)"/>
-        <path class="strip-core" d="M246 88 Q600 72 954 88" fill="none" stroke="#2d6bff" stroke-width="5" stroke-linecap="round"/>
-      </g>
-      <!-- DASHBOARD -->
-      <g class="zone" data-zone="dashboard">
-        <path class="strip-bloom" d="M214 394 Q600 380 986 394" fill="none" stroke="#2d6bff" stroke-width="16" stroke-linecap="round" filter="url(#f-glow-soft)"/>
-        <path class="strip-core" d="M214 394 Q600 380 986 394" fill="none" stroke="#2d6bff" stroke-width="5" stroke-linecap="round"/>
-      </g>
-      <!-- DOORS -->
-      <g class="zone" data-zone="doors">
-        <path class="strip-bloom" d="M190 372 L190 604" fill="none" stroke="#2d6bff" stroke-width="16" stroke-linecap="round" filter="url(#f-glow-soft)"/>
-        <path class="strip-core" d="M190 372 L190 604" fill="none" stroke="#2d6bff" stroke-width="5" stroke-linecap="round"/>
-        <path class="strip-bloom" d="M1010 372 L1010 604" fill="none" stroke="#2d6bff" stroke-width="16" stroke-linecap="round" filter="url(#f-glow-soft)"/>
-        <path class="strip-core" d="M1010 372 L1010 604" fill="none" stroke="#2d6bff" stroke-width="5" stroke-linecap="round"/>
-      </g>
-      <!-- CONSOLE -->
-      <g class="zone" data-zone="console">
-        <path class="strip-bloom" d="M570 448 L570 612" fill="none" stroke="#2d6bff" stroke-width="16" stroke-linecap="round" filter="url(#f-glow-soft)"/>
-        <path class="strip-core" d="M570 448 L570 612" fill="none" stroke="#2d6bff" stroke-width="5" stroke-linecap="round"/>
-        <path class="strip-bloom" d="M630 448 L630 612" fill="none" stroke="#2d6bff" stroke-width="16" stroke-linecap="round" filter="url(#f-glow-soft)"/>
-        <path class="strip-core" d="M630 448 L630 612" fill="none" stroke="#2d6bff" stroke-width="5" stroke-linecap="round"/>
-      </g>
-      <!-- FOOTWELL -->
-      <g class="zone" data-zone="footwell">
-        <ellipse class="strip-bloom" cx="600" cy="686" rx="470" ry="46" fill="#2d6bff" opacity="0.5" filter="url(#f-glow-soft)"/>
-        <ellipse class="strip-core" cx="600" cy="688" rx="470" ry="40" fill="#2d6bff" opacity="0.5"/>
-      </g>
-      <!-- SEATS -->
-      <g class="zone" data-zone="seats">
-        <path class="strip-bloom" d="M352 300 Q406 288 460 300" fill="none" stroke="#2d6bff" stroke-width="14" stroke-linecap="round" filter="url(#f-glow-soft)"/>
-        <path class="strip-core" d="M352 300 Q406 288 460 300" fill="none" stroke="#2d6bff" stroke-width="4.5" stroke-linecap="round"/>
-        <path class="strip-bloom" d="M740 300 Q794 288 848 300" fill="none" stroke="#2d6bff" stroke-width="14" stroke-linecap="round" filter="url(#f-glow-soft)"/>
-        <path class="strip-core" d="M740 300 Q794 288 848 300" fill="none" stroke="#2d6bff" stroke-width="4.5" stroke-linecap="round"/>
-      </g>
-    </g>
+  <div class="hero-content">
+    <p class="kicker hero-kicker" data-i18n="hero.kicker">MUNDA KOSOVA · AUTOMOTIVE TEXTILE LIGHTING</p>
+    <h1 data-i18n-html="hero.title">MUNDA<br><span class="grad">FUTURE LAB</span></h1>
+    <p class="hero-sub" data-i18n="hero.sub">Designing the lighting experience of tomorrow's mobility.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary btn-lg" href="experience.html" data-i18n="hero.play">PLAY THE EXPERIENCE</a>
+      <a class="btn btn-ghost btn-lg" href="#technology" data-scroll data-i18n="hero.explore">EXPLORE MUNDA</a>
+    </div>
+    <p class="hero-foot" data-i18n="hero.foot">A Digital School project · Made in Kosovo</p>
+  </div>
 
-    <!-- ===== HIGHLIGHTS (selection outline) ===== -->
-    <g id="highlights" fill="none">
-      <path data-hl="roof" d="M246 88 Q600 72 954 88"/>
-      <path data-hl="dashboard" d="M214 394 Q600 380 986 394"/>
-      <path data-hl="doors" d="M190 372 L190 604 M1010 372 L1010 604"/>
-      <path data-hl="console" d="M570 448 L570 612 M630 448 L630 612"/>
-      <ellipse data-hl="footwell" cx="600" cy="686" rx="470" ry="46"/>
-      <path data-hl="seats" d="M352 300 Q406 288 460 300 M740 300 Q794 288 848 300"/>
-    </g>
-  </svg>
+  <a class="hero-scroll" href="#interior" data-scroll aria-label="Scroll down">
+    <span></span>
+  </a>
+</section>
 
-  <!-- zone label tooltip -->
-  <div id="zone-tip" class="zone-tip" aria-hidden="true"></div>
-</div>
+<!-- ===================== 2. INTERACTIVE CAR ===================== -->
+<section class="sec" id="interior">
+  <div class="sec-head">
+    <p class="kicker" data-i18n="interior.kicker">EXPERIENCE THE TECHNOLOGY</p>
+    <h2 data-i18n-html="interior.title">Touch the <em>cabin.</em></h2>
+    <p class="sec-sub" data-i18n="interior.sub">Hover or click the glowing zones to discover how MUNDA technology lives inside a premium vehicle. Then play with the light yourself.</p>
+  </div>
 
-<!-- ===================== SCREENS ===================== -->
-<main id="app">
+  <div class="car-wrap glass">
+    <div class="car-stage">
+      <svg id="interior-svg" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Interactive MUNDA vehicle interior">
+        <defs>
+          <linearGradient id="ic-glass" x1="0" y1="0" x2="0.35" y2="1">
+            <stop offset="0%" stop-color="#0a0d16"/><stop offset="55%" stop-color="#05060b"/><stop offset="100%" stop-color="#0b0c12"/>
+          </linearGradient>
+          <linearGradient id="ic-dash" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#171a22"/><stop offset="100%" stop-color="#0a0b10"/>
+          </linearGradient>
+          <linearGradient id="ic-seat" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1c1f27"/><stop offset="100%" stop-color="#101117"/>
+          </linearGradient>
+          <radialGradient id="ic-bg" cx="50%" cy="38%" r="75%">
+            <stop offset="0%" stop-color="#101118"/><stop offset="45%" stop-color="#09090d"/><stop offset="100%" stop-color="#040405"/>
+          </radialGradient>
+          <filter id="ic-glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="15"/></filter>
+          <filter id="ic-glow2" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="26"/></filter>
+        </defs>
+        <rect x="-40" y="-40" width="1280" height="840" fill="url(#ic-bg)"/>
+        <polygon points="260,64 940,64 1048,356 152,356" fill="#0a1424"/>
+        <g fill="#0d1626">
+          <rect x="300" y="210" width="46" height="146"/><rect x="356" y="176" width="34" height="180"/>
+          <rect x="400" y="232" width="52" height="124"/><rect x="466" y="196" width="30" height="160"/>
+          <rect x="580" y="186" width="38" height="170"/><rect x="630" y="228" width="48" height="128"/>
+        </g>
+        <polygon points="260,64 940,64 1048,356 152,356" fill="url(#ic-glass)" opacity="0.55"/>
+        <rect x="176" y="52" width="848" height="44" rx="8" fill="#0d0e13"/>
+        <polygon points="152,356 232,356 210,120 176,64" fill="#0a0b0f"/>
+        <polygon points="1048,356 968,356 990,120 1024,64" fill="#0a0b0f"/>
+        <polygon points="140,356 1060,356 1130,432 70,432" fill="url(#ic-dash)"/>
+        <polygon points="70,432 1130,432 1150,592 50,592" fill="url(#ic-dash)"/>
+        <polyline points="86,452 1114,452" fill="none" stroke="#3a3f4c" stroke-width="5" stroke-linecap="round"/>
+        <rect x="252" y="372" width="212" height="66" rx="12" fill="#0b1018" stroke="#20242e" stroke-width="1.4"/>
+        <rect x="516" y="368" width="188" height="74" rx="10" fill="#0b1018" stroke="#20242e" stroke-width="1.4"/>
+        <g stroke="#000" stroke-opacity="0.45" stroke-width="3" stroke-linecap="round">
+          <path d="M250 480 H470"/><path d="M730 480 H950"/>
+        </g>
+        <path d="M560 432 Q555 420 560 414 L640 414 Q645 420 640 432 L646 640 L554 640 Z" fill="#0d0e13"/>
+        <polygon points="52,340 156,340 156,600 52,600" fill="#0b0c10"/>
+        <polygon points="1148,340 1044,340 1044,600 1148,600" fill="#0b0c10"/>
+        <rect x="352" y="272" width="108" height="90" rx="26" fill="url(#ic-seat)"/>
+        <rect x="740" y="272" width="108" height="90" rx="26" fill="url(#ic-seat)"/>
+        <g>
+          <circle cx="356" cy="510" r="96" fill="#0b0c11"/>
+          <circle cx="356" cy="510" r="96" fill="none" stroke="#333947" stroke-width="7"/>
+          <path d="M356 414 L356 606" fill="none" stroke="#1c1e25" stroke-width="10" stroke-linecap="round"/>
+        </g>
+        <rect x="50" y="600" width="1100" height="118" fill="#050608"/>
 
-  <!-- ========== 1. LANDING ========== -->
-  <section class="screen active" id="screen-landing" data-screen="landing">
-    <div class="landing-inner">
-      <div class="landing-logo">
-        <div class="light-line" aria-hidden="true"></div>
-        <h1 class="brand-word">MUNDA</h1>
-        <p class="brand-sub">KOSOVA</p>
+        <!-- LIGHT ZONES -->
+        <g class="ic-zone" data-zone="roof">
+          <path d="M246 88 Q600 72 954 88" fill="none" stroke="var(--zc,#2d6bff)" stroke-width="30" stroke-linecap="round" filter="url(#ic-glow2)" opacity="0.35"/>
+          <path d="M246 88 Q600 72 954 88" fill="none" stroke="var(--zc,#4df3ff)" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <g class="ic-zone" data-zone="dashboard">
+          <path d="M214 394 Q600 380 986 394" fill="none" stroke="var(--zc,#2d6bff)" stroke-width="30" stroke-linecap="round" filter="url(#ic-glow2)" opacity="0.35"/>
+          <path d="M214 394 Q600 380 986 394" fill="none" stroke="var(--zc,#4df3ff)" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <g class="ic-zone" data-zone="doors">
+          <path d="M190 372 L190 604 M1010 372 L1010 604" fill="none" stroke="var(--zc,#2d6bff)" stroke-width="26" stroke-linecap="round" filter="url(#ic-glow2)" opacity="0.35"/>
+          <path d="M190 372 L190 604 M1010 372 L1010 604" fill="none" stroke="var(--zc,#4df3ff)" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <g class="ic-zone" data-zone="console">
+          <path d="M570 448 L570 612 M630 448 L630 612" fill="none" stroke="var(--zc,#2d6bff)" stroke-width="14" stroke-linecap="round" filter="url(#ic-glow)" opacity="0.5"/>
+          <path d="M570 448 L570 612 M630 448 L630 612" fill="none" stroke="var(--zc,#4df3ff)" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <g class="ic-zone" data-zone="seats">
+          <path d="M352 300 Q406 288 460 300 M740 300 Q794 288 848 300" fill="none" stroke="var(--zc,#2d6bff)" stroke-width="14" stroke-linecap="round" filter="url(#ic-glow)" opacity="0.5"/>
+          <path d="M352 300 Q406 288 460 300 M740 300 Q794 288 848 300" fill="none" stroke="var(--zc,#4df3ff)" stroke-width="4.5" stroke-linecap="round"/>
+        </g>
+        <g class="ic-zone" data-zone="footwell">
+          <ellipse cx="600" cy="686" rx="470" ry="46" fill="var(--zc,#2d6bff)" opacity="0.28" filter="url(#ic-glow2)"/>
+          <ellipse cx="600" cy="688" rx="470" ry="40" fill="var(--zc,#4df3ff)" opacity="0.18"/>
+        </g>
+
+        <!-- invisible hotspot hit areas -->
+        <g fill="transparent" stroke="none">
+          <path data-hot="roof" d="M246 88 Q600 72 954 88" stroke="transparent" stroke-width="52"/>
+          <path data-hot="dashboard" d="M214 394 Q600 380 986 394" stroke="transparent" stroke-width="52"/>
+          <path data-hot="doors" d="M190 372 L190 604 M1010 372 L1010 604" stroke="transparent" stroke-width="52"/>
+          <path data-hot="console" d="M570 448 L570 612 M630 448 L630 612" stroke="transparent" stroke-width="52"/>
+          <path data-hot="seats" d="M352 300 Q406 288 460 300 M740 300 Q794 288 848 300" stroke="transparent" stroke-width="52"/>
+          <rect data-hot="footwell" x="130" y="640" width="940" height="60"/>
+        </g>
+      </svg>
+
+      <!-- floating info panel -->
+      <div class="zone-info glass" id="zone-info" hidden>
+        <b id="zone-info-title">Roof / Ambient</b>
+        <p id="zone-info-desc"></p>
       </div>
-      <h2 class="landing-headline">DESIGN THE LIGHT.<br><span>SHAPE THE FUTURE.</span></h2>
-      <p class="landing-sub">Experience the future of automotive textile lighting.</p>
-      <button class="btn-primary btn-enter" data-nav="textile">
-        <span>ENTER THE LIGHT LAB</span>
-        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <p class="landing-foot">MUNDA · Kosovo · Digital School Competition</p>
     </div>
-    <div class="landing-car-hint" aria-hidden="true"></div>
-  </section>
 
-  <!-- ========== 2. TEXTILE (FROM TEXTILE TO LIGHT) ========== -->
-  <section class="screen" id="screen-textile" data-screen="textile">
-    <div class="screen-head">
-      <p class="kicker">01 — From Textile to Light</p>
-      <h2 class="screen-title">A piece of fabric<br>becomes <em>light.</em></h2>
-    </div>
-    <div class="textile-stage">
-      <div class="threads" aria-hidden="true"></div>
-      <div class="fabric-sheet" id="fabric-sheet" aria-hidden="true">
-        <div class="fabric-glow" id="fabric-glow"></div>
-        <span class="fabric-label" id="fabric-label">TEXTILE</span>
-      </div>
-      <div class="pipeline">
-        <button class="pipe-step active" data-stage="0"><i></i><span>TEXTILE</span></button>
-        <span class="pipe-arrow">→</span>
-        <button class="pipe-step" data-stage="1"><i></i><span>TECHNOLOGY</span></button>
-        <span class="pipe-arrow">→</span>
-        <button class="pipe-step" data-stage="2"><i></i><span>LIGHT</span></button>
-        <span class="pipe-arrow">→</span>
-        <button class="pipe-step" data-stage="3"><i></i><span>AUTOMOTIVE</span></button>
-        <span class="pipe-arrow">→</span>
-        <button class="pipe-step" data-stage="4"><i></i><span>FUTURE</span></button>
-      </div>
-      <p class="stage-desc" id="stage-desc">Drag across the fabric to weave technology into light.</p>
-      <div class="drag-hint" id="drag-hint"><span class="drag-line"></span> DRAG <span class="drag-line"></span></div>
-    </div>
-    <div class="wow-panel" id="wow-panel" hidden>
-      <h3 class="wow-title">WHAT IF LIGHT<br>COULD BE <em>FABRIC?</em></h3>
-      <p class="wow-sub">MUNDA weaves flexible LED technology directly into textile — turning soft material into a living light source.</p>
-      <button class="btn-primary" id="btn-discover">DISCOVER</button>
-    </div>
-    <div class="screen-next">
-      <button class="btn-primary" data-nav="lab" id="textile-next" hidden>ENTER THE INTERIOR LAB →</button>
-    </div>
-  </section>
-
-  <!-- ========== 3. INTERIOR LAB ========== -->
-  <section class="screen" id="screen-lab" data-screen="lab">
-    <div class="lab-layout">
-      <div class="lab-canvas">
-        <div class="lab-head">
-          <p class="kicker">02 — The Interior Lab</p>
-          <h2 class="screen-title">Shape the <em>cabin.</em></h2>
-          <p class="lab-sub">Select a zone, then design its light. Every change is live.</p>
-        </div>
-        <div class="zone-row" id="zone-row">
-          <button class="zone-btn" data-zone="dashboard"><i></i>Dashboard</button>
-          <button class="zone-btn" data-zone="doors"><i></i>Doors</button>
-          <button class="zone-btn" data-zone="console"><i></i>Console</button>
-          <button class="zone-btn" data-zone="footwell"><i></i>Footwell</button>
-          <button class="zone-btn" data-zone="seats"><i></i>Seats</button>
-          <button class="zone-btn" data-zone="roof"><i></i>Roof</button>
-        </div>
-        <div class="mode-row">
-          <span class="group-label">DRIVE MODE</span>
-          <button class="mode-btn" data-mode="city"><i></i>CITY</button>
-          <button class="mode-btn" data-mode="sport"><i></i>SPORT</button>
-          <button class="mode-btn" data-mode="night"><i></i>NIGHT</button>
-          <button class="mode-btn" data-mode="eco"><i></i>ECO</button>
+    <div class="car-controls">
+      <div class="cc-group">
+        <span class="cc-label" data-i18n="interior.color">COLOUR</span>
+        <div class="cc-swatches" id="car-colors">
+          <button class="cc-swatch active" style="--c:#2d6bff" data-car-color="#2d6bff" aria-label="Blue"></button>
+          <button class="cc-swatch" style="--c:#4df3ff" data-car-color="#4df3ff" aria-label="Cyan"></button>
+          <button class="cc-swatch" style="--c:#ffc861" data-car-color="#ffc861" aria-label="Gold"></button>
+          <button class="cc-swatch" style="--c:#ff4d8d" data-car-color="#ff4d8d" aria-label="Pink"></button>
+          <button class="cc-swatch" style="--c:#35e07f" data-car-color="#35e07f" aria-label="Green"></button>
         </div>
       </div>
-
-      <aside class="lab-panel">
-        <div class="panel-group">
-          <span class="group-label">COLOR</span>
-          <div class="swatches" data-ctl-group="color">
-            <button class="swatch" style="--c:#ff2d55" data-ctl="color" data-value="red" title="Red"><i></i></button>
-            <button class="swatch" style="--c:#2d6bff" data-ctl="color" data-value="blue" title="Blue"><i></i></button>
-            <button class="swatch" style="--c:#4df3ff" data-ctl="color" data-value="cyan" title="Cyan"><i></i></button>
-            <button class="swatch" style="--c:#9a4dff" data-ctl="color" data-value="purple" title="Purple"><i></i></button>
-            <button class="swatch" style="--c:#35e07f" data-ctl="color" data-value="green" title="Green"><i></i></button>
-            <button class="swatch" style="--c:#e8c87a" data-ctl="color" data-value="gold" title="Gold"><i></i></button>
-            <button class="swatch" style="--c:#ffffff" data-ctl="color" data-value="white" title="White"><i></i></button>
-            <button class="swatch swatch-grad" data-ctl="color" data-value="gradient" title="Custom gradient"><i></i></button>
-          </div>
-        </div>
-        <div class="panel-group">
-          <span class="group-label">PATTERN</span>
-          <div class="chips" data-ctl-group="pattern">
-            <button class="chip" data-ctl="pattern" data-value="linear">Linear</button>
-            <button class="chip" data-ctl="pattern" data-value="wave">Wave</button>
-            <button class="chip" data-ctl="pattern" data-value="flow">Flow</button>
-            <button class="chip" data-ctl="pattern" data-value="pulse">Pulse</button>
-            <button class="chip" data-ctl="pattern" data-value="dots">Dots</button>
-            <button class="chip" data-ctl="pattern" data-value="dynamic">Dynamic</button>
-            <button class="chip" data-ctl="pattern" data-value="custom">Custom</button>
-          </div>
-        </div>
-        <div class="panel-group">
-          <span class="group-label">BRIGHTNESS <em id="bright-val">70%</em></span>
-          <input type="range" id="brightness" min="0" max="100" value="70" data-ctl="brightness">
-        </div>
-        <div class="panel-group">
-          <span class="group-label">ANIMATION</span>
-          <div class="chips" data-ctl-group="animation">
-            <button class="chip" data-ctl="animation" data-value="static">Static</button>
-            <button class="chip" data-ctl="animation" data-value="pulse">Pulse</button>
-            <button class="chip" data-ctl="animation" data-value="flow">Flow</button>
-            <button class="chip" data-ctl="animation" data-value="wave">Wave</button>
-            <button class="chip" data-ctl="animation" data-value="breathing">Breathing</button>
-            <button class="chip" data-ctl="animation" data-value="dynamic">Dynamic</button>
-          </div>
-        </div>
-        <div class="panel-group">
-          <span class="group-label">SPEED</span>
-          <div class="chips" data-ctl-group="speed">
-            <button class="chip" data-ctl="speed" data-value="slow">Slow</button>
-            <button class="chip" data-ctl="speed" data-value="medium">Medium</button>
-            <button class="chip" data-ctl="speed" data-value="fast">Fast</button>
-          </div>
-        </div>
-        <div class="panel-group">
-          <span class="group-label">TEXTILE MATERIAL</span>
-          <div class="chips" data-ctl-group="material">
-            <button class="chip" data-ctl="material" data-value="carbon">Carbon Weave</button>
-            <button class="chip" data-ctl="material" data-value="knit">Soft Knit</button>
-            <button class="chip" data-ctl="material" data-value="mesh">Tech Mesh</button>
-            <button class="chip" data-ctl="material" data-value="silk">Lumen Silk</button>
-          </div>
-        </div>
-        <div class="panel-actions">
-          <button class="btn-primary" id="lab-lightshow">LIGHT SHOW</button>
-          <button class="btn-primary btn-outline" data-nav="tech">NEXT: TECHNOLOGY →</button>
-        </div>
-      </aside>
-    </div>
-  </section>
-
-  <!-- ========== 4. TECHNOLOGY EXPLORER ========== -->
-  <section class="screen" id="screen-tech" data-screen="tech">
-    <div class="screen-head">
-      <p class="kicker">03 — MUNDA Technology</p>
-      <h2 class="screen-title">Touch a node.<br>See it <em>activate.</em></h2>
-    </div>
-    <div class="tech-orbit">
-      <div class="tech-core" id="tech-core">
-        <span class="tech-core-label" id="tech-core-label">MUNDA</span>
-        <span class="tech-core-desc" id="tech-core-desc">Select a technology to explore.</span>
+      <div class="cc-group">
+        <span class="cc-label" data-i18n="interior.brightness">BRIGHTNESS</span>
+        <input type="range" id="car-bright" min="20" max="100" value="80" aria-label="Brightness">
       </div>
-      <button class="tech-node" data-tech="led" style="--a:0deg"><i></i><span>LED</span></button>
-      <button class="tech-node" data-tech="textile" style="--a:72deg"><i></i><span>TEXTILE</span></button>
-      <button class="tech-node" data-tech="flex" style="--a:144deg"><i></i><span>FLEXIBILITY</span></button>
-      <button class="tech-node" data-tech="design" style="--a:216deg"><i></i><span>DESIGN</span></button>
-      <button class="tech-node" data-tech="auto" style="--a:288deg"><i></i><span>AUTOMOTIVE</span></button>
-      <div class="tech-ring" aria-hidden="true"></div>
+      <a class="btn btn-primary btn-sm" href="experience.html" data-i18n="interior.cta">BUILD YOUR OWN →</a>
     </div>
-    <div class="screen-next">
-      <button class="btn-primary" data-nav="kosova">NEXT: MADE IN KOSOVA →</button>
-    </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ========== 5. KOSOVA ========== -->
-  <section class="screen" id="screen-kosova" data-screen="kosova">
-    <div class="kosova-inner">
-      <p class="kicker">04 — Made in Kosova</p>
-      <h2 class="screen-title kosova-title">MADE IN <em>KOSOVA</em><br>MOVING THE <em>WORLD</em></h2>
-      <div class="kosova-map">
-        <svg viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet" aria-label="Map of Europe">
-          <g class="europe">
-            <circle cx="500" cy="280" r="250" fill="none" stroke="#23242c" stroke-width="1.4"/>
-            <circle cx="500" cy="280" r="200" fill="none" stroke="#1b1c22" stroke-width="1.4"/>
-            <circle cx="500" cy="280" r="150" fill="none" stroke="#23242c" stroke-width="1.4"/>
-            <circle cx="500" cy="280" r="100" fill="none" stroke="#1b1c22" stroke-width="1.4"/>
-            <circle cx="500" cy="280" r="50" fill="none" stroke="#23242c" stroke-width="1.4"/>
+<!-- ===================== 3. HOW IT WORKS ===================== -->
+<section class="sec" id="how">
+  <div class="sec-head">
+    <p class="kicker" data-i18n="how.kicker">THE METHOD</p>
+    <h2 data-i18n-html="how.title">How the <em>Future Lab</em> works.</h2>
+    <p class="sec-sub" data-i18n="how.sub">Four steps turn a piece of textile into a living light experience.</p>
+  </div>
+
+  <div class="how-grid">
+    <article class="how-step glass">
+      <span class="how-num">01</span>
+      <svg viewBox="0 0 160 110" aria-hidden="true">
+        <rect x="20" y="30" width="120" height="56" rx="12" fill="url(#hs-dash)" stroke="rgba(255,255,255,.12)"/>
+        <g stroke="#4df3ff" stroke-opacity=".55" stroke-width="2">
+          <path d="M36 44 H124"/><path d="M36 56 H100"/><path d="M36 68 H112"/>
+        </g>
+        <path d="M30 30 L44 20 L60 30" fill="none" stroke="#2d6bff" stroke-width="2.5"/>
+        <circle cx="44" cy="22" r="3" fill="#4df3ff"/>
+        <path d="M120 86 Q128 76 136 86" fill="none" stroke="#ffc861" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <h3 data-i18n="how.s1t">DESIGN</h3>
+      <p data-i18n="how.s1d">Choose the illuminated textile — every weave diffuses light differently.</p>
+    </article>
+
+    <article class="how-step glass">
+      <span class="how-num">02</span>
+      <svg viewBox="0 0 160 110" aria-hidden="true">
+        <path d="M30 84 L80 26 L130 84 Z" fill="none" stroke="#2d6bff" stroke-width="2.5" stroke-linejoin="round"/>
+        <circle cx="80" cy="26" r="6" fill="#4df3ff" opacity=".9"/>
+        <path d="M52 62 L68 62 M92 62 L108 62 M60 46 L76 46 M84 46 L100 46" stroke="#4df3ff" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="80" cy="84" r="4" fill="#ffc861"/>
+        <path d="M80 30 L80 80" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
+      </svg>
+      <h3 data-i18n="how.s2t">ILLUMINATE</h3>
+      <p data-i18n="how.s2d">Place LED zones across the cabin — colour, pattern and intensity are live.</p>
+    </article>
+
+    <article class="how-step glass">
+      <span class="how-num">03</span>
+      <svg viewBox="0 0 160 110" aria-hidden="true">
+        <rect x="24" y="34" width="44" height="34" rx="8" fill="#12141b" stroke="#2d6bff" stroke-width="2"/>
+        <rect x="92" y="34" width="44" height="34" rx="8" fill="#12141b" stroke="#2d6bff" stroke-width="2"/>
+        <path d="M68 51 C 78 51 82 51 92 51" fill="none" stroke="#35e07f" stroke-width="2.5" stroke-dasharray="4 3"/>
+        <circle cx="46" cy="43" r="3" fill="#35e07f"/>
+        <circle cx="114" cy="43" r="3" fill="#35e07f"/>
+        <path d="M30 82 L60 82 M100 82 L130 82" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+        <path d="M40 78 L40 86 M120 78 L120 86" stroke="#ffc861" stroke-width="2"/>
+      </svg>
+      <h3 data-i18n="how.s3t">TEST</h3>
+      <p data-i18n="how.s3d">Five automotive tests — light, vibration, temperature, durability, efficiency.</p>
+    </article>
+
+    <article class="how-step glass">
+      <span class="how-num">04</span>
+      <svg viewBox="0 0 160 110" aria-hidden="true">
+        <path d="M80 20 L140 55 L80 90 L20 55 Z" fill="none" stroke="#ffc861" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M80 34 L80 76 M44 55 L116 55" stroke="rgba(255,255,255,.18)" stroke-width="1.5"/>
+        <circle cx="80" cy="55" r="10" fill="none" stroke="#4df3ff" stroke-width="2.5"/>
+        <circle cx="80" cy="55" r="3.5" fill="#4df3ff"/>
+      </svg>
+      <h3 data-i18n="how.s4t">INNOVATE</h3>
+      <p data-i18n="how.s4d">Get your MUNDA SCORE, climb the ranks and unlock the future.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== 4. TECHNOLOGY ===================== -->
+<section class="sec" id="technology">
+  <div class="sec-head">
+    <p class="kicker" data-i18n="tech.kicker">THE TECHNOLOGY</p>
+    <h2 data-i18n-html="tech.title">Textile. Light. <em>Matter.</em></h2>
+    <p class="sec-sub" data-i18n="tech.sub">What MUNDA actually does — flexible LED systems woven into textile for the automotive industry.</p>
+  </div>
+
+  <div class="tech-grid">
+    <article class="tech-card glass">
+      <div class="tc-vis tc-textile">
+        <svg viewBox="0 0 120 90" aria-hidden="true">
+          <rect width="120" height="90" rx="10" fill="#101318"/>
+          <g stroke="#4df3ff" stroke-opacity=".5" stroke-width="1.6">
+            <path d="M10 18 H110 M10 30 H110 M10 42 H110 M10 54 H110 M10 66 H110 M10 78 H110"/>
           </g>
-          <g class="reach" id="reach">
-            <path class="reach-line" d="M500 280 L500 120" fill="none" stroke="url(#reach-grad)" stroke-width="3" stroke-linecap="round"/>
-            <path class="reach-line" d="M500 280 L720 180" fill="none" stroke="url(#reach-grad)" stroke-width="3" stroke-linecap="round"/>
-            <path class="reach-line" d="M500 280 L760 320" fill="none" stroke="url(#reach-grad)" stroke-width="3" stroke-linecap="round"/>
-            <path class="reach-line" d="M500 280 L600 420" fill="none" stroke="url(#reach-grad)" stroke-width="3" stroke-linecap="round"/>
-            <path class="reach-line" d="M500 280 L330 420" fill="none" stroke="url(#reach-grad)" stroke-width="3" stroke-linecap="round"/>
-            <path class="reach-line" d="M500 280 L250 320" fill="none" stroke="url(#reach-grad)" stroke-width="3" stroke-linecap="round"/>
-            <path class="reach-line" d="M500 280 L300 170" fill="none" stroke="url(#reach-grad)" stroke-width="3" stroke-linecap="round"/>
-            <g class="reach-dots">
-              <circle cx="500" cy="120" r="3"/><circle cx="720" cy="180" r="3"/><circle cx="760" cy="320" r="3"/>
-              <circle cx="600" cy="420" r="3"/><circle cx="330" cy="420" r="3"/><circle cx="250" cy="320" r="3"/><circle cx="300" cy="170" r="3"/>
-            </g>
-          </g>
-          <defs>
-            <linearGradient id="reach-grad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#2d6bff"/><stop offset="100%" stop-color="rgba(45,107,255,0.08)"/>
-            </linearGradient>
-          </defs>
-          <g class="kosovo-pin">
-            <circle cx="500" cy="280" r="10" fill="#2d6bff" filter="url(#f-glow)"/>
-            <circle cx="500" cy="280" r="5" fill="#eaffff"/>
-            <circle cx="500" cy="280" r="26" fill="none" stroke="rgba(45,107,255,0.35)" stroke-width="1.5"/>
+          <g stroke="#2d6bff" stroke-opacity=".7" stroke-width="1.6">
+            <path d="M18 8 V82 M30 8 V82 M42 8 V82 M54 8 V82 M66 8 V82 M78 8 V82 M90 8 V82 M102 8 V82"/>
           </g>
         </svg>
-        <span class="map-label">KOSOVA</span>
       </div>
-      <p class="kosova-quote">“Innovation made in Kosovo.”</p>
-      <p class="kosova-body">MUNDA Kosova is part of a wider automotive network — its factory in Obiliq is part of this development. Lighting the experience, from the heart of the Balkans to the world.</p>
-      <button class="btn-primary" data-nav="challenge">DESIGN THE FUTURE →</button>
-    </div>
-  </section>
+      <h3 data-i18n="tech.c1t">ILLUMINATED TEXTILES</h3>
+      <p data-i18n="tech.c1d">Micro-LEDs are woven directly into soft fabric — a material that conducts light, not just threads.</p>
+    </article>
 
-  <!-- ========== 6. CHALLENGE ========== -->
-  <section class="screen" id="screen-challenge" data-screen="challenge">
-    <div class="challenge-layout">
-      <div class="challenge-head">
-        <p class="kicker">05 — The MUNDA Design Challenge</p>
-        <h2 class="screen-title">Create the most <em>innovative</em> interior lighting.</h2>
-        <p class="challenge-sub">Design before time runs out.</p>
-        <div class="timer" id="timer">03:00</div>
-        <div class="progress" id="progress">
-          <span class="phase active" data-phase="0">DESIGN</span><span>→</span>
-          <span class="phase" data-phase="1">TEST</span><span>→</span>
-          <span class="phase" data-phase="2">REVIEW</span><span>→</span>
-          <span class="phase" data-phase="3">FINAL</span>
-        </div>
+    <article class="tech-card glass">
+      <div class="tc-vis tc-led">
+        <svg viewBox="0 0 120 90" aria-hidden="true">
+          <rect width="120" height="90" rx="10" fill="#0e1118"/>
+          <circle cx="60" cy="40" r="16" fill="none" stroke="#ffc861" stroke-width="2"/>
+          <circle cx="60" cy="40" r="7" fill="#ffc861" opacity=".9"/>
+          <g stroke="#2d6bff" stroke-width="2" stroke-linecap="round">
+            <path d="M60 16 V8 M60 64 V72 M36 40 H28 M84 40 H92"/>
+          </g>
+          <g fill="#4df3ff" opacity=".8">
+            <circle cx="24" cy="68" r="2"/><circle cx="92" cy="70" r="2"/><circle cx="34" cy="20" r="2"/>
+          </g>
+        </svg>
       </div>
-      <aside class="challenge-panel" id="challenge-panel">
-        <div class="panel-group">
-          <span class="group-label">INTERIOR AREA</span>
-          <div class="zone-row compact" id="challenge-zones"></div>
-        </div>
-        <div class="panel-group">
-          <span class="group-label">TEXTILE MATERIAL</span>
-          <div class="chips" data-ctl-group="material">
-            <button class="chip" data-ctl="material" data-value="carbon">Carbon</button>
-            <button class="chip" data-ctl="material" data-value="knit">Knit</button>
-            <button class="chip" data-ctl="material" data-value="mesh">Mesh</button>
-            <button class="chip" data-ctl="material" data-value="silk">Silk</button>
+      <h3 data-i18n="tech.c2t">LED INTEGRATION</h3>
+      <p data-i18n="tech.c2d">Flexible emitters that bend, fold and wrap every surface of the cabin — one seamless light.</p>
+    </article>
+
+    <article class="tech-card glass">
+      <div class="tc-vis tc-auto">
+        <svg viewBox="0 0 120 90" aria-hidden="true">
+          <rect width="120" height="90" rx="10" fill="#10131a"/>
+          <path d="M22 62 L46 30 H74 L98 62 Z" fill="#151923" stroke="#2d6bff" stroke-width="1.6" stroke-linejoin="round"/>
+          <circle cx="38" cy="62" r="8" fill="#0a0b10" stroke="#333947" stroke-width="2"/>
+          <circle cx="82" cy="62" r="8" fill="#0a0b10" stroke="#333947" stroke-width="2"/>
+          <path d="M46 30 Q60 22 74 30" fill="none" stroke="#4df3ff" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3 data-i18n="tech.c3t">AUTOMOTIVE INTERIOR TECHNOLOGY</h3>
+      <p data-i18n="tech.c3d">Integrated into dashboards, doors, seats and roofs of premium vehicles from the MUNDA factory in Obiliq.</p>
+    </article>
+
+    <article class="tech-card glass">
+      <div class="tc-vis tc-innov">
+        <svg viewBox="0 0 120 90" aria-hidden="true">
+          <rect width="120" height="90" rx="10" fill="#0f1117"/>
+          <circle cx="60" cy="42" r="20" fill="none" stroke="#9a4dff" stroke-width="1.6" stroke-dasharray="4 4"/>
+          <path d="M60 22 A20 20 0 0 1 80 42" fill="none" stroke="#4df3ff" stroke-width="2.4" stroke-linecap="round"/>
+          <circle cx="60" cy="42" r="6" fill="#ffc861"/>
+          <g stroke="rgba(255,255,255,.3)" stroke-width="1.4">
+            <path d="M20 70 L40 70 M80 70 L100 70 M60 78 L60 60"/>
+          </g>
+        </svg>
+      </div>
+      <h3 data-i18n="tech.c4t">INNOVATION</h3>
+      <p data-i18n="tech.c4d">Infinite colours, patterns and moods — generated on demand by a single connected textile.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== 5. THE GAME ===================== -->
+<section class="sec" id="game">
+  <div class="sec-head">
+    <p class="kicker" data-i18n="game.kicker">THE EXPERIENCE</p>
+    <h2 data-i18n-html="game.title">Become a MUNDA <em>design engineer.</em></h2>
+    <p class="sec-sub" data-i18n="game.sub">A five-phase journey: DESIGN → LIGHT → CONNECT → TEST → SHOWCASE. Then a MUNDA SCORE reveals how close you came to building the future.</p>
+  </div>
+
+  <div class="shots">
+    <figure class="shot">
+      <div class="shot-frame">
+        <div class="mock mock-design">
+          <div class="mock-hud"><i>MUNDA FUTURE LAB</i><b>PHASE 01 · DESIGN</b></div>
+          <div class="mock-mats">
+            <span class="mm active"><s></s>Carbon Weave</span>
+            <span class="mm"><s></s>Soft Knit</span>
+            <span class="mm"><s></s>Lumen Silk</span>
+          </div>
+          <div class="mock-car">
+            <svg viewBox="0 0 200 90">
+              <path d="M20 18 Q100 12 180 18" fill="none" stroke="#2d6bff" stroke-width="5" stroke-linecap="round"/>
+              <path d="M20 46 Q100 42 180 46" fill="none" stroke="#4df3ff" stroke-width="4" stroke-linecap="round"/>
+            </svg>
           </div>
         </div>
-        <div class="panel-group">
-          <span class="group-label">COLOR</span>
-          <div class="swatches" data-ctl-group="color">
-            <button class="swatch" style="--c:#ff2d55" data-ctl="color" data-value="red"><i></i></button>
-            <button class="swatch" style="--c:#2d6bff" data-ctl="color" data-value="blue"><i></i></button>
-            <button class="swatch" style="--c:#4df3ff" data-ctl="color" data-value="cyan"><i></i></button>
-            <button class="swatch" style="--c:#9a4dff" data-ctl="color" data-value="purple"><i></i></button>
-            <button class="swatch" style="--c:#35e07f" data-ctl="color" data-value="green"><i></i></button>
-            <button class="swatch" style="--c:#e8c87a" data-ctl="color" data-value="gold"><i></i></button>
-            <button class="swatch" style="--c:#ffffff" data-ctl="color" data-value="white"><i></i></button>
-            <button class="swatch swatch-grad" data-ctl="color" data-value="gradient"><i></i></button>
+      </div>
+      <figcaption data-i18n="game.shot1">Choose the textile — the base of every design.</figcaption>
+    </figure>
+
+    <figure class="shot">
+      <div class="shot-frame">
+        <div class="mock mock-wire">
+          <div class="mock-hud"><i>PHASE 03 · CONNECT</i><b>WIRE THE SYSTEM</b></div>
+          <div class="mock-pins">
+            <span class="pin l active">DASH-01</span>
+            <span class="pin l">DOOR-L</span>
+            <span class="pin l">ROOF-01</span>
+          </div>
+          <div class="mock-links"><i></i><i></i><i></i></div>
+          <div class="mock-pins">
+            <span class="pin r">PORT A</span>
+            <span class="pin r done">PORT B</span>
+            <span class="pin r">PORT C</span>
           </div>
         </div>
-        <div class="panel-group">
-          <span class="group-label">PATTERN</span>
-          <div class="chips" data-ctl-group="pattern">
-            <button class="chip" data-ctl="pattern" data-value="linear">Linear</button>
-            <button class="chip" data-ctl="pattern" data-value="wave">Wave</button>
-            <button class="chip" data-ctl="pattern" data-value="flow">Flow</button>
-            <button class="chip" data-ctl="pattern" data-value="pulse">Pulse</button>
-            <button class="chip" data-ctl="pattern" data-value="dots">Dots</button>
-            <button class="chip" data-ctl="pattern" data-value="dynamic">Dynamic</button>
-            <button class="chip" data-ctl="pattern" data-value="custom">Custom</button>
+      </div>
+      <figcaption data-i18n="game.shot2">Connect every LED module to its controller port.</figcaption>
+    </figure>
+
+    <figure class="shot">
+      <div class="shot-frame">
+        <div class="mock mock-test">
+          <div class="mock-hud"><i>PHASE 04 · VALIDATION</i><b>TEST BENCH</b></div>
+          <div class="mock-tests">
+            <span><i>LIGHT OUTPUT</i><s><b style="width:88%"></b></s><em>PASS</em></span>
+            <span><i>VIBRATION</i><s><b style="width:72%"></b></s><em>PASS</em></span>
+            <span><i>TEMPERATURE</i><s><b style="width:54%"></b></s><em>FAIL</em></span>
           </div>
         </div>
-        <div class="panel-group">
-          <span class="group-label">BRIGHTNESS <em id="challenge-bright-val">70%</em></span>
-          <input type="range" id="challenge-brightness" min="0" max="100" value="70" data-ctl="brightness">
-        </div>
-        <div class="panel-group">
-          <span class="group-label">ANIMATION</span>
-          <div class="chips" data-ctl-group="animation">
-            <button class="chip" data-ctl="animation" data-value="static">Static</button>
-            <button class="chip" data-ctl="animation" data-value="pulse">Pulse</button>
-            <button class="chip" data-ctl="animation" data-value="flow">Flow</button>
-            <button class="chip" data-ctl="animation" data-value="wave">Wave</button>
-            <button class="chip" data-ctl="animation" data-value="breathing">Breathing</button>
-            <button class="chip" data-ctl="animation" data-value="dynamic">Dynamic</button>
+      </div>
+      <figcaption data-i18n="game.shot3">Five automotive tests decide your fate.</figcaption>
+    </figure>
+
+    <figure class="shot">
+      <div class="shot-frame">
+        <div class="mock mock-show">
+          <div class="mock-showcar">
+            <svg viewBox="0 0 200 90">
+              <path d="M20 18 Q100 12 180 18" fill="none" stroke="#ffc861" stroke-width="6" stroke-linecap="round"/>
+              <path d="M20 46 Q100 42 180 46" fill="none" stroke="#4df3ff" stroke-width="5" stroke-linecap="round"/>
+              <path d="M14 26 V72 M186 26 V72" fill="none" stroke="#2d6bff" stroke-width="4" stroke-linecap="round"/>
+            </svg>
           </div>
+          <div class="mock-score"><b>94</b><span>MUNDA SCORE</span></div>
         </div>
-        <div class="panel-group">
-          <span class="group-label">ENERGY EFFICIENCY</span>
-          <div class="chips" data-ctl-group="mode">
-            <button class="chip" data-ctl="mode" data-value="city">City</button>
-            <button class="chip" data-ctl="mode" data-value="sport">Sport</button>
-            <button class="chip" data-ctl="mode" data-value="night">Night</button>
-            <button class="chip" data-ctl="mode" data-value="eco">Eco</button>
-          </div>
-        </div>
-        <div class="panel-actions">
-          <button class="btn-primary" id="challenge-finish">FINISH DESIGN</button>
-        </div>
-      </aside>
-    </div>
-  </section>
+      </div>
+      <figcaption data-i18n="game.shot4">The showcase — your interior comes alive.</figcaption>
+    </figure>
+  </div>
 
-  <!-- ========== 7. JURY MODE ========== -->
-  <section class="screen" id="screen-jury" data-screen="jury">
-    <div class="jury-head">
-      <p class="kicker">Live — Jury Mode</p>
-      <h2 class="jury-title">JURY, YOU HAVE<br><em>3 MINUTES.</em></h2>
-      <div class="timer jury-timer" id="jury-timer">03:00</div>
+  <div class="game-strip">
+    <div class="gs-feats">
+      <span data-i18n="game.f1">⚡ Live lighting engine</span>
+      <span data-i18n="game.f2">🧵 4 textile materials</span>
+      <span data-i18n="game.f3">🎨 8 colours · 7 patterns</span>
+      <span data-i18n="game.f4">🔌 Wiring mini-game</span>
+      <span data-i18n="game.f5">🧪 5 automotive tests</span>
+      <span data-i18n="game.f6">🏆 XP · levels · badges</span>
     </div>
-    <div class="jury-panel">
-      <div class="panel-group">
-        <span class="group-label">COLOR</span>
-        <div class="swatches big" data-ctl-group="color">
-          <button class="swatch" style="--c:#ff2d55" data-ctl="color" data-value="red"><i></i></button>
-          <button class="swatch" style="--c:#2d6bff" data-ctl="color" data-value="blue"><i></i></button>
-          <button class="swatch" style="--c:#4df3ff" data-ctl="color" data-value="cyan"><i></i></button>
-          <button class="swatch" style="--c:#9a4dff" data-ctl="color" data-value="purple"><i></i></button>
-          <button class="swatch" style="--c:#35e07f" data-ctl="color" data-value="green"><i></i></button>
-          <button class="swatch" style="--c:#e8c87a" data-ctl="color" data-value="gold"><i></i></button>
-          <button class="swatch" style="--c:#ffffff" data-ctl="color" data-value="white"><i></i></button>
-          <button class="swatch swatch-grad" data-ctl="color" data-value="gradient"><i></i></button>
-        </div>
-      </div>
-      <div class="panel-group">
-        <span class="group-label">ZONE</span>
-        <div class="zone-row compact" id="jury-zones"></div>
-      </div>
-      <div class="panel-group">
-        <span class="group-label">PATTERN</span>
-        <div class="chips" data-ctl-group="pattern">
-          <button class="chip" data-ctl="pattern" data-value="linear">Linear</button>
-          <button class="chip" data-ctl="pattern" data-value="wave">Wave</button>
-          <button class="chip" data-ctl="pattern" data-value="flow">Flow</button>
-          <button class="chip" data-ctl="pattern" data-value="pulse">Pulse</button>
-          <button class="chip" data-ctl="pattern" data-value="dots">Dots</button>
-          <button class="chip" data-ctl="pattern" data-value="dynamic">Dynamic</button>
-          <button class="chip" data-ctl="pattern" data-value="custom">Custom</button>
-        </div>
-      </div>
-      <div class="panel-group">
-        <span class="group-label">MATERIAL</span>
-        <div class="chips" data-ctl-group="material">
-          <button class="chip" data-ctl="material" data-value="carbon">Carbon</button>
-          <button class="chip" data-ctl="material" data-value="knit">Knit</button>
-          <button class="chip" data-ctl="material" data-value="mesh">Mesh</button>
-          <button class="chip" data-ctl="material" data-value="silk">Silk</button>
-        </div>
-      </div>
-      <div class="panel-group">
-        <span class="group-label">BRIGHTNESS <em id="jury-bright-val">70%</em></span>
-        <input type="range" id="jury-brightness" min="0" max="100" value="70" data-ctl="brightness">
-      </div>
-      <div class="panel-actions jury-actions">
-        <button class="btn-primary btn-huge" id="jury-lightshow">ACTIVATE LIGHT SHOW</button>
-        <button class="btn-primary btn-outline" id="jury-finish">YOUR DESIGN IS READY →</button>
-      </div>
+    <div class="gs-ranks">
+      <span data-rank="rookie">ROOKIE</span><i></i>
+      <span data-rank="engineer">ENGINEER</span><i></i>
+      <span data-rank="designer">DESIGNER</span><i></i>
+      <span data-rank="senior">SENIOR</span><i></i>
+      <span data-rank="master">MUNDA MASTER</span><i></i>
+      <span data-rank="architect">FUTURE ARCHITECT</span>
     </div>
-  </section>
+    <a class="btn btn-primary btn-xl" href="experience.html" data-i18n="game.cta">PLAY MUNDA FUTURE LAB</a>
+  </div>
+</section>
 
-  <!-- ========== 8. BEAT THE DESIGNER ========== -->
-  <section class="screen" id="screen-beat" data-screen="beat">
-    <div class="beat-inner">
-      <p class="kicker">Concept Evaluation</p>
-      <h2 class="screen-title">CAN YOU BEAT<br>THE <em>PROFESSIONAL?</em></h2>
-      <div class="versus">
-        <div class="vs-card">
-          <div class="vs-label">YOUR DESIGN</div>
-          <div class="vs-score" id="vs-your-score">0%</div>
-          <div class="vs-bars" id="vs-your-bars"></div>
-        </div>
-        <div class="vs-divider"><span>VS</span></div>
-        <div class="vs-card">
-          <div class="vs-label">MUNDA CONCEPT DESIGN</div>
-          <div class="vs-score" id="vs-concept-score">0%</div>
-          <div class="vs-bars" id="vs-concept-bars"></div>
-        </div>
-      </div>
-      <p class="beat-note">Scores are a concept evaluation for this experience — not an official MUNDA assessment.</p>
-      <div class="panel-actions">
-        <button class="btn-primary" id="beat-save">SAVE MY DESIGN</button>
-        <button class="btn-primary btn-outline" data-nav="showcase">VIEW MY DESIGN →</button>
-      </div>
-    </div>
-  </section>
+<!-- ===================== 6. MUNDA SCORE DEMO ===================== -->
+<section class="sec" id="score">
+  <div class="sec-head">
+    <p class="kicker" data-i18n="score.kicker">TRY IT NOW</p>
+    <h2 data-i18n-html="score.title">What would your <em>MUNDA SCORE</em> be?</h2>
+    <p class="sec-sub" data-i18n="score.sub">Move the sliders — the same score the game computes, live in your browser.</p>
+  </div>
 
-  <!-- ========== 9. SHOWCASE / MY DESIGN ========== -->
-  <section class="screen" id="screen-showcase" data-screen="showcase">
-    <div class="showcase-layout">
-      <div class="showcase-canvas">
-        <div class="showcase-head">
-          <p class="kicker">My Design</p>
-          <h2 class="screen-title" id="design-name">UNTITLED DESIGN</h2>
-          <div class="design-tags" id="design-tags"></div>
-        </div>
+  <div class="score-wrap glass">
+    <div class="score-ring-side">
+      <svg viewBox="0 0 200 200" class="score-ring" aria-hidden="true">
+        <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="12"/>
+        <circle id="score-arc" cx="100" cy="100" r="86" fill="none" stroke="#2d6bff" stroke-width="12"
+                stroke-linecap="round" stroke-dasharray="540" stroke-dashoffset="540" transform="rotate(-90 100 100)"/>
+      </svg>
+      <div class="score-ring-mid">
+        <b id="score-num">70</b>
+        <span data-i18n="score.of">/ 100</span>
       </div>
-      <aside class="showcase-panel">
-        <div class="score-ring-wrap">
-          <div class="score-ring" id="score-ring"><span id="score-num">0%</span></div>
-          <span class="score-cap">CONCEPT SCORE</span>
-        </div>
-        <div class="design-stats" id="design-stats"></div>
-        <div class="panel-actions">
-          <button class="btn-primary" id="save-design">SAVE DESIGN</button>
-          <button class="btn-primary btn-outline" id="replay-show">REPLAY LIGHT SHOW</button>
-          <button class="btn-primary btn-ghost" data-nav="challenge">CREATE NEW DESIGN</button>
-          <button class="btn-primary btn-outline" id="finish-experience">FINISH → LIGHTING THE EXPERIENCE</button>
-        </div>
-      </aside>
+      <span class="score-rank" id="score-rank" data-rank="designer">DESIGNER</span>
     </div>
-  </section>
 
-  <!-- ========== 10. GALLERY ========== -->
-  <section class="screen" id="screen-gallery" data-screen="gallery">
-    <div class="screen-head">
-      <p class="kicker">MUNDA Design Gallery</p>
-      <h2 class="screen-title">Saved <em>designs.</em></h2>
-      <div class="sort-row">
-        <button class="sort active" data-sort="top">TOP SCORE</button>
-        <button class="sort" data-sort="innov">MOST INNOVATIVE</button>
-        <button class="sort" data-sort="latest">LATEST</button>
+    <div class="score-sliders">
+      <label class="sl-row">
+        <span data-i18n="score.bright">BRIGHTNESS</span>
+        <input type="range" data-score-var="brightness" min="0" max="100" value="75">
+        <b>75</b>
+      </label>
+      <label class="sl-row">
+        <span data-i18n="score.eff">EFFICIENCY</span>
+        <input type="range" data-score-var="efficiency" min="0" max="100" value="60">
+        <b>60</b>
+      </label>
+      <label class="sl-row">
+        <span data-i18n="score.prec">PRECISION</span>
+        <input type="range" data-score-var="precision" min="0" max="100" value="65">
+        <b>65</b>
+      </label>
+      <label class="sl-row">
+        <span data-i18n="score.dur">DURABILITY</span>
+        <input type="range" data-score-var="durability" min="0" max="100" value="70">
+        <b>70</b>
+      </label>
+      <p class="score-note" data-i18n="score.note">This is a concept demonstration — in the game, every value comes from your real choices.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 7. GALLERY ===================== -->
+<section class="sec" id="gallery">
+  <div class="sec-head">
+    <p class="kicker" data-i18n="gallery.kicker">VISUAL STORY</p>
+    <h2 data-i18n-html="gallery.title">A look inside the <em>Future Lab.</em></h2>
+  </div>
+
+  <div class="gallery-grid" id="gallery-grid">
+    <button class="g-tile gt-1" data-caption="gallery.c1" aria-label="Vehicle interior">
+      <span class="gt-inner">
+        <svg viewBox="0 0 200 130">
+          <path d="M24 26 Q100 20 176 26 M24 64 Q100 58 176 64" stroke="#4df3ff" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <path d="M16 38 V104 M184 38 V104" stroke="#2d6bff" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <ellipse cx="100" cy="118" rx="78" ry="6" fill="#2d6bff" opacity=".5"/>
+        </svg>
+      </span>
+      <b data-i18n="gallery.t1">The cabin</b>
+    </button>
+
+    <button class="g-tile gt-2" data-caption="gallery.c2" aria-label="Illuminated textile macro">
+      <span class="gt-inner">
+        <svg viewBox="0 0 200 130">
+          <g stroke="#4df3ff" stroke-opacity=".6" stroke-width="2"><path d="M10 30 H190 M10 50 H190 M10 70 H190 M10 90 H190 M10 110 H190"/></g>
+          <g stroke="#2d6bff" stroke-opacity=".8" stroke-width="2"><path d="M30 10 V120 M50 10 V120 M70 10 V120 M90 10 V120 M110 10 V120 M130 10 V120 M150 10 V120 M170 10 V120"/></g>
+        </svg>
+      </span>
+      <b data-i18n="gallery.t2">Textile macro</b>
+    </button>
+
+    <button class="g-tile gt-3" data-caption="gallery.c3" aria-label="The lab">
+      <span class="gt-inner">
+        <svg viewBox="0 0 200 130">
+          <rect x="14" y="18" width="172" height="86" rx="10" fill="none" stroke="#2d6bff" stroke-width="2"/>
+          <path d="M40 50 H160 M40 68 H130" stroke="#4df3ff" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="170" cy="34" r="5" fill="#ffc861"/>
+        </svg>
+      </span>
+      <b data-i18n="gallery.t3">The lab</b>
+    </button>
+
+    <button class="g-tile gt-4" data-caption="gallery.c4" aria-label="LED system">
+      <span class="gt-inner">
+        <svg viewBox="0 0 200 130">
+          <circle cx="100" cy="62" r="26" fill="none" stroke="#ffc861" stroke-width="2.5"/>
+          <circle cx="100" cy="62" r="10" fill="#ffc861" opacity=".85"/>
+          <g stroke="#4df3ff" stroke-width="2"><path d="M100 26 V14 M100 98 V110 M64 62 H52 M136 62 H148"/></g>
+        </svg>
+      </span>
+      <b data-i18n="gallery.t4">LED core</b>
+    </button>
+
+    <button class="g-tile gt-5" data-caption="gallery.c5" aria-label="Gameplay moment">
+      <span class="gt-inner">
+        <svg viewBox="0 0 200 130">
+          <rect x="24" y="20" width="60" height="34" rx="8" fill="none" stroke="#35e07f" stroke-width="2"/>
+          <rect x="116" y="20" width="60" height="34" rx="8" fill="none" stroke="#35e07f" stroke-width="2"/>
+          <path d="M84 37 C 96 37 104 37 116 37" stroke="#35e07f" stroke-width="2.5" stroke-dasharray="5 4" fill="none"/>
+          <text x="100" y="90" text-anchor="middle" fill="#ffc861" font-family="Space Grotesk,sans-serif" font-size="20" font-weight="700">94%</text>
+        </svg>
+      </span>
+      <b data-i18n="gallery.t5">Gameplay</b>
+    </button>
+
+    <button class="g-tile gt-6" data-caption="gallery.c6" aria-label="Final showcase">
+      <span class="gt-inner">
+        <svg viewBox="0 0 200 130">
+          <rect x="30" y="34" width="140" height="70" rx="14" fill="none" stroke="#9a4dff" stroke-width="2"/>
+          <path d="M60 46 Q100 40 140 46 M60 76 Q100 70 140 76" stroke="#ffc861" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M44 52 V92 M156 52 V92" stroke="#4df3ff" stroke-width="3" stroke-linecap="round" fill="none"/>
+        </svg>
+      </span>
+      <b data-i18n="gallery.t6">Showcase</b>
+    </button>
+
+    <button class="g-tile gt-7 wide" data-caption="gallery.c7" aria-label="MUNDA wordmark">
+      <span class="gt-inner gt-word">
+        <b>MUNDA</b><i data-i18n="gallery.wsub">LIGHTING THE FUTURE OF MOBILITY</i>
+      </span>
+    </button>
+
+    <button class="g-tile gt-8" data-caption="gallery.c8" aria-label="Kosovo">
+      <span class="gt-inner">
+        <svg viewBox="0 0 200 130">
+          <circle cx="100" cy="65" r="34" fill="none" stroke="#2d6bff" stroke-width="2"/>
+          <circle cx="100" cy="65" r="6" fill="#4df3ff"/>
+          <g stroke="#4df3ff" stroke-opacity=".6" stroke-width="2" stroke-linecap="round">
+            <path d="M100 65 L100 22 M100 65 L138 42 M100 65 L140 78"/>
+          </g>
+        </svg>
+      </span>
+      <b data-i18n="gallery.t8">Made in Kosovo</b>
+    </button>
+  </div>
+
+  <!-- lightbox -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-close" id="lb-close" aria-label="Close">✕</button>
+    <div class="lb-stage" id="lb-stage"></div>
+    <p class="lb-caption" id="lb-caption"></p>
+  </div>
+</section>
+
+<!-- ===================== 8. ABOUT ===================== -->
+<section class="sec" id="about">
+  <div class="about-wrap">
+    <div class="about-copy">
+      <p class="kicker" data-i18n="about.kicker">ABOUT THE PROJECT</p>
+      <h2 data-i18n-html="about.title">MUNDA Kosova.<br>Light from the <em>heart of the Balkans.</em></h2>
+      <p data-i18n="about.p1">MUNDA produces illuminated textile systems for the automotive industry — flexible LED technology woven directly into fabric, manufactured at the company's factory in Obiliq, Kosovo.</p>
+      <p data-i18n="about.p2">This experience is a Digital School competition project. It lets you step into the role of a MUNDA design engineer and build the interior lighting of tomorrow's premium vehicle — exactly the way the real product works: design, illuminate, connect, test, showcase.</p>
+      <div class="about-stats">
+        <div class="as-stat"><b>6</b><span data-i18n="about.s1">interior zones</span></div>
+        <div class="as-stat"><b>5</b><span data-i18n="about.s2">automotive tests</span></div>
+        <div class="as-stat"><b>100</b><span data-i18n="about.s3">MUNDA SCORE</span></div>
+        <div class="as-stat"><b>1</b><span data-i18n="about.s4">future</span></div>
       </div>
+      <p class="about-note" data-i18n="about.note">The vehicle interior is a design concept created for this experience. No brand partnership is implied.</p>
     </div>
-    <div class="gallery-grid" id="gallery-grid"></div>
-    <div class="gallery-empty" id="gallery-empty" hidden>No designs saved yet — create your first in the Lab or Challenge.</div>
-    <div class="gallery-foot">
-      <button class="btn-primary btn-outline" id="gallery-finish">FINISH → LIGHTING THE EXPERIENCE</button>
+    <div class="about-visual">
+      <svg viewBox="0 0 420 420" aria-hidden="true">
+        <circle cx="210" cy="210" r="180" fill="none" stroke="rgba(45,107,255,.25)" stroke-width="1.5"/>
+        <circle cx="210" cy="210" r="130" fill="none" stroke="rgba(77,243,255,.2)" stroke-width="1.5" stroke-dasharray="4 6"/>
+        <path d="M210 210 L210 60 M210 210 L330 150 M210 210 L330 300 M210 210 L120 330" stroke="#2d6bff" stroke-opacity=".5" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="210" cy="210" r="34" fill="#2d6bff" opacity=".15" stroke="#4df3ff" stroke-width="2"/>
+        <circle cx="210" cy="210" r="8" fill="#4df3ff"/>
+        <text x="210" y="216" text-anchor="middle" fill="#fff" font-family="Space Grotesk,sans-serif" font-size="20" font-weight="700">M</text>
+        <g fill="#ffc861">
+          <circle cx="210" cy="60" r="5"/><circle cx="330" cy="150" r="5"/><circle cx="330" cy="300" r="5"/><circle cx="120" cy="330" r="5"/>
+        </g>
+      </svg>
     </div>
-  </section>
+  </div>
+</section>
+
+<!-- ===================== 9. FINAL CTA ===================== -->
+<section class="final-cta">
+  <div class="fcta-glow" aria-hidden="true"></div>
+  <p class="kicker" data-i18n="cta.kicker">THE CHALLENGE</p>
+  <h2 data-i18n-html="cta.title">Ready to design<br>the <em>future?</em></h2>
+  <p class="cta-sub" data-i18n="cta.sub">Enter the MUNDA Future Lab and create your own automotive lighting experience.</p>
+  <a class="btn btn-primary btn-xl btn-pulse" href="experience.html" id="cta-play" data-i18n="cta.btn">START DESIGNING</a>
+</section>
 
 </main>
 
-<!-- ===================== OVERLAYS ===================== -->
+<!-- ===================== FOOTER ===================== -->
+<footer class="site-footer">
+  <div class="foot-brand">
+    <span class="brand-mark">M</span>
+    <b>MUNDA <em>KOSOVA</em></b>
+  </div>
+  <nav class="foot-links" aria-label="Footer">
+    <a href="#interior" data-scroll data-i18n="nav.tech">Technology</a>
+    <a href="#how" data-scroll data-i18n="nav.how">How it works</a>
+    <a href="#game" data-scroll data-i18n="nav.game">The Game</a>
+    <a href="#gallery" data-scroll data-i18n="nav.gallery">Gallery</a>
+    <a href="experience.html" data-i18n="nav.play">Play</a>
+  </nav>
+  <div class="lang-switch" role="group" aria-label="Language">
+    <button data-lang-set="en">EN</button>
+    <button data-lang-set="sq">SQ</button>
+  </div>
+  <p class="foot-note" data-i18n="foot.note">Made in Kosovo. Designed for the future. · Digital School Competition · Design concept — no brand partnership implied.</p>
+</footer>
 
-<!-- Light show -->
-<div class="overlay" id="lightshow" hidden>
-  <div class="overlay-stage"></div>
-  <button class="overlay-close" id="lightshow-close">EXIT LIGHT SHOW ✕</button>
-</div>
-
-<!-- Cinematic reveal (countdown) -->
-<div class="overlay overlay-black" id="reveal" hidden>
-  <div class="reveal-count" id="reveal-count">3</div>
-  <div class="reveal-caption" id="reveal-caption"></div>
-</div>
-
-<!-- Finale -->
-<div class="overlay overlay-black" id="finale" hidden>
-  <div class="finale-line" aria-hidden="true"></div>
-  <h2 class="finale-title">MUNDA<br><em>LIGHTING THE EXPERIENCE</em></h2>
-  <p class="finale-sub">Made in Kosovo.<br>Designed for the future.</p>
-  <button class="btn-primary" id="finale-restart">RESTART EXPERIENCE</button>
-</div>
-
-<script src="js/particles.js"></script>
-<script src="js/interior.js"></script>
-<script src="js/lab.js"></script>
-<script src="js/game.js"></script>
-<script src="js/app.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/fx.js"></script>
+<script src="js/site.js"></script>
 </body>
 </html>

@@ -1,80 +1,87 @@
-/* MUNDA — game systems: scoring, challenge, jury mode, beat-the-designer,
-   light show, and the cinematic reveal. */
+/* =====================================================================
+   MUNDA — game systems for the FUTURE LAB experience:
+   scoring engine (deterministic, choice-driven), Jury Mode (live 3-min
+   jury control), the cinematic light show, and the finale.
+
+   The main build flow (DESIGN → LIGHT → CONNECT → TEST → SHOWCASE)
+   lives in futurelab.js. This module serves the LIVE PRESENTATION
+   (Jury Mode) and the shared cinematic moments.
+   ===================================================================== */
 (function () {
   'use strict';
 
-  /* ============ SCORING ENGINE (deterministic, choice-driven) ============ */
+  /* ============ SCORING ENGINE ============
+     Same weights as the build flow in futurelab.js:
+       total = lighting*.24 + precision*.20 + efficiency*.18
+             + durability*.18 + design*.20
+     Pure function of the interior state — no randomness. */
   var Score = (function () {
     function clamp(n) { return Math.max(0, Math.min(100, n)); }
-    function colorHarmony(c) {
-      return { red: 78, blue: 85, cyan: 92, purple: 88, green: 80, gold: 90, white: 68, gradient: 96 }[c] || 80;
-    }
-    function patternScore(p) {
-      return { linear: 70, wave: 82, flow: 86, pulse: 74, dots: 80, dynamic: 93, custom: 90 }[p] || 70;
-    }
+    var COLOR_HARMONY = { red: 78, blue: 85, cyan: 92, purple: 88, green: 80, gold: 90, white: 68, gradient: 96 };
+    var PATTERN_SCORE = { linear: 70, wave: 82, flow: 86, pulse: 74, dots: 80, dynamic: 93, custom: 90 };
+    var MAT_DUR = { carbon: 88, knit: 72, mesh: 82, silk: 64 };
+    var MODE_EFF = { city: 82, sport: 52, night: 88, eco: 96 };
 
     function compute(state, extra) {
       extra = extra || {};
+      state = state || {};
       var zones = state.zones || {};
       var zoneCount = 0, z;
       for (z in zones) if (zones[z]) zoneCount++;
+      var b = state.brightness != null ? state.brightness : 70;
+      var mat = state.material || 'carbon';
+      var mode = state.mode || 'city';
+      var color = state.color || 'blue';
+      var pattern = state.pattern || 'linear';
+      var anim = state.animation || 'static';
+
+      var lighting = clamp(
+        22 + b * 0.34 + zoneCount * 4.6 +
+        (COLOR_HARMONY[color] || 80) * 0.12 +
+        (PATTERN_SCORE[pattern] || 70) * 0.1);
+
+      var precision = clamp(
+        (extra.mistakes != null ? 96 - extra.mistakes * 14 + (extra.mistakes === 0 ? 4 : 0) : 90) +
+        (anim === 'dynamic' ? -3 : 0), 0, 100);
+
+      var efficiency = clamp(
+        (MODE_EFF[mode] || 82) - b * 0.14 +
+        (mat === 'mesh' ? 5 : 0) + (mode === 'eco' ? 4 : 0) +
+        (extra.testsPassed === 5 ? 3 : 0), 0, 100);
+
+      var durability = clamp(
+        MAT_DUR[mat] - (extra.mistakes ? extra.mistakes * 2 : 0) +
+        (extra.testsPassed === 5 ? 5 : extra.testsPassed >= 3 ? 2 : 0) +
+        (mat === 'carbon' ? 3 : 0), 0, 100);
 
       var design = clamp(
-        0.5 * colorHarmony(state.color) +
-        0.3 * (55 + zoneCount * 6.5) +
-        0.2 * patternScore(state.pattern)
-      );
+        (COLOR_HARMONY[color] || 80) * 0.22 +
+        (PATTERN_SCORE[pattern] || 70) * 0.2 +
+        (anim === 'dynamic' ? 9 : anim !== 'static' ? 5 : 0) +
+        zoneCount * 3.2 + (mat !== 'carbon' ? 4 : 0) + (zoneCount >= 4 ? 3 : 0), 0, 100);
 
-      var innov = 55;
-      if (state.color === 'gradient') innov += 10;
-      if (state.pattern === 'dynamic' || state.pattern === 'custom') innov += 12;
-      if (state.material && state.material !== 'carbon') innov += 10;
-      if (zoneCount >= 4) innov += 8; else if (zoneCount >= 2) innov += 4;
-      if (state.animation === 'dynamic') innov += 6; else if (state.animation !== 'static') innov += 3;
-      innov = clamp(innov);
-
-      var modeEff = { city: 82, sport: 52, night: 88, eco: 96 }[state.mode] || 82;
-      var eff = clamp(modeEff - state.brightness * 0.16 + (state.material === 'mesh' ? 4 : 0));
-
-      var integ = clamp(20 + (zoneCount / 6) * 60 + (state.material !== 'carbon' ? 14 : 0) + (zoneCount >= 3 ? 8 : 0));
-
-      var ux = 60;
-      if (extra.completedReview) ux += 12;
-      if (extra.savedDesign) ux += 10;
-      if (extra.usedLightShow) ux += 6;
-      if (extra.timeLeft != null) ux += clamp((extra.timeLeft / 180) * 14);
-      ux = clamp(ux);
-
-      var sub = {
-        design: Math.round(design),
-        innovation: Math.round(innov),
-        efficiency: Math.round(eff),
-        integration: Math.round(integ),
-        ux: Math.round(ux)
-      };
       var total = Math.round(
-        0.30 * sub.design + 0.25 * sub.innovation + 0.20 * sub.efficiency +
-        0.15 * sub.integration + 0.10 * sub.ux
-      );
-      return { total: total, sub: sub };
+        lighting * 0.24 + precision * 0.20 + efficiency * 0.18 +
+        durability * 0.18 + design * 0.20);
+
+      return {
+        total: clamp(total, 0, 100),
+        sub: {
+          lighting: Math.round(lighting), precision: Math.round(precision),
+          efficiency: Math.round(efficiency), durability: Math.round(durability), design: Math.round(design)
+        }
+      };
     }
     return { compute: compute };
   })();
 
-  var CONCEPT = {
-    zones: { dashboard: true, doors: true, console: true, footwell: true, seats: true, roof: true },
-    color: 'gradient', pattern: 'dynamic', brightness: 40, animation: 'dynamic',
-    speed: 'medium', material: 'silk', mode: 'eco'
-  };
-  var CONCEPT_EXTRA = { completedReview: true, savedDesign: true, usedLightShow: true, timeLeft: 120 };
-
   /* ============ module state ============ */
   var timerInterval = null;
-  var current = null;        // { kind, extra, remaining }
+  var current = null;         // { kind }
+  var juryResult = null;
   var lightShowRunning = false;
   var lightShowInterval = null;
   var lightShowSaved = null;
-  var lastResult = null;     // { playerScore, conceptScore, playerState, extra, name }
 
   var LS_SCRIPT = [
     { color: 'blue', pattern: 'flow', animation: 'flow', speed: 'medium', brightness: 82 },
@@ -99,12 +106,11 @@
     }
     timerInterval = setInterval(function () {
       var remaining = Math.max(0, Math.ceil((end - Date.now()) / 1000));
-      if (current) current.remaining = remaining;
       render(remaining);
       if (onTick) onTick(seconds - remaining, seconds);
       if (remaining <= 0) {
         clearInterval(timerInterval); timerInterval = null;
-        onEnd();
+        if (onEnd) onEnd();
       }
     }, 250);
     render(seconds);
@@ -113,121 +119,53 @@
     if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
   }
 
-  /* ============ challenge ============ */
-  function updatePhases(phase) {
-    document.querySelectorAll('#progress .phase').forEach(function (p) {
-      var i = parseInt(p.getAttribute('data-phase'), 10);
-      p.classList.toggle('active', i === phase);
-      p.classList.toggle('done', i < phase);
-    });
-  }
-
-  function startChallenge() {
-    Interior.reset({
-      zones: { dashboard: true, roof: true, doors: false, console: false, footwell: false, seats: false },
-      color: 'cyan', pattern: 'linear', brightness: 70, animation: 'static',
-      speed: 'medium', material: 'carbon', mode: 'city'
-    });
-    current = { kind: 'challenge', extra: { completedReview: true, savedDesign: false, usedLightShow: false }, remaining: 180 };
-    updatePhases(0);
-    startTimer('timer', 180, function (elapsed) {
-      updatePhases(Math.min(3, Math.floor(elapsed / 45)));
-    }, finishChallenge);
-  }
-
-  function finishChallenge() {
-    stopTimer();
-    computeAndShowBeat();
-    if (window.App) App.go('beat');
-  }
-
-  /* ============ jury ============ */
+  /* ============ jury mode ============ */
   function startJury() {
-    Interior.reset({
+    if (window.Interior) Interior.reset({
       zones: { dashboard: true, doors: false, console: false, footwell: false, seats: false, roof: false },
       color: 'cyan', pattern: 'wave', brightness: 60, animation: 'flow',
       speed: 'medium', material: 'carbon', mode: 'city'
     });
-    current = { kind: 'jury', extra: { completedReview: true, savedDesign: false, usedLightShow: false }, remaining: 180 };
+    if (window.FutureLab) FutureLab.setEnv('showroom', false);
+    current = { kind: 'jury' };
     startTimer('jury-timer', 180, null, function () {
-      if (window.App) App.onJuryTimeUp();
+      reveal(function () { finishJury(); });
     });
   }
 
   function finishJury() {
     stopTimer();
-    computeAndShowBeat();
-    if (window.App) App.go('beat');
-  }
-
-  function computeAndShowBeat() {
-    var playerState = Interior.getState();
-    var extra = (current && current.extra) || { completedReview: true };
-    if (current && current.remaining != null) extra.timeLeft = current.remaining;
-    var playerScore = Score.compute(playerState, extra);
-    var conceptScore = Score.compute(CONCEPT, CONCEPT_EXTRA);
-    lastResult = {
-      playerScore: playerScore, conceptScore: conceptScore,
-      playerState: playerState, extra: extra, name: null
-    };
-    renderBeat(lastResult);
-  }
-
-  /* ============ beat the designer ============ */
-  var BAR_LABELS = { design: 'Design', innovation: 'Innovation', efficiency: 'Efficiency', integration: 'Integration', ux: 'UX' };
-
-  function renderBars(containerId, sub) {
-    var el = document.getElementById(containerId);
-    if (!el) return;
-    el.innerHTML = '';
-    Object.keys(BAR_LABELS).forEach(function (k) {
-      var bar = document.createElement('div');
-      bar.className = 'vs-bar';
-      bar.innerHTML =
-        '<span class="lb">' + BAR_LABELS[k] + '</span>' +
-        '<span class="track"><span class="fill"></span></span>' +
-        '<span class="val">' + sub[k] + '%</span>';
-      el.appendChild(bar);
-    });
-  }
-
-  function renderBeat(result) {
-    result = result || lastResult;
-    if (!result) return;
-    var y = result.playerScore, c = result.conceptScore;
-    document.getElementById('vs-your-score').textContent = y.total + '%';
-    document.getElementById('vs-concept-score').textContent = c.total + '%';
-    renderBars('vs-your-bars', y.sub);
-    renderBars('vs-concept-bars', c.sub);
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        document.querySelectorAll('#vs-your-bars .fill').forEach(function (f, i) {
-          f.style.width = Object.keys(BAR_LABELS)[i] ? (y.sub[Object.keys(BAR_LABELS)[i]] + '%') : '0%';
-        });
-        document.querySelectorAll('#vs-concept-bars .fill').forEach(function (f, i) {
-          f.style.width = Object.keys(BAR_LABELS)[i] ? (c.sub[Object.keys(BAR_LABELS)[i]] + '%') : '0%';
-        });
-      });
-    });
+    var state = window.Interior ? Interior.getState() : {};
+    var score = Score.compute(state, { completedReview: true });
+    juryResult = { playerScore: score, playerState: state };
+    if (window.FutureLab && FutureLab.showResult) {
+      if (window.App) App.go('result');
+      FutureLab.showResult({ total: score.total, sub: score.sub, tests: [], testsPassed: 0, mistakes: 0 }, { silent: true });
+    } else if (window.App) {
+      App.go('hub');
+    }
   }
 
   /* ============ light show ============ */
   function runLightShow() {
     if (lightShowRunning) return;
-    lightShowSaved = Interior.getState();
+    if (window.Sound) try { Sound.sfx('whoosh'); } catch (e) {}
+    lightShowSaved = window.Interior ? Interior.getState() : null;
     lightShowRunning = true;
     document.body.classList.add('lightshow');
     var ov = document.getElementById('lightshow');
-    ov.hidden = false; ov.classList.add('show');
-    Interior.setZones({ dashboard: true, doors: true, console: true, footwell: true, seats: true, roof: true });
+    if (ov) { ov.hidden = false; ov.classList.add('show'); }
+    if (window.Interior) Interior.setZones({ dashboard: true, doors: true, console: true, footwell: true, seats: true, roof: true });
     var i = 0;
     lightShowInterval = setInterval(function () {
       var p = LS_SCRIPT[i % LS_SCRIPT.length];
-      Interior.setState('color', p.color);
-      Interior.setState('pattern', p.pattern);
-      Interior.setState('animation', p.animation);
-      Interior.setState('speed', p.speed);
-      Interior.setState('brightness', p.brightness);
+      if (window.Interior) {
+        Interior.setState('color', p.color);
+        Interior.setState('pattern', p.pattern);
+        Interior.setState('animation', p.animation);
+        Interior.setState('speed', p.speed);
+        Interior.setState('brightness', p.brightness);
+      }
       i++;
     }, 1800);
   }
@@ -238,15 +176,16 @@
     lightShowRunning = false;
     document.body.classList.remove('lightshow');
     var ov = document.getElementById('lightshow');
-    ov.classList.remove('show');
-    setTimeout(function () { ov.hidden = true; }, 600);
-    if (lightShowSaved) Interior.setStateFull(lightShowSaved);
-    if (current) current.extra.usedLightShow = true;
-    if (window.App) App.syncShowcase();
+    if (ov) {
+      ov.classList.remove('show');
+      setTimeout(function () { ov.hidden = true; }, 600);
+    }
+    if (lightShowSaved && window.Interior) Interior.setStateFull(lightShowSaved);
   }
 
   /* ============ cinematic reveal (jury) ============ */
   function flashInterior() {
+    if (!window.Interior) return null;
     var saved = Interior.getState();
     var flash = JSON.parse(JSON.stringify(saved));
     flash.zones = { dashboard: true, doors: true, console: true, footwell: true, seats: true, roof: true };
@@ -259,6 +198,7 @@
     var ov = document.getElementById('reveal');
     var count = document.getElementById('reveal-count');
     var caption = document.getElementById('reveal-caption');
+    if (!ov) { if (onDone) onDone(); return; }
     ov.hidden = false; ov.classList.add('show');
     caption.textContent = '';
     count.style.display = '';
@@ -268,6 +208,7 @@
       if (n > 0) {
         count.textContent = n;
         count.style.animation = 'none'; void count.offsetWidth; count.style.animation = '';
+        if (window.Sound) try { Sound.sfx('countdown'); } catch (e) {}
         n--;
         setTimeout(step, 900);
       } else {
@@ -275,14 +216,15 @@
         count.style.display = 'none';
         caption.textContent = 'YOU JUST DESIGNED THE FUTURE';
         caption.style.animation = 'none'; void caption.offsetWidth; caption.style.animation = 'fadeUp 1s cubic-bezier(0.22,1,0.36,1) both';
+        if (window.Sound) try { Sound.sfx('reveal'); } catch (e) {}
         setTimeout(function () {
           ov.classList.remove('show');
           setTimeout(function () {
             ov.hidden = true; count.style.display = ''; caption.textContent = '';
-            Interior.setStateFull(saved);
-            onDone();
+            if (saved && window.Interior) Interior.setStateFull(saved);
+            if (onDone) onDone();
           }, 700);
-        }, 1700);
+        }, 1900);
       }
     }
     step();
@@ -291,29 +233,29 @@
   /* ============ finale ============ */
   function playFinale() {
     var ov = document.getElementById('finale');
-    ov.hidden = false; ov.classList.add('show');
+    if (ov) { ov.hidden = false; ov.classList.add('show'); }
+    if (window.Sound) try { Sound.music('cinematic'); } catch (e) {}
   }
   function closeFinale() {
     var ov = document.getElementById('finale');
-    ov.classList.remove('show');
-    setTimeout(function () { ov.hidden = true; }, 700);
+    if (ov) {
+      ov.classList.remove('show');
+      setTimeout(function () { ov.hidden = true; }, 700);
+    }
   }
 
   window.Score = Score;
   window.Game = {
-    CONCEPT: CONCEPT,
     Score: Score,
-    current: function () { return current; },
-    lastResult: function () { return lastResult; },
-    computeScore: function (state, extra) { return Score.compute(state || Interior.getState(), extra); },
-    startChallenge: startChallenge,
-    finishChallenge: finishChallenge,
+    juryResult: function () { return juryResult; },
+    computeScore: function (state, extra) {
+      return Score.compute(state || (window.Interior ? Interior.getState() : {}), extra);
+    },
     startJury: startJury,
     finishJury: finishJury,
-    renderBeat: renderBeat,
-    onJuryTimeUp: function () { reveal(function () { finishJury(); }); },
     runLightShow: runLightShow,
     stopLightShow: stopLightShow,
+    get lightShowRunning() { return lightShowRunning; },
     reveal: reveal,
     playFinale: playFinale,
     closeFinale: closeFinale
