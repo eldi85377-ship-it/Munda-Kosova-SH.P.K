@@ -20,7 +20,7 @@ Then open:
 
 | URL | What it is |
 |---|---|
-| **http://localhost:8123** | The marketing website (hero, interactive car, technology, the game, MUNDA SCORE demo, gallery, about, CTA) |
+| **http://localhost:8123** | The marketing website — **company first**: MUNDA Kosova SH.P.K, its technology, method, interactive car, MUNDA SCORE demo, gallery, the **team/staff section** (photos load from `assets/photos/`), then the game promo at the end |
 | **http://localhost:8123/experience.html** | **THE GAME** — MUNDA FUTURE LAB |
 
 > Needs internet for Google Fonts (Space Grotesk / Inter / JetBrains Mono) — everything else is fully self-contained and works offline. All audio is **synthesized live in the browser** (Web Audio API) — zero external sound files, 100% safe for a competition.
@@ -36,6 +36,8 @@ You are a **MUNDA design engineer**. Build the interior lighting of a premium ve
 3. **CONNECT** — wire every LED module to its controller port (beams on success, shake on mistakes).
 4. **TEST** — run 5 automotive tests: LIGHT OUTPUT, VIBRATION, TEMPERATURE, DURABILITY, ENERGY EFFICIENCY.
 5. **SHOWCASE** — the cinematic WOW moment: lights die, the arena appears, the cabin illuminates section by section, the MUNDA light-logo draws itself, then your **MUNDA SCORE** is revealed.
+
+> ⏱️ **The whole build is a 1:30 challenge.** The clock counts down from 01:30 — when it hits zero the lab auto-shows your design with what you managed to build.
 
 ### MUNDA SCORE
 `lighting·0.24 + precision·0.20 + efficiency·0.18 + durability·0.18 + design·0.20` → 0–100, with the rank ladder:
@@ -65,16 +67,17 @@ Every action has sound + particles: button clicks, hovers, collects, wiring succ
 
 A premium automotive-tech brand site (dark, cinematic, glassmorphism):
 
-1. **Hero** — animated illuminated-car backdrop, parallax, particles
-2. **Interactive Car** — hover/click the 6 zones, change colour & brightness live
-3. **How It Works** — 4 illustrated steps (Design → Illuminate → Test → Innovate)
-4. **Technology** — 4 cards (Illuminated Textiles, LED Integration, Automotive Interior Technology, Innovation)
-5. **The Game** — 4 crafted gameplay mockups + features + rank ladder
+1. **Hero** — MUNDA KOSOVA SH.P.K branding, animated illuminated-car backdrop, parallax, particles
+2. **The Company** — who MUNDA Kosova SH.P.K is, the factory in Obiliq, stats, disclaimer
+3. **Technology** — 4 cards (Illuminated Textiles, LED Integration, Automotive Interior Technology, Innovation)
+4. **How It Works** — 4 illustrated steps (Design → Illuminate → Test → Innovate)
+5. **Interactive Car** — hover/click the 6 zones, change colour & brightness live
 6. **MUNDA SCORE Demo** — live score calculator with the same formula as the game
 7. **Gallery** — 8 CSS/SVG artworks with lightbox
-8. **About** — MUNDA Kosova, the project, stats, disclaimer
-9. **Final CTA** — "Ready to design the future?"
-10. **Footer** — links + language switch
+8. **Team / Staff** — the people of MUNDA Kosova SH.P.K (cards load real photos from `assets/photos/`)
+9. **The Game** — full promo at the end, one click from the top-nav "PLAY THE GAME"
+10. **Final CTA** — "Ready to design the future?"
+11. **Footer** — links + language switch
 
 Bilingual **EN/SQ** with a working switcher on both surfaces.
 
