@@ -20,7 +20,7 @@
       en: {
         'nav.tech': 'Technology', 'nav.how': 'How it works', 'nav.game': 'The Game',
         'nav.score': 'MUNDA Score', 'nav.gallery': 'Gallery', 'nav.about': 'About',
-        'nav.play': 'PLAY',
+        'nav.play': 'PLAY', 'nav.playGame': 'PLAY THE GAME',
         'hero.kicker': 'MUNDA KOSOVA · AUTOMOTIVE TEXTILE LIGHTING',
         'hero.title': 'MUNDA<br><span class="grad">FUTURE LAB</span>',
         'hero.sub': 'Designing the lighting experience of tomorrow\'s mobility.',
@@ -93,7 +93,7 @@
       sq: {
         'nav.tech': 'Teknologjia', 'nav.how': 'Si funksionon', 'nav.game': 'Loja',
         'nav.score': 'MUNDA Score', 'nav.gallery': 'Galeria', 'nav.about': 'Rreth',
-        'nav.play': 'LUAJ',
+        'nav.play': 'LUAJ', 'nav.playGame': 'LUAJ LOJËN',
         'hero.kicker': 'MUNDA KOSOVA · NDRIÇIM TEKSTIL AUTOMOTIV',
         'hero.title': 'MUNDA<br><span class="grad">FUTURE LAB</span>',
         'hero.sub': 'Dizajnojmë përvojën e ndriçimit të lëvizjes së së ardhmes.',

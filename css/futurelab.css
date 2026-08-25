@@ -176,6 +176,11 @@ body.cine-on #camera{animation:cameraBreathe 6s ease-in-out infinite alternate}
 .boot-err{color:var(--danger);font-size:12px}
 .boot-lang{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:14px}
 .boot-lang>span{font-size:10px;letter-spacing:.3em;color:var(--faint);text-transform:uppercase}
+.boot-site{
+  margin-top:12px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.18em;
+  color:var(--faint);text-transform:uppercase;transition:color .25s;
+}
+.boot-site:hover{color:var(--cyan)}
 .boot-foot{font-size:10.5px;color:var(--faint);letter-spacing:.06em;margin-top:6px}
 
 /* ---------- hub ---------- */

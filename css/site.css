@@ -395,8 +395,14 @@ input[type="range"]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;b
   .score-wrap{padding:24px 18px}
   .sl-row{grid-template-columns:1fr;gap:7px}
   .site-nav-right .btn-sm{display:none}
+  .play-mobile{display:block !important}
   .hero-cta{flex-direction:column;width:100%}
   .hero-cta .btn{width:100%}
+}
+.play-mobile{
+  display:none !important;margin-top:6px;text-align:center;padding:13px 16px !important;
+  background:var(--grad-brand);color:#fff !important;border-radius:12px;font-weight:700;
+  letter-spacing:.1em;box-shadow:0 8px 22px -8px rgba(45,107,255,.8);
 }
 
 /* ---------- scroll reveal ---------- */

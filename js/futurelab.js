@@ -54,6 +54,7 @@
         'test.pass': 'PASS', 'test.fail': 'FAIL', 'test.running': 'RUNNING TEST…',
         'wire.port': 'PORT', 'wire.linked': 'LINKED', 'wire.mistakes': 'MISTAKES',
         'cin.tag': 'LIGHTING THE FUTURE OF MOBILITY',
+        'time.up': "TIME'S UP — SHOWCASING YOUR DESIGN",
         'score.youBuilt': 'YOU BUILT THE FUTURE', 'score.nearly': 'A SOLID PROTOTYPE',
         'score.failed': 'THE SYSTEM NEEDS WORK',
         'rew.xp': 'XP EARNED', 'rew.coins': 'CREDITS', 'rew.rank': 'NEW RANK',
@@ -65,6 +66,7 @@
         'test.pass': 'KALUAR', 'test.fail': 'DESHTUAR', 'test.running': 'TESTIM…',
         'wire.port': 'PORT', 'wire.linked': 'LIDHUR', 'wire.mistakes': 'GABIME',
         'cin.tag': 'NDRICOJMË TË ARDHMEN E LËVIZJES',
+        'time.up': 'KOHA MBI — PREZANTOHET DIZAJNI YT',
         'score.youBuilt': 'TI E NDËRTOVE TË ARDHMEN', 'score.nearly': 'NJË PROTOTIP I FORTË',
         'score.failed': 'SISTEMI KA NEVOJË PËR PUNË',
         'rew.xp': 'XP E FITUAR', 'rew.coins': 'KREDITET', 'rew.rank': 'RANK I RI',
@@ -392,19 +394,44 @@
     if (phaseIndex > 0) { setPhase(phaseIndex - 1); sfx('back'); }
   }
 
-  /* ---------- build timer ---------- */
+  /* ---------- build timer: 1:30 challenge ---------- */
+  var BUILD_TIME = 90; // the whole build lasts 1 minute 30 seconds
+
   function startTimer() {
     if (timerInterval) clearInterval(timerInterval);
-    timerStart = Date.now();
+    var end = Date.now() + BUILD_TIME * 1000;
     timerInterval = setInterval(function () {
       var el = $('build-timer');
-      if (!el) return;
-      var s = Math.floor((Date.now() - timerStart) / 1000);
-      el.textContent = (s < 10 ? '0' : '') + Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + (s % 60);
-    }, 500);
+      var remaining = Math.max(0, Math.ceil((end - Date.now()) / 1000));
+      if (el) {
+        el.textContent = (remaining < 10 ? '0' : '') + Math.floor(remaining / 60) + ':' +
+          (remaining % 60 < 10 ? '0' : '') + (remaining % 60);
+        el.classList.toggle('warn', remaining <= 15);
+      }
+      if (remaining <= 0) {
+        clearInterval(timerInterval); timerInterval = null;
+        buildTimeUp();
+      }
+    }, 250);
+    var el = $('build-timer');
+    if (el) { el.textContent = '01:30'; el.classList.remove('warn'); }
   }
   function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
   function runSeconds() { return Math.round((Date.now() - (run ? run.start : Date.now())) / 1000); }
+
+  /* time is up — present whatever the engineer managed to build */
+  function buildTimeUp() {
+    if (cineRunning || testRunning) return;
+    sfx('impact');
+    if (window.FX) safe(function () {
+      FX.floatText(window.innerWidth / 2, window.innerHeight * 0.4,
+        t('time.up', "TIME'S UP — SHOWCASING YOUR DESIGN"), { color: '#ffc861', size: 26, duration: 2000 });
+      FX.flash('rgba(255,200,97,0.12)', 500);
+    });
+    if (window.Progress) safe(function () { Progress.trackEvent('time', { seconds: BUILD_TIME }); });
+    if (phaseIndex < 4) setPhase(4);
+    setTimeout(function () { beginShowcase(); }, 1800);
+  }
 
   /* per-phase durations (seconds) from the recorded phase-entry stamps */
   function phaseDurations() {
@@ -515,6 +542,9 @@
       g.setAttribute('data-kind', 'port');
       g.setAttribute('data-port', port);
       g.setAttribute('data-linked', 'false');
+      g.setAttribute('tabindex', '0');
+      g.setAttribute('role', 'button');
+      g.setAttribute('aria-label', 'PORT ' + port);
       var cy = rightY[i];
       g.innerHTML =
         '<rect x="300" y="' + (cy - 16) + '" width="92" height="32" rx="9" class="wn-box"/>' +
@@ -522,6 +552,9 @@
         esc(t('wire.port')) + ' ' + port + '</text>';
       g.style.cursor = 'pointer';
       g.addEventListener('click', wireClick);
+      g.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); wireClick({ currentTarget: this }); }
+      });
       nodes.appendChild(g);
     });
 
@@ -532,6 +565,9 @@
       g.setAttribute('data-module', p.module);
       g.setAttribute('data-port', p.port);
       g.setAttribute('data-linked', 'false');
+      g.setAttribute('tabindex', '0');
+      g.setAttribute('role', 'button');
+      g.setAttribute('aria-label', p.module);
       var cy = leftY[i];
       g.innerHTML =
         '<rect x="28" y="' + (cy - 16) + '" width="92" height="32" rx="9" class="wn-box"/>' +
@@ -539,6 +575,9 @@
         '<text x="86" y="' + (cy + 5) + '" text-anchor="middle" class="wn-label">' + esc(p.module) + '</text>';
       g.style.cursor = 'pointer';
       g.addEventListener('click', wireClick);
+      g.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); wireClick({ currentTarget: this }); }
+      });
       nodes.appendChild(g);
     });
   }
@@ -1166,7 +1205,10 @@
     // phase nav
     var next = $('btn-phase-next');
     if (next) next.addEventListener('click', function () {
-      if (phase === 'design' || phase === 'light') nextPhase();
+      // DESIGN, LIGHT and CONNECT advance manually; TEST advances itself
+      // after the bench finishes, SHOWCASE is the last step.
+      if (phase === 'design' || phase === 'light' || phase === 'connect') nextPhase();
+      else if (phase === 'test' && !testRunning) nextPhase();
     });
     var back = $('btn-phase-back');
     if (back) back.addEventListener('click', function () {
