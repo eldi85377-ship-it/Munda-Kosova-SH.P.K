@@ -45,7 +45,7 @@
   function defaultState() {
     return {
       zones: { dashboard: true, doors: false, console: false, footwell: false, seats: false, roof: true },
-      color: 'blue',
+      color: 'green',
       pattern: 'linear',
       brightness: 70,
       animation: 'static',

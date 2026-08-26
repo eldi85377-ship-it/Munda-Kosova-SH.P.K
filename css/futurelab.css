@@ -205,6 +205,7 @@ body.cine-on #camera{animation:cameraBreathe 6s ease-in-out infinite alternate}
   position:fixed;inset:0;z-index:9200;display:grid;place-items:center;padding:24px;
   background:rgba(3,3,6,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   animation:tutBack .35s var(--ease) both;
+  pointer-events:auto; /* #app is pointer-events:none (style.css) — the tutorial sits outside .screen, so it must opt back in or its buttons can't be clicked */
 }
 .tutorial[hidden]{display:none}
 @keyframes tutBack{from{opacity:0}to{opacity:1}}
@@ -707,3 +708,215 @@ input[type="range"]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;b
   .hud-coins{display:none}
   .lu-card{padding:28px 22px;width:92vw}
 }
+
+/* =====================================================================
+   REALISM & PREMIUM POLISH — depth, reflections, cinematic grade
+   ===================================================================== */
+
+/* ---------- camera parallax (JS drives --rx / --ry) ---------- */
+#camera{
+  transition:none;
+  transform:perspective(1150px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  will-change:transform;
+}
+body[data-screen="boot"] #camera{transition:transform 1.6s var(--ease)}
+body.phase-showcase #camera{
+  transition:transform 1.6s var(--ease);
+  transform:perspective(1150px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(1.045);
+}
+body.cine-on #camera{animation:cameraBreathe 6s ease-in-out infinite alternate}
+@keyframes cameraBreathe{
+  from{transform:perspective(1150px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(1.02)}
+  to{transform:perspective(1150px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(1.07)}
+}
+
+/* ---------- light strips: soft glow on the emitters ---------- */
+#interior .strip-core{filter:drop-shadow(0 0 5px rgba(130,200,255,.5))}
+#interior .zone:hover .strip-core{filter:brightness(1.3) drop-shadow(0 0 9px rgba(160,220,255,.85))}
+#interior .zone .strip-bloom{transition:opacity .5s var(--ease),fill .5s var(--ease),stroke .5s var(--ease)}
+
+/* ---------- cinematic grade + depth ---------- */
+#grade{
+  position:fixed;inset:0;z-index:4;pointer-events:none;mix-blend-mode:soft-light;
+  background:linear-gradient(165deg,rgba(45,107,255,.13),rgba(8,10,18,.24) 48%,rgba(77,243,255,.05));
+  opacity:.6;
+}
+#grade::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(120% 95% at 50% 42%,transparent 52%,rgba(2,3,8,.55));
+}
+body[data-screen="boot"] #stage{filter:saturate(1.05) brightness(1.02)}
+
+/* ---------- glass panels with depth ---------- */
+.glass{
+  background:linear-gradient(160deg,rgba(30,34,46,.74),rgba(13,15,22,.8));
+  border-color:rgba(255,255,255,.10);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 26px 60px -24px rgba(0,0,0,.65);
+}
+.hud{
+  background:linear-gradient(180deg,rgba(22,26,36,.82),rgba(9,11,17,.74));
+  border-color:rgba(255,255,255,.12);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 14px 40px -16px rgba(0,0,0,.8);
+  backdrop-filter:blur(16px) saturate(1.25);
+  -webkit-backdrop-filter:blur(16px) saturate(1.25);
+}
+
+/* ---------- buttons: physical depth ---------- */
+.btn-primary{
+  background:linear-gradient(135deg,#2d6bff 0%,#1f4ad8 55%,#1740b5 100%);
+  box-shadow:0 10px 28px -8px rgba(45,107,255,.6),inset 0 1px 0 rgba(255,255,255,.22),
+             inset 0 -6px 12px rgba(0,0,0,.18);
+  text-shadow:0 1px 2px rgba(0,0,0,.35);
+}
+.btn-primary:hover{
+  box-shadow:0 14px 38px -8px rgba(45,107,255,.85),inset 0 1px 0 rgba(255,255,255,.3),
+             inset 0 -6px 12px rgba(0,0,0,.15);
+  filter:brightness(1.06);
+}
+
+/* ---------- phase stepper ---------- */
+.pstep.active{
+  background:var(--grad-brand);color:#fff;
+  box-shadow:0 8px 22px -8px rgba(45,107,255,.95),inset 0 1px 0 rgba(255,255,255,.3);
+}
+.pstep.done{color:var(--success);text-shadow:0 0 12px rgba(53,224,127,.45)}
+
+/* ---------- timer + chips ---------- */
+.timer{text-shadow:0 0 14px rgba(77,243,255,.35)}
+.timer.warn{text-shadow:0 0 16px rgba(255,45,85,.6)}
+.brief-chip{box-shadow:0 0 16px -6px rgba(77,243,255,.5)}
+
+/* ---------- material cards ---------- */
+.mat-card.active{
+  border-color:var(--brand);
+  box-shadow:0 0 0 2px rgba(45,107,255,.4),0 14px 34px -12px rgba(45,107,255,.55),
+             inset 0 1px 0 rgba(255,255,255,.08);
+  background:linear-gradient(160deg,rgba(45,107,255,.16),rgba(10,12,20,.4));
+}
+
+/* ---------- zone buttons ---------- */
+.zone-btn.active{
+  box-shadow:0 0 0 1px rgba(45,107,255,.45),0 8px 22px -8px var(--accent),
+             inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+/* ---------- sliders: luminous thumbs ---------- */
+input[type="range"]::-webkit-slider-thumb{
+  box-shadow:0 0 0 4px rgba(45,107,255,.14),0 2px 10px rgba(0,0,0,.55);
+}
+input[type="range"]::-moz-range-thumb{
+  box-shadow:0 0 0 4px rgba(45,107,255,.14),0 2px 10px rgba(0,0,0,.55);
+}
+
+/* ---------- environment details ---------- */
+.env-dot circle{animation:envTw 5s ease-in-out infinite;animation-delay:var(--d,0s)}
+.env-dot circle:nth-child(2n){animation-delay:-2.2s}
+.env-dot circle:nth-child(3n){animation-delay:-3.8s}
+@keyframes envTw{0%,100%{opacity:.25}50%{opacity:.9}}
+.arena-beam{animation:beamSway 7s ease-in-out infinite alternate}
+@keyframes beamSway{from{opacity:.16}to{opacity:.32}}
+
+/* ---------- showcase countdown ---------- */
+.reveal-count{text-shadow:0 0 34px rgba(77,243,255,.9),0 0 90px rgba(45,107,255,.7)}
+
+/* =====================================================================
+   GAME V2 — realistic lab ambience, navy/green premium UI, soft glow
+   ===================================================================== */
+
+/* ---------- automotive-lab ambience around the interior ---------- */
+#stage::before,
+#stage::after{
+  content:'';position:absolute;left:50%;transform:translateX(-50%);
+  pointer-events:none;z-index:0;border-radius:999px;
+}
+#stage::before{ /* overhead lab light bar */
+  top:26px;width:min(660px,70vw);height:10px;
+  background:linear-gradient(90deg,transparent,rgba(22,163,74,.5) 18%,rgba(180,255,210,.85) 50%,rgba(22,163,74,.5) 82%,transparent);
+  box-shadow:0 0 40px 8px rgba(22,163,74,.28),0 0 120px 30px rgba(22,163,74,.10);
+  animation:labBar 7s ease-in-out infinite alternate;
+}
+#stage::after{ /* floor light reflection */
+  bottom:8px;width:min(760px,78vw);height:26px;
+  background:radial-gradient(50% 100% at 50% 100%,rgba(22,163,74,.22),transparent 70%);
+  filter:blur(4px);
+}
+@keyframes labBar{from{opacity:.7;width:min(660px,70vw)}to{opacity:1;width:min(720px,74vw)}}
+
+/* ---------- LED rendering: white-hot core + soft colored halo ---------- */
+#interior .strip-core{filter:drop-shadow(0 0 3px rgba(255,255,255,.35))}
+#interior .strip-bloom{filter:url(#f-glow-soft) saturate(1.05)}
+#interior .strip-halo{opacity:.28}
+#interior .zone:hover .strip-core{filter:brightness(1.25) drop-shadow(0 0 5px rgba(255,255,255,.5))}
+
+/* ---------- realistic light-pool falloff (soft-light blend) ---------- */
+#interior .strip-bloom[filter="url(#f-soft30)"],
+#interior ellipse.strip-bloom[filter="url(#f-soft30)"]{mix-blend-mode:screen}
+
+/* ---------- UI: navy glass + green accents ---------- */
+.glass,.panel,.hud,.hub-card,.build-panel,.result-panel,.tut-card{
+  background:linear-gradient(165deg,rgba(13,21,48,.82),rgba(7,11,24,.9));
+  border-color:rgba(90,140,255,.14);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 26px 60px -26px rgba(0,0,0,.75);
+}
+.btn-primary{
+  background:linear-gradient(135deg,#0e7a3d,#22c55e);
+  box-shadow:0 12px 32px -10px rgba(34,197,94,.55),inset 0 1px 0 rgba(255,255,255,.25);
+}
+.btn-primary:hover{box-shadow:0 16px 44px -10px rgba(34,197,94,.8);filter:brightness(1.06)}
+.btn-ghost{border-color:rgba(90,140,255,.3);color:var(--ink-dim)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);background:rgba(22,163,74,.08)}
+.kicker,.hud .label,.phase-label,.step-label,.mono-label{color:var(--cyan)}
+
+/* phase stepper — green active */
+.pstep.active{background:linear-gradient(135deg,#0e7a3d,#22c55e);box-shadow:0 8px 22px -8px rgba(34,197,94,.8)}
+.pstep.done{color:#4ade80;text-shadow:0 0 12px rgba(34,197,94,.4)}
+
+/* sliders — green fill/thumb */
+input[type="range"]{--fill:linear-gradient(90deg,#16a34a,#4ade80)}
+input[type="range"]::-webkit-slider-thumb{box-shadow:0 0 0 4px rgba(34,197,94,.18),0 2px 10px rgba(0,0,0,.6)}
+
+/* zone chips / swatches */
+.zone-btn.active,.cc-swatch.active,.env-chips .chip.active{
+  border-color:var(--accent);box-shadow:0 0 0 2px rgba(34,197,94,.35),0 8px 24px -8px rgba(34,197,94,.6);
+}
+
+/* timer — clean tabular digits with soft glow */
+.timer{font-variant-numeric:tabular-nums;text-shadow:0 0 14px rgba(74,222,128,.35)}
+.timer.warn{text-shadow:0 0 16px rgba(255,45,85,.6)}
+
+/* result screen — navy band */
+.score-ring{box-shadow:0 0 0 6px rgba(11,42,107,.5),0 0 70px -8px rgba(34,197,94,.5)}
+.rank-chip{background:linear-gradient(135deg,rgba(11,42,107,.7),rgba(7,11,24,.8));border-color:rgba(34,197,94,.4)}
+
+/* ---------- smooth transitions ---------- */
+.screen{transition:opacity .5s var(--ease),transform .5s var(--ease),filter .5s var(--ease)}
+.screen.active{animation:screenIn .55s var(--ease) both}
+@keyframes screenIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.gcard,.hub-card,.mat-card{transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
+.gcard:hover,.hub-card:hover{transform:translateY(-4px);border-color:rgba(34,197,94,.4);box-shadow:0 24px 54px -20px rgba(34,197,94,.35)}
+
+/* lab screens (story/tech) — green glow accents */
+.textile-stage,.tech-canvas{filter:drop-shadow(0 0 30px rgba(34,197,94,.08))}
+
+/* =====================================================================
+   WIRE MINI-GAME — real drag & drop
+   ===================================================================== */
+/* CRITICAL: #app is pointer-events:none — the wire board must opt in */
+#wire-svg .wire-node{pointer-events:auto;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none}
+#wire-svg .wire-node:active{cursor:grabbing}
+#wire-svg .wire-node.port{cursor:crosshair}
+#wire-svg .wire-node.linked{pointer-events:none}
+#wire-svg .wire-node.dragging .wn-box{stroke:var(--cyan);stroke-width:2.2;fill:rgba(34,197,94,.10)}
+#wire-svg .wire-node.port.drag-hover .wn-box{
+  stroke:#35e07f;stroke-width:2.6;fill:rgba(53,224,127,.16);
+  filter:drop-shadow(0 0 10px rgba(53,224,127,.55));
+}
+.wire-drag{
+  fill:none;stroke:rgba(74,222,128,.85);stroke-width:2.6;stroke-dasharray:7 6;
+  opacity:.95;animation:beamFlow .4s linear infinite;
+  filter:drop-shadow(0 0 5px rgba(74,222,128,.5));
+  pointer-events:none;
+}
+.wire-board{-webkit-user-select:none;user-select:none}
+.wire-hint.warn{color:var(--danger);animation:wireHint 1.6s ease}
+@keyframes wireHint{0%,100%{opacity:1}30%{opacity:.45}}

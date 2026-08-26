@@ -1,0 +1,219 @@
+/* =====================================================================
+   MUNDA — MINIMAL PREMIUM LAUNCHER (index.html + experience.html boot)
+   One screen. One button. MUNDA / FUTURE LAB + START.
+   ===================================================================== */
+
+/* ---------- full-screen stage ---------- */
+.launch{
+  position:fixed;inset:0;overflow:hidden;z-index:4;
+  background:radial-gradient(90% 80% at 50% 30%,#0b1020 0%,#05060b 55%,#02030a 100%);
+}
+.launch-drift{
+  position:absolute;inset:-4%;display:grid;place-items:center;
+  transform-origin:50% 50%;
+  animation:drift 26s ease-in-out infinite alternate;
+}
+@keyframes drift{
+  from{transform:scale(1.015) translateY(0)}
+  to{transform:scale(1.075) translateY(-12px)}
+}
+.launch-interior{
+  width:100%;height:100%;display:block;
+}
+.launch-drift .launch-interior{width:122%;height:122%;max-width:none}
+
+/* ---------- illuminated textile / LED animations (SVG) ---------- */
+.al-halo{animation:alBreathe 5.5s ease-in-out infinite alternate}
+.al-halo2{animation-delay:-2.7s}
+.al-halo3{animation-delay:-4.1s}
+@keyframes alBreathe{from{opacity:.32}to{opacity:.85}}
+.al-flow{stroke-dasharray:520 1460;animation:alFlow 9s linear infinite}
+.al-flow2{animation-delay:-4.5s}
+.al-flow3{animation-delay:-7s}
+@keyframes alFlow{to{stroke-dashoffset:-1980}}
+.al-stitch{stroke-dasharray:3 13;animation:alStitch 5.5s linear infinite}
+.al-stitch2{animation-delay:-2.8s}
+@keyframes alStitch{to{stroke-dashoffset:-160}}
+.al-tw{animation:alTw 6s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes alTw{0%,100%{opacity:.12}50%{opacity:.75}}
+.al-seat{animation:alBreathe 7s ease-in-out infinite alternate}
+.al-seat2{animation-delay:-3.5s}
+
+/* ---------- floating light dust ---------- */
+.launch-dust{position:absolute;inset:0;pointer-events:none;z-index:3}
+.launch-dust i{
+  position:absolute;width:3px;height:3px;border-radius:50%;
+  background:#a8d4ff;box-shadow:0 0 10px 2px rgba(77,243,255,.45);
+  animation:floaty 12s ease-in-out infinite alternate;
+}
+.launch-dust i:nth-child(1){left:16%;top:62%;animation-duration:13s;animation-delay:-2s}
+.launch-dust i:nth-child(2){left:74%;top:38%;animation-duration:11s;animation-delay:-6s}
+.launch-dust i:nth-child(3){left:38%;top:24%;animation-duration:15s;animation-delay:-9s}
+.launch-dust i:nth-child(4){left:88%;top:70%;animation-duration:12.5s;animation-delay:-4s}
+.launch-dust i:nth-child(5){left:58%;top:82%;animation-duration:10s;animation-delay:-7.5s}
+@keyframes floaty{
+  from{transform:translate3d(0,0,0);opacity:.1}
+  50%{opacity:.6}
+  to{transform:translate3d(26px,-36px,0);opacity:.18}
+}
+
+/* ---------- center content ---------- */
+.launch-center{
+  position:relative;z-index:5;
+  height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:0 22px;pointer-events:none;
+}
+.launch-center::before{
+  content:"";position:absolute;left:50%;top:50%;width:min(860px,96vw);aspect-ratio:1.9/1;
+  transform:translate(-50%,-52%);pointer-events:none;
+  background:radial-gradient(50% 55% at 50% 50%,rgba(4,5,10,.78),rgba(4,5,10,.32) 55%,transparent 78%);
+  animation:haloBreath 7s ease-in-out infinite alternate;
+}
+@keyframes haloBreath{from{opacity:.8}to{opacity:1}}
+
+.launch-title{
+  position:relative;font-family:var(--font-display,'Space Grotesk',sans-serif);
+  font-weight:700;font-size:clamp(3.2rem,10vw,7.6rem);line-height:1;
+  letter-spacing:.02em;color:#fff;
+  background:linear-gradient(180deg,#ffffff 30%,#aab8e8 75%,#6f7fd0 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 34px rgba(45,107,255,.42));
+  animation:launchIn 1.15s var(--ease) .1s both;
+}
+.launch-sub{
+  position:relative;font-family:var(--font-display,'Space Grotesk',sans-serif);
+  font-weight:500;font-size:clamp(.86rem,2.6vw,1.55rem);
+  letter-spacing:.66em;text-indent:.66em;text-transform:uppercase;
+  background:linear-gradient(90deg,#2d6bff,#4df3ff);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 18px rgba(77,243,255,.35));
+  margin-top:clamp(10px,2vh,20px);
+  animation:launchIn 1.15s var(--ease) .3s both;
+}
+
+/* ---------- THE ONE BUTTON: START ---------- */
+.launch-start{
+  position:relative;pointer-events:auto;cursor:pointer;margin-top:clamp(38px,7vh,72px);
+  min-width:clamp(214px,26vw,280px);height:66px;padding:0 8px;border-radius:999px;
+  display:grid;place-items:center;
+  font-family:var(--font-display,'Space Grotesk',sans-serif);
+  font-weight:600;font-size:15px;color:#fff;
+  background:linear-gradient(120deg,rgba(45,107,255,.22),rgba(77,243,255,.08) 60%,rgba(45,107,255,.16));
+  border:1px solid rgba(77,160,255,.55);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 0 0 1px rgba(45,107,255,.12) inset,0 10px 44px -10px rgba(45,107,255,.65),
+            0 0 34px -6px rgba(77,243,255,.35);
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s var(--ease);
+  animation:launchIn 1.15s var(--ease) .55s both,startPulse 3.2s ease-in-out 1.7s infinite;
+}
+.launch-start span{display:inline-block;letter-spacing:.36em;text-indent:.36em}
+@keyframes launchIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes startPulse{
+  0%,100%{box-shadow:0 0 0 1px rgba(45,107,255,.12) inset,0 10px 44px -10px rgba(45,107,255,.6),0 0 30px -8px rgba(77,243,255,.3)}
+  50%{box-shadow:0 0 0 1px rgba(77,243,255,.25) inset,0 10px 58px -8px rgba(45,107,255,.9),0 0 52px -6px rgba(77,243,255,.6)}
+}
+.launch-start:hover{
+  background:linear-gradient(120deg,#2d6bff,#4df3ff);
+  border-color:rgba(160,235,255,.9);color:#04070f;
+  box-shadow:0 0 0 1px rgba(77,243,255,.4) inset,0 16px 70px -8px rgba(45,107,255,.95),
+             0 0 66px -4px rgba(77,243,255,.75);
+  transform:translateY(-2px);
+}
+.launch-start:active{transform:translateY(1px) scale(.97)}
+.launch-start:disabled{opacity:.5;pointer-events:none}
+.launch-start .ls-hint{
+  position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);
+  font-family:var(--font-mono,'JetBrains Mono',monospace);font-size:9px;
+  letter-spacing:.34em;text-indent:.34em;color:rgba(255,255,255,.28);white-space:nowrap;
+}
+
+/* =====================================================================
+   CINEMATIC TRANSITION — short, premium, ~2s
+   ===================================================================== */
+.cine{position:fixed;inset:0;z-index:99999;display:none;pointer-events:none;overflow:hidden}
+.cine.on{display:block}
+.cine-veil{position:absolute;inset:0;background:#010208;opacity:0;transition:opacity .32s ease}
+.cine.on .cine-veil{opacity:.86}
+.cine-beam{
+  position:absolute;top:-12%;left:-45%;height:124%;width:46%;
+  transform:translateX(-30%) skewX(-16deg);
+  background:linear-gradient(90deg,transparent 0%,rgba(45,107,255,.10) 30%,
+    rgba(190,235,255,.55) 50%,rgba(77,243,255,.16) 68%,transparent 100%);
+  opacity:0;
+}
+.cine.beam .cine-beam{animation:cineBeam .78s cubic-bezier(.4,0,.2,1) both}
+@keyframes cineBeam{0%{transform:translateX(-60%) skewX(-16deg);opacity:0}12%{opacity:1}100%{transform:translateX(430%) skewX(-16deg);opacity:0}}
+.cine-logo{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;opacity:0;transform:scale(.62);filter:blur(10px);
+}
+.cine-logo span{
+  font-family:var(--font-display,'Space Grotesk',sans-serif);font-weight:700;
+  font-size:clamp(3.4rem,11vw,8rem);line-height:1;letter-spacing:.04em;color:#fff;
+  text-shadow:0 0 42px rgba(45,107,255,.9),0 0 120px rgba(77,243,255,.55);
+}
+.cine-logo i{
+  font-style:normal;font-family:var(--font-display,'Space Grotesk',sans-serif);font-weight:500;
+  font-size:clamp(.8rem,2.4vw,1.4rem);letter-spacing:.66em;text-indent:.66em;
+  text-transform:uppercase;color:#4df3ff;text-shadow:0 0 26px rgba(77,243,255,.8);
+}
+.cine.zoom .cine-logo{animation:cineZoom .82s cubic-bezier(.2,.9,.25,1.12) both}
+@keyframes cineZoom{from{opacity:0;transform:scale(.62);filter:blur(10px)}to{opacity:1;transform:scale(1.06);filter:blur(0)}}
+.cine.warp .cine-logo{animation:cineWarp .5s cubic-bezier(.65,0,.35,1) both}
+@keyframes cineWarp{from{opacity:1;transform:scale(1.06);filter:blur(0)}to{opacity:0;transform:scale(2.1);filter:blur(16px)}}
+.cine-flash{
+  position:absolute;inset:0;opacity:0;
+  background:radial-gradient(60% 60% at 50% 50%,rgba(255,255,255,.95) 0%,rgba(77,243,255,.4) 38%,transparent 72%);
+}
+.cine.flash .cine-flash{animation:cineFlash .5s ease-out both}
+@keyframes cineFlash{0%{opacity:0}22%{opacity:1}100%{opacity:0}}
+.cine.hold .cine-veil{opacity:1;transition-duration:.12s}
+
+/* =====================================================================
+   EXPERIENCE BOOT OVERRIDES — the game opens the same minimal screen
+   ===================================================================== */
+body[data-screen="boot"] #topbar{opacity:0;pointer-events:none;transition:opacity .45s var(--ease)}
+body[data-screen="boot"] #stage{opacity:1;transform:scale(1)}
+body[data-screen="boot"] #camera{transform:scale(1.06)}
+body[data-screen="boot"] #screen-boot{background:transparent}
+#screen-boot .launch-center{height:100dvh;pointer-events:none}
+#screen-boot .launch-start{pointer-events:auto}
+/* auto-start (arrived from the website launcher): hide boot chrome, quick fade-in */
+body.auto-start #screen-boot .launch-center{opacity:0;pointer-events:none}
+body.auto-start{animation:pageIn .55s var(--ease) both}
+@keyframes pageIn{from{opacity:0}to{opacity:1}}
+
+@media (prefers-reduced-motion: reduce){
+  .launch-drift,.launch-dust i,.launch-center::before,
+  .al-halo,.al-halo2,.al-halo3,.al-flow,.al-flow2,.al-flow3,
+  .al-stitch,.al-stitch2,.al-tw,.al-seat,.al-seat2,
+  .launch-title,.launch-sub,.launch-start{animation:none !important}
+}
+
+/* ---------- parallax camera (loaded last — re-assert over futurelab.css) ---------- */
+#camera{
+  transition:none;
+  transform:perspective(1150px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  will-change:transform;
+}
+body[data-screen="boot"] #camera{
+  transition:transform 1.6s var(--ease);
+  transform:scale(1.06);
+}
+body.phase-showcase #camera{
+  transition:transform 1.6s var(--ease);
+  transform:perspective(1150px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(1.045);
+}
+body.cine-on #camera{animation:cameraBreathe 6s ease-in-out infinite alternate}
+
+/* ---------- green premium boot (brand 2026) ---------- */
+.btn-start,.launch-start{
+  background:linear-gradient(120deg,#0e7a3d 0%,#22c55e 100%) !important;
+  box-shadow:0 0 0 1px rgba(180,255,210,.45) inset,0 18px 60px -12px rgba(34,197,94,.85),0 0 90px -10px rgba(74,222,128,.5) !important;
+  animation:startGlowG 3.2s ease-in-out infinite !important;
+}
+@keyframes startGlowG{
+  0%,100%{box-shadow:0 0 0 1px rgba(180,255,210,.45) inset,0 18px 60px -12px rgba(34,197,94,.8),0 0 70px -12px rgba(74,222,128,.4)}
+  50%{box-shadow:0 0 0 1px rgba(200,255,225,.65) inset,0 22px 80px -10px rgba(34,197,94,1),0 0 120px -8px rgba(74,222,128,.7)}
+}
+.launch-kicker{color:#4ade80}

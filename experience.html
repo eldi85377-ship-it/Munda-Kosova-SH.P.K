@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#050507">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232d6bff'/%3E%3Cstop offset='1' stop-color='%234df3ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M20 44V20l12 14 12-14v24' fill='none' stroke='%2305070f' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <title>MUNDA FUTURE LAB — Design the Light</title>
 <meta name="description" content="Become a MUNDA design engineer. Design, illuminate, connect and test the interior lighting of tomorrow's premium vehicle.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +13,7 @@
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/futurelab.css">
+<link rel="stylesheet" href="css/launcher.css">
 </head>
 <body data-screen="boot">
 
@@ -19,6 +21,7 @@
 <canvas id="particles" aria-hidden="true"></canvas>
 <div class="vignette" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
+<div id="grade" aria-hidden="true"></div>
 
 <!-- ===================== HUD / TOP BAR ===================== -->
 <header id="topbar">
@@ -101,130 +104,193 @@
 <div id="stage">
   <div id="camera">
   <svg id="interior" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="MUNDA concept vehicle interior">
-    <defs>
-      <!-- surfaces -->
-      <radialGradient id="g-bg" cx="50%" cy="38%" r="75%">
-        <stop offset="0%" stop-color="#101118"/>
-        <stop offset="45%" stop-color="#09090d"/>
-        <stop offset="100%" stop-color="#040405"/>
+        <defs>
+      <!-- surfaces (photorealistic multi-stop) -->
+      <radialGradient id="g-bg" cx="50%" cy="36%" r="80%">
+        <stop offset="0%" stop-color="#16203a"/><stop offset="46%" stop-color="#0a0e1c"/><stop offset="100%" stop-color="#04050c"/>
       </radialGradient>
       <linearGradient id="g-glass" x1="0" y1="0" x2="0.35" y2="1">
-        <stop offset="0%" stop-color="#0a0d16"/>
-        <stop offset="55%" stop-color="#05060b"/>
-        <stop offset="100%" stop-color="#0b0c12"/>
+        <stop offset="0%" stop-color="#101a30"/><stop offset="45%" stop-color="#060b16"/><stop offset="100%" stop-color="#131d36"/>
       </linearGradient>
       <linearGradient id="g-headliner" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#0d0e13"/>
-        <stop offset="100%" stop-color="#07080b"/>
+        <stop offset="0%" stop-color="#131622"/><stop offset="100%" stop-color="#080a12"/>
       </linearGradient>
       <linearGradient id="g-dash-top" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#1b1d24"/>
-        <stop offset="100%" stop-color="#0e0f13"/>
+        <stop offset="0%" stop-color="#2a2f3d"/><stop offset="38%" stop-color="#1b1f2b"/><stop offset="72%" stop-color="#12141d"/><stop offset="100%" stop-color="#0c0d15"/>
       </linearGradient>
       <linearGradient id="g-dash" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#14161c"/>
-        <stop offset="100%" stop-color="#0a0b0f"/>
+        <stop offset="0%" stop-color="#1e2330"/><stop offset="38%" stop-color="#161a25"/><stop offset="100%" stop-color="#0a0c13"/>
       </linearGradient>
       <linearGradient id="g-door" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="#0b0c10"/>
-        <stop offset="100%" stop-color="#17181e"/>
+        <stop offset="0%" stop-color="#0b0d14"/><stop offset="38%" stop-color="#141824"/><stop offset="100%" stop-color="#1d212e"/>
       </linearGradient>
       <linearGradient id="g-door-r" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="#17181e"/>
-        <stop offset="100%" stop-color="#0b0c10"/>
+        <stop offset="0%" stop-color="#1d212e"/><stop offset="62%" stop-color="#141824"/><stop offset="100%" stop-color="#0b0d14"/>
       </linearGradient>
       <linearGradient id="g-console" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#1a1b21"/>
-        <stop offset="100%" stop-color="#0c0d11"/>
+        <stop offset="0%" stop-color="#20242f"/><stop offset="55%" stop-color="#141720"/><stop offset="100%" stop-color="#0b0c13"/>
       </linearGradient>
       <linearGradient id="g-seat" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#1e2027"/>
-        <stop offset="100%" stop-color="#101116"/>
+        <stop offset="0%" stop-color="#2e3341"/><stop offset="42%" stop-color="#1f232e"/><stop offset="100%" stop-color="#111319"/>
       </linearGradient>
-      <linearGradient id="g-trim" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#464a55"/>
-        <stop offset="45%" stop-color="#1c1e25"/>
-        <stop offset="100%" stop-color="#2c2f38"/>
+      <linearGradient id="g-seat-side" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#0e1018"/><stop offset="100%" stop-color="#262b38"/>
       </linearGradient>
-      <radialGradient id="g-wheel" cx="50%" cy="42%" r="60%">
-        <stop offset="0%" stop-color="#1a1b20"/>
-        <stop offset="70%" stop-color="#0b0c10"/>
-        <stop offset="100%" stop-color="#050508"/>
+      <linearGradient id="g-trim" x1="0" y1="0" x2="0.5" y2="1">
+        <stop offset="0%" stop-color="#7d8598"/><stop offset="45%" stop-color="#2e3340"/><stop offset="100%" stop-color="#545b70"/>
+      </linearGradient>
+      <radialGradient id="g-wheel" cx="50%" cy="42%" r="62%">
+        <stop offset="0%" stop-color="#21252f"/><stop offset="55%" stop-color="#13161f"/><stop offset="100%" stop-color="#090a10"/>
       </radialGradient>
+      <linearGradient id="g-wheel-rim" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#414756"/><stop offset="50%" stop-color="#1b1f29"/><stop offset="100%" stop-color="#313745"/>
+      </linearGradient>
       <radialGradient id="g-footwell" cx="50%" cy="100%" r="90%">
-        <stop offset="0%" stop-color="rgba(120,140,180,0.22)"/>
-        <stop offset="100%" stop-color="rgba(120,140,180,0)"/>
+        <stop offset="0%" stop-color="rgba(86,120,190,0.20)"/><stop offset="100%" stop-color="rgba(86,120,190,0)"/>
       </radialGradient>
       <linearGradient id="g-screen" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#12202e"/>
-        <stop offset="100%" stop-color="#070c12"/>
+        <stop offset="0%" stop-color="#122038"/><stop offset="100%" stop-color="#060a12"/>
       </linearGradient>
       <linearGradient id="g-sheen" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="rgba(255,255,255,0.10)"/>
-        <stop offset="45%" stop-color="rgba(255,255,255,0.02)"/>
-        <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        <stop offset="0%" stop-color="rgba(255,255,255,0.12)"/><stop offset="42%" stop-color="rgba(255,255,255,0.03)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+      </linearGradient>
+      <linearGradient id="g-dash-gloss" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="rgba(255,255,255,0.16)"/><stop offset="55%" stop-color="rgba(255,255,255,0.03)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+      </linearGradient>
+      <linearGradient id="g-haze" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="rgba(140,180,240,0)"/><stop offset="100%" stop-color="rgba(140,180,240,0.12)"/>
+      </linearGradient>
+      <radialGradient id="g-moon" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="rgba(215,230,255,0.9)"/><stop offset="18%" stop-color="rgba(195,218,255,0.35)"/><stop offset="100%" stop-color="rgba(160,195,255,0)"/>
+      </radialGradient>
+      <linearGradient id="g-ao-top" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="rgba(0,0,0,0)"/><stop offset="100%" stop-color="rgba(0,0,0,0.6)"/>
+      </linearGradient>
+      <radialGradient id="g-ao-s" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="rgba(0,0,0,0.55)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+      </radialGradient>
+      <linearGradient id="g-floor" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0c0d13"/><stop offset="100%" stop-color="#03040b"/>
       </linearGradient>
 
-      <!-- ENVIRONMENTS (behind the windshield) -->
+      <!-- ENVIRONMENTS (behind the windshield, deep navy) -->
       <linearGradient id="env-city" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#0b1730"/><stop offset="60%" stop-color="#0a1020"/><stop offset="100%" stop-color="#05070d"/>
+        <stop offset="0%" stop-color="#16264e"/><stop offset="55%" stop-color="#0c1733"/><stop offset="100%" stop-color="#060b18"/>
       </linearGradient>
       <linearGradient id="env-tunnel" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#161005"/><stop offset="55%" stop-color="#0d0a06"/><stop offset="100%" stop-color="#060505"/>
+        <stop offset="0%" stop-color="#241a08"/><stop offset="55%" stop-color="#120d04"/><stop offset="100%" stop-color="#070605"/>
       </linearGradient>
       <linearGradient id="env-showroom" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#1a1e28"/><stop offset="60%" stop-color="#0f1218"/><stop offset="100%" stop-color="#080a0e"/>
+        <stop offset="0%" stop-color="#2a3348"/><stop offset="60%" stop-color="#141826"/><stop offset="100%" stop-color="#090c12"/>
       </linearGradient>
       <linearGradient id="env-arena" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#1b0a24"/><stop offset="55%" stop-color="#0d0714"/><stop offset="100%" stop-color="#05040a"/>
+        <stop offset="0%" stop-color="#2a1246"/><stop offset="55%" stop-color="#120823"/><stop offset="100%" stop-color="#060410"/>
       </linearGradient>
 
-      <!-- glow filters -->
+      <!-- glow filters — natural falloff, no neon -->
       <filter id="f-glow" x="-60%" y="-60%" width="220%" height="220%">
-        <feGaussianBlur stdDeviation="7" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        <feGaussianBlur stdDeviation="8" result="b"/>
+        <feComponentTransfer in="b" result="g"><feFuncA type="gamma" amplitude="1" exponent="0.55"/></feComponentTransfer>
+        <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
       <filter id="f-glow-soft" x="-80%" y="-80%" width="260%" height="260%">
-        <feGaussianBlur stdDeviation="16"/>
+        <feGaussianBlur stdDeviation="18"/>
       </filter>
-      <filter id="f-glow-huge" x="-120%" y="-120%" width="340%" height="340%">
-        <feGaussianBlur stdDeviation="34"/>
+      <filter id="f-glow-huge" x="-140%" y="-140%" width="380%" height="380%">
+        <feGaussianBlur stdDeviation="40"/>
+      </filter>
+      <filter id="f-glow-fine" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="4"/>
+      </filter>
+      <filter id="f-soft15" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur stdDeviation="15"/>
+      </filter>
+      <filter id="f-soft30" x="-120%" y="-120%" width="340%" height="340%">
+        <feGaussianBlur stdDeviation="30"/>
       </filter>
       <filter id="f-blur6"><feGaussianBlur stdDeviation="6"/></filter>
       <filter id="f-blur2"><feGaussianBlur stdDeviation="2"/></filter>
+      <filter id="f-ao" x="-40%" y="-40%" width="180%" height="240%">
+        <feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#000000" flood-opacity="0.6"/>
+      </filter>
+      <filter id="f-ao-sm" x="-40%" y="-40%" width="180%" height="220%">
+        <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#000000" flood-opacity="0.55"/>
+      </filter>
+      <filter id="f-glass" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="1.4"/>
+      </filter>
 
-      <!-- material patterns -->
+      <!-- material patterns — detailed, layered -->
       <pattern id="p-carbon" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
         <rect width="14" height="14" fill="transparent"/>
-        <path d="M0 4 H14 M0 12 H14" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1.4"/>
-        <path d="M4 0 V14 M12 0 V14" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+        <path d="M0 3.5 H14 M0 10.5 H14" stroke="#ffffff" stroke-opacity="0.11" stroke-width="1.5"/>
+        <path d="M3.5 0 V14 M10.5 0 V14" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+        <path d="M0 7 H14" stroke="#000000" stroke-opacity="0.2" stroke-width="0.9"/>
+        <circle cx="3.5" cy="3.5" r="0.35" fill="#ffffff" fill-opacity="0.5"/>
+        <circle cx="10.5" cy="10.5" r="0.35" fill="#ffffff" fill-opacity="0.5"/>
       </pattern>
-      <pattern id="p-knit" width="16" height="16" patternUnits="userSpaceOnUse">
-        <rect width="16" height="16" fill="transparent"/>
-        <path d="M0 0 L16 16 M16 0 L0 16" stroke="#ffffff" stroke-opacity="0.08" stroke-width="1"/>
-        <circle cx="8" cy="8" r="1.2" fill="#ffffff" fill-opacity="0.12"/>
+      <pattern id="p-knit" width="13" height="13" patternUnits="userSpaceOnUse">
+        <rect width="13" height="13" fill="transparent"/>
+        <path d="M0.5 9.5 Q6.5 1.5 12.5 9.5 M0.5 4 Q6.5 -3 12.5 4" fill="none" stroke="#ffffff" stroke-opacity="0.09" stroke-width="1.1"/>
+        <path d="M0 10.5 Q6.5 12.5 13 10.5" fill="none" stroke="#000000" stroke-opacity="0.12" stroke-width="0.9"/>
       </pattern>
-      <pattern id="p-mesh" width="18" height="18" patternUnits="userSpaceOnUse">
-        <rect width="18" height="18" fill="transparent"/>
-        <circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.14"/>
-        <circle cx="11" cy="11" r="1" fill="#ffffff" fill-opacity="0.10"/>
-        <path d="M0 9 H18 M9 0 V18" stroke="#ffffff" stroke-opacity="0.05" stroke-width="0.6"/>
+      <pattern id="p-mesh" width="15" height="15" patternUnits="userSpaceOnUse">
+        <rect width="15" height="15" fill="transparent"/>
+        <circle cx="3.7" cy="3.7" r="1" fill="#ffffff" fill-opacity="0.14"/>
+        <circle cx="11.2" cy="11.2" r="1" fill="#ffffff" fill-opacity="0.14"/>
+        <circle cx="7.4" cy="7.4" r="0.6" fill="#ffffff" fill-opacity="0.07"/>
+        <path d="M0 7.5 H15 M7.5 0 V15" stroke="#ffffff" stroke-opacity="0.03" stroke-width="0.5"/>
       </pattern>
-      <pattern id="p-silk" width="24" height="24" patternUnits="userSpaceOnUse">
-        <rect width="24" height="24" fill="transparent"/>
-        <path d="M0 6 Q12 0 24 6 M0 18 Q12 12 24 18" stroke="#ffffff" stroke-opacity="0.07" stroke-width="1" fill="none"/>
+      <pattern id="p-silk" width="20" height="20" patternUnits="userSpaceOnUse">
+        <rect width="20" height="20" fill="transparent"/>
+        <path d="M2 0 V20 M7 0 V20 M12 0 V20 M17 0 V20" stroke="#ffffff" stroke-opacity="0.045" stroke-width="1"/>
+        <path d="M9.5 0 V20" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1"/>
       </pattern>
       <pattern id="p-stitch" width="18" height="9" patternUnits="userSpaceOnUse">
-        <path d="M0 4.5 H7" stroke="#ffffff" stroke-opacity="0.16" stroke-width="1.1" stroke-linecap="round"/>
+        <path d="M0 5 H7" stroke="#000000" stroke-opacity="0.35" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M0 4.5 H7" stroke="#ffffff" stroke-opacity="0.20" stroke-width="1.1" stroke-linecap="round"/>
+      </pattern>
+      <pattern id="p-grain" width="90" height="90" patternUnits="userSpaceOnUse">
+        <rect width="90" height="90" fill="transparent"/>
+        <circle cx="12" cy="34" r="0.5" fill="#ffffff" fill-opacity="0.55"/>
+        <circle cx="48" cy="11" r="0.6" fill="#ffffff" fill-opacity="0.4"/>
+        <circle cx="71" cy="57" r="0.5" fill="#ffffff" fill-opacity="0.5"/>
+        <circle cx="33" cy="78" r="0.4" fill="#ffffff" fill-opacity="0.35"/>
+        <circle cx="86" cy="24" r="0.5" fill="#ffffff" fill-opacity="0.3"/>
+        <circle cx="20" cy="60" r="0.4" fill="#ffffff" fill-opacity="0.45"/>
+        <circle cx="58" cy="82" r="0.4" fill="#ffffff" fill-opacity="0.3"/>
+        <circle cx="8" cy="8" r="0.4" fill="#ffffff" fill-opacity="0.35"/>
+        <circle cx="40" cy="40" r="0.3" fill="#ffffff" fill-opacity="0.4"/>
+        <circle cx="78" cy="14" r="0.35" fill="#ffffff" fill-opacity="0.35"/>
+      </pattern>
+      <pattern id="p-perf" width="9" height="9" patternUnits="userSpaceOnUse">
+        <rect width="9" height="9" fill="transparent"/>
+        <circle cx="4.5" cy="4.5" r="1.1" fill="#000000" fill-opacity="0.28"/>
+        <circle cx="4.5" cy="3.9" r="0.8" fill="#ffffff" fill-opacity="0.10"/>
       </pattern>
     </defs>
 
     <!-- ===== ENVIRONMENT (world outside the glass) ===== -->
+        <!-- ===== ENVIRONMENT (world outside the glass) ===== -->
     <g id="environment" data-env="city">
       <rect x="-40" y="-40" width="1280" height="840" fill="url(#g-bg)"/>
-      <g id="env-layer" clip-path="none">
+      <g id="env-layer">
         <!-- sky / backdrop swapped by JS via fill -->
         <polygon id="env-sky" points="260,64 940,64 1048,356 152,356" fill="url(#env-city)"/>
+        <!-- atmosphere + cabin-light reflection on glass -->
+        <g id="env-atmos" pointer-events="none">
+          <rect x="152" y="64" width="896" height="236" fill="url(#g-haze)" opacity="0.4"/>
+          <rect x="152" y="299" width="896" height="2" fill="#9fc4ff" opacity="0.28" filter="url(#f-glow)"/>
+          <path d="M282 96 Q600 84 918 96" fill="none" stroke="#8fd0ff" stroke-width="3" stroke-linecap="round" opacity="0.15" filter="url(#f-glow-soft)"/>
+          <path d="M300 118 Q600 106 900 118" fill="none" stroke="#bcd6ff" stroke-width="1.6" stroke-linecap="round" opacity="0.10" filter="url(#f-glass)"/>
+        </g>
+        <!-- moon + glow -->
+        <g class="env-moon">
+          <circle cx="818" cy="132" r="52" fill="url(#g-moon)"/>
+          <circle cx="818" cy="132" r="15" fill="#dbe6ff" opacity="0.85"/>
+        </g>
+        <!-- horizon haze -->
+        <polygon points="152,300 1048,300 1048,356 152,356" fill="url(#g-haze)"/>
         <!-- city skyline -->
         <g id="env-city-g" class="env-set">
           <g fill="#0d1424" stroke="none">
@@ -248,6 +314,10 @@
             <rect x="810" y="232" width="4" height="6"/><rect x="826" y="272" width="4" height="6"/>
             <rect x="862" y="264" width="4" height="6"/><rect x="880" y="296" width="4" height="6"/>
           </g>
+          <g class="env-dot" fill="#bcd6ff">
+            <circle cx="330" cy="130" r="1.3"/><circle cx="452" cy="104" r="1"/><circle cx="560" cy="140" r="1.5"/>
+            <circle cx="672" cy="118" r="1.1"/><circle cx="740" cy="150" r="1.2"/><circle cx="880" cy="120" r="1.4"/>
+          </g>
           <!-- road light streaks -->
           <g class="env-streak" stroke="#8fd0ff" stroke-opacity="0.18" stroke-width="2" stroke-linecap="round">
             <path d="M200 336 H420"/><path d="M700 344 H980"/>
@@ -257,6 +327,9 @@
         <g id="env-tunnel-g" class="env-set" style="display:none">
           <g stroke="#ffb03a" stroke-opacity="0.5" stroke-width="7" stroke-linecap="round" filter="url(#f-blur2)">
             <path d="M470 92 H730"/><path d="M440 150 H760"/><path d="M410 214 H790"/><path d="M372 286 H828"/>
+          </g>
+          <g class="env-dot" fill="#ffd9a0">
+            <circle cx="360" cy="120" r="1.6"/><circle cx="520" cy="80" r="1.3"/><circle cx="700" cy="130" r="1.5"/><circle cx="840" cy="96" r="1.2"/>
           </g>
           <g stroke="#2a2118" stroke-width="2" stroke-opacity="0.8">
             <path d="M300 64 L200 356"/><path d="M900 64 L1000 356"/>
@@ -271,6 +344,9 @@
             <ellipse cx="420" cy="150" rx="70" ry="9"/><ellipse cx="780" cy="150" rx="70" ry="9"/>
             <ellipse cx="600" cy="112" rx="90" ry="10"/>
           </g>
+          <g class="env-dot" fill="#ffffff">
+            <circle cx="330" cy="90" r="1.4"/><circle cx="520" cy="110" r="1.1"/><circle cx="700" cy="86" r="1.3"/><circle cx="860" cy="120" r="1"/>
+          </g>
         </g>
         <!-- night city -->
         <g id="env-night-city-g" class="env-set" style="display:none">
@@ -280,6 +356,9 @@
             <rect x="436" y="226" width="5" height="7"/><rect x="480" y="196" width="5" height="7"/><rect x="536" y="240" width="5" height="7"/>
             <rect x="592" y="184" width="5" height="7"/><rect x="648" y="228" width="5" height="7"/><rect x="704" y="200" width="5" height="7"/>
             <rect x="760" y="246" width="5" height="7"/><rect x="812" y="192" width="5" height="7"/><rect x="866" y="232" width="5" height="7"/>
+          </g>
+          <g class="env-dot" fill="#a8c8ff">
+            <circle cx="420" cy="120" r="1.5"/><circle cx="580" cy="104" r="1.2"/><circle cx="760" cy="128" r="1.4"/>
           </g>
           <path d="M152 356 H1048" stroke="#2d6bff" stroke-opacity="0.25" stroke-width="3"/>
         </g>
@@ -293,112 +372,319 @@
             <circle cx="730" cy="96" r="3"/><circle cx="840" cy="122" r="3"/>
             <circle cx="410" cy="170" r="2.4"/><circle cx="540" cy="158" r="2.4"/><circle cx="670" cy="162" r="2.4"/><circle cx="790" cy="174" r="2.4"/>
           </g>
+          <g class="env-dot" fill="#d9b8ff">
+            <circle cx="500" cy="140" r="1.4"/><circle cx="640" cy="120" r="1.2"/><circle cx="780" cy="150" r="1.3"/>
+          </g>
         </g>
       </g>
       <!-- glass over the world -->
-      <polygon points="260,64 940,64 1048,356 152,356" fill="url(#g-glass)" opacity="0.55"/>
-      <polyline points="286,120 320,200 348,260" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="14"/>
-      <polyline points="560,96 610,220 700,320" fill="none" stroke="#ffffff" stroke-opacity="0.03" stroke-width="18"/>
+      <polygon points="260,64 940,64 1048,356 152,356" fill="url(#g-glass)" opacity="0.62"/>
+      <polygon points="260,64 940,64 940,110 260,110" fill="url(#g-ao-top)" opacity="0.55"/>
+      <polyline points="286,120 320,200 348,260" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="14"/>
+      <polyline points="560,96 610,220 700,320" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="18"/>
+      <polyline points="700,110 720,200 690,300" fill="none" stroke="#ffffff" stroke-opacity="0.03" stroke-width="10"/>
+      <polyline points="300,280 340,330" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="8"/>
     </g>
 
-    <!-- ===== CABIN (static surfaces) ===== -->
+        <!-- ===== CABIN (static surfaces) ===== -->
     <g id="cabin">
       <!-- headliner / roof -->
       <rect x="176" y="52" width="848" height="44" rx="8" fill="url(#g-headliner)"/>
+      <rect x="238" y="56" width="724" height="8" rx="4" fill="#04050a"/>
+      <rect x="238" y="56" width="724" height="2" rx="1" fill="#1c2030"/>
       <!-- rear-view mirror -->
-      <rect x="566" y="60" width="68" height="20" rx="9" fill="#101218"/>
-      <rect x="570" y="63" width="60" height="13" rx="6" fill="#1b1f27"/>
+      <rect x="566" y="60" width="68" height="20" rx="9" fill="#101218" filter="url(#f-ao-sm)"/>
+      <rect x="570" y="63" width="60" height="13" rx="6" fill="url(#g-screen)"/>
+      <path d="M574 65 L626 65 L622 73 L578 73 Z" fill="#2d6bff" fill-opacity="0.28"/>
       <!-- sun visors -->
-      <rect x="300" y="58" width="130" height="12" rx="6" fill="#0e0f14"/>
-      <rect x="770" y="58" width="130" height="12" rx="6" fill="#0e0f14"/>
+      <rect x="300" y="58" width="130" height="12" rx="6" fill="#0e0f14" filter="url(#f-ao-sm)"/>
+      <rect x="770" y="58" width="130" height="12" rx="6" fill="#0e0f14" filter="url(#f-ao-sm)"/>
       <!-- A-pillar trims -->
       <polygon points="152,356 232,356 210,120 176,64" fill="#0a0b0f"/>
+      <polygon points="152,356 232,356 210,120 176,64" fill="url(#p-knit)" opacity="0.28"/>
       <polygon points="1048,356 968,356 990,120 1024,64" fill="#0a0b0f"/>
+      <polygon points="1048,356 968,356 990,120 1024,64" fill="url(#p-knit)" opacity="0.28"/>
+      <path d="M178 70 L208 118 L224 352" stroke="#000000" stroke-opacity="0.5" stroke-width="2" fill="none"/>
+      <path d="M1022 70 L992 118 L976 352" stroke="#000000" stroke-opacity="0.5" stroke-width="2" fill="none"/>
       <!-- dashboard shelf -->
       <polygon points="140,356 1060,356 1130,432 70,432" fill="url(#g-dash-top)"/>
       <polygon points="140,356 1060,356 1130,432 70,432" fill="url(#g-sheen)"/>
+      <polygon points="70,430 1130,430 1130,436 70,436" fill="url(#g-ao-top)" opacity="0.6"/>
       <!-- dashboard front face -->
       <polygon points="70,432 1130,432 1150,592 50,592" fill="url(#g-dash)"/>
+      <polygon points="70,432 1130,432 1150,448 50,448" fill="url(#g-sheen)" opacity="0.5"/>
       <!-- trim line -->
       <polyline points="86,452 1114,452" fill="none" stroke="url(#g-trim)" stroke-width="5" stroke-linecap="round"/>
+      <polyline points="86,455 1114,455" fill="none" stroke="#000000" stroke-opacity="0.4" stroke-width="1.4"/>
+      <!-- dash seams + grain -->
+      <path d="M300 452 V590 M900 452 V590" stroke="#000000" stroke-opacity="0.35" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <polygon points="70,432 1130,432 1150,592 50,592" fill="url(#p-grain)" opacity="0.5"/>
+      <!-- side speaker grilles -->
+      <rect x="96" y="474" width="52" height="74" rx="14" fill="#0b0c11" stroke="#22262f" stroke-width="1.2"/>
+      <rect x="100" y="478" width="44" height="66" rx="11" fill="url(#p-mesh)" opacity="0.7"/>
+      <rect x="1052" y="474" width="52" height="74" rx="14" fill="#0b0c11" stroke="#22262f" stroke-width="1.2"/>
+      <rect x="1056" y="478" width="44" height="66" rx="11" fill="url(#p-mesh)" opacity="0.7"/>
+      <!-- glovebox line -->
+      <path d="M200 520 H1000" stroke="#000000" stroke-opacity="0.4" stroke-width="1.6"/>
+      <path d="M200 522 H1000" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+      <rect x="560" y="512" width="80" height="7" rx="3.5" fill="#0e1016" stroke="#2a2e38" stroke-width="1"/>
       <!-- instrument cluster -->
-      <g id="cluster">
-        <rect x="252" y="372" width="212" height="66" rx="12" fill="url(#g-screen)" stroke="#20242e" stroke-width="1.4"/>
+            <g id="cluster">
+        <rect x="252" y="372" width="212" height="66" rx="12" fill="#0a0c12" stroke="#262b36" stroke-width="1.6" filter="url(#f-ao-sm)"/>
+        <rect x="256" y="376" width="204" height="58" rx="9" fill="url(#g-screen)"/>
         <g class="cluster-live">
-          <path d="M270 424 A44 44 0 0 1 314 380" fill="none" stroke="#2d6bff" stroke-opacity="0.75" stroke-width="3.4" stroke-linecap="round"/>
-          <path d="M402 380 A44 44 0 0 1 446 424" fill="none" stroke="#4df3ff" stroke-opacity="0.55" stroke-width="3.4" stroke-linecap="round"/>
-          <rect x="336" y="392" width="44" height="6" rx="3" fill="#ffffff" fill-opacity="0.5"/>
-          <rect x="330" y="406" width="56" height="4" rx="2" fill="#ffffff" fill-opacity="0.22"/>
-          <rect x="342" y="416" width="32" height="4" rx="2" fill="#ffffff" fill-opacity="0.16"/>
+          <!-- speed dial -->
+          <path d="M272 422 A42 42 0 0 1 314 380" fill="none" stroke="#35e07f" stroke-opacity="0.85" stroke-width="3.2" stroke-linecap="round"/>
+          <path d="M274 420 A40 40 0 0 1 312 384" fill="none" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1"/>
+          <!-- power dial -->
+          <path d="M398 380 A42 42 0 0 1 440 422" fill="none" stroke="#22c55e" stroke-opacity="0.55" stroke-width="3.2" stroke-linecap="round"/>
+          <g stroke="#ffffff" stroke-opacity="0.26" stroke-width="1.2">
+            <path d="M276 396 L280 396 M286 389 L289 389 M295 385 L297 385 M303 383 L305 383 M311 382 L313 382 M319 383 L321 383"/>
+            <path d="M436 396 L432 396 M426 389 L423 389 M417 385 L415 385 M409 383 L407 383 M401 382 L399 382 M393 383 L391 383"/>
+          </g>
+          <!-- digital readout -->
+          <text x="358" y="409" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="20" font-weight="700" fill="#e8eefc">128</text>
+          <text x="358" y="422" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="6.5" letter-spacing="1" fill="#8b95ab">KM/H</text>
+          <!-- gear + status -->
+          <text x="330" y="420" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="11" font-weight="700" fill="#35e07f">D</text>
+          <circle cx="338" cy="384" r="2.2" fill="#35e07f"/>
+          <circle cx="347" cy="384" r="2.2" fill="#35e07f" opacity="0.5"/>
+          <!-- energy bars -->
+          <rect x="368" y="386" width="26" height="3" rx="1.5" fill="#35e07f" opacity="0.9"/>
+          <rect x="368" y="392" width="20" height="3" rx="1.5" fill="#35e07f" opacity="0.55"/>
+          <rect x="368" y="398" width="14" height="3" rx="1.5" fill="#ffffff" opacity="0.25"/>
         </g>
+        <path d="M262 380 L340 376 L300 428 Z" fill="#ffffff" fill-opacity="0.06"/>
+        <path d="M330 376 L372 376 L360 428 Z" fill="#ffffff" fill-opacity="0.03"/>
       </g>
+      <!-- centre infotainment screen --></g>
       <!-- centre infotainment screen -->
-      <g id="infotainment">
-        <rect x="516" y="368" width="188" height="74" rx="10" fill="url(#g-screen)" stroke="#20242e" stroke-width="1.4"/>
+            <g id="infotainment">
+        <rect x="516" y="368" width="188" height="74" rx="10" fill="#0a0c12" stroke="#262b36" stroke-width="1.6" filter="url(#f-ao-sm)"/>
+        <rect x="520" y="372" width="180" height="66" rx="7" fill="url(#g-screen)"/>
         <g class="info-live">
-          <rect x="530" y="380" width="60" height="7" rx="3.5" fill="#2d6bff" fill-opacity="0.85"/>
-          <rect x="530" y="394" width="112" height="5" rx="2.5" fill="#ffffff" fill-opacity="0.3"/>
-          <rect x="530" y="405" width="86" height="5" rx="2.5" fill="#ffffff" fill-opacity="0.2"/>
-          <rect x="530" y="416" width="130" height="5" rx="2.5" fill="#ffffff" fill-opacity="0.14"/>
-          <circle cx="676" cy="404" r="16" fill="none" stroke="#4df3ff" stroke-opacity="0.5" stroke-width="2.4"/>
-          <circle cx="676" cy="404" r="5" fill="#4df3ff" fill-opacity="0.7"/>
+          <rect x="530" y="380" width="40" height="6" rx="3" fill="#22c55e" opacity="0.9"/>
+          <rect x="574" y="381" width="26" height="4" rx="2" fill="#ffffff" opacity="0.3"/>
+          <!-- map + route -->
+          <path d="M598 416 L622 400 L642 410 L668 392 L686 404" fill="none" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1.6" stroke-linecap="round"/>
+          <circle cx="668" cy="400" r="10" fill="none" stroke="#22c55e" stroke-opacity="0.6" stroke-width="2"/>
+          <circle cx="668" cy="400" r="3" fill="#22c55e" opacity="0.8"/>
+          <!-- media card -->
+          <rect x="530" y="394" width="120" height="5" rx="2.5" fill="#ffffff" opacity="0.35"/>
+          <rect x="530" y="404" width="96" height="5" rx="2.5" fill="#ffffff" opacity="0.2"/>
+          <!-- climate -->
+          <rect x="654" y="386" width="30" height="6" rx="3" fill="#0b2a6b" opacity="0.9"/>
+          <text x="669" y="392" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="6.5" fill="#e8eefc">21°</text>
+          <!-- app icons -->
+          <circle cx="532" cy="424" r="4" fill="#ffffff" opacity="0.18"/>
+          <circle cx="546" cy="424" r="4" fill="#ffffff" opacity="0.18"/>
+          <circle cx="560" cy="424" r="4" fill="#22c55e" opacity="0.5"/>
+          <circle cx="574" cy="424" r="4" fill="#ffffff" opacity="0.18"/>
+          <rect x="588" y="420" width="46" height="8" rx="4" fill="#35e07f" opacity="0.16"/>
+          <rect x="592" y="423" width="38" height="2" rx="1" fill="#35e07f" opacity="0.8"/>
         </g>
+        <path d="M524 376 L600 372 L560 432 Z" fill="#ffffff" fill-opacity="0.06"/>
+        <path d="M588 372 L652 372 L616 432 Z" fill="#ffffff" fill-opacity="0.03"/>
       </g>
+      <!-- vents --></g>
       <!-- vents -->
-      <g stroke="#000" stroke-opacity="0.45" stroke-width="3" stroke-linecap="round">
-        <path d="M250 480 H470"/>
-        <path d="M730 480 H950"/>
+      <g stroke="#000" stroke-opacity="0.5" stroke-width="3" stroke-linecap="round" filter="url(#f-blur2)">
+        <path d="M250 480 H470"/><path d="M730 480 H950"/>
       </g>
-      <g stroke="#ffffff" stroke-opacity="0.05" stroke-width="1" stroke-linecap="round">
+      <g stroke="#ffffff" stroke-opacity="0.06" stroke-width="1" stroke-linecap="round">
         <path d="M250 474 H470"/><path d="M730 474 H950"/>
       </g>
       <!-- center console -->
-      <path d="M560 432 Q555 420 560 414 L640 414 Q645 420 640 432 L646 640 L554 640 Z" fill="url(#g-console)"/>
+      <path d="M560 432 Q552 408 560 398 L640 398 Q648 408 640 432 L646 640 L554 640 Z" fill="url(#g-console)" filter="url(#f-ao)"/>
+      <path d="M566 440 Q560 430 566 424 L634 424 Q640 430 634 440 L638 640 L562 640 Z" fill="url(#g-sheen)" opacity="0.6"/>
       <!-- gear selector -->
-      <rect x="580" y="486" width="40" height="58" rx="18" fill="#15171d" stroke="#282c36" stroke-width="1.4"/>
+      <rect x="580" y="486" width="40" height="58" rx="18" fill="url(#g-dash)" stroke="#2b303c" stroke-width="1.4" filter="url(#f-ao-sm)"/>
       <rect x="592" y="498" width="16" height="30" rx="8" fill="#0a0b0e"/>
-      <!-- console knob -->
-      <circle cx="600" cy="574" r="17" fill="#14161c" stroke="#2a2e38" stroke-width="1.6"/>
-      <circle cx="600" cy="574" r="5" fill="#2d6bff" fill-opacity="0.55"/>
+      <path d="M592 500 H608" stroke="#4df3ff" stroke-opacity="0.6" stroke-width="1.4"/>
+      <!-- console knob + storage -->
+      <circle cx="600" cy="574" r="17" fill="url(#g-wheel)" stroke="#2e333f" stroke-width="1.6" filter="url(#f-ao-sm)"/>
+      <circle cx="600" cy="574" r="5" fill="#2d6bff" fill-opacity="0.65" filter="url(#f-glow-fine)"/>
+      <path d="M566 540 H634" stroke="#000000" stroke-opacity="0.4" stroke-width="1.4"/>
       <!-- door panels -->
       <polygon points="52,340 156,340 156,600 52,600" fill="url(#g-door)"/>
       <polygon points="1148,340 1044,340 1044,600 1148,600" fill="url(#g-door-r)"/>
+      <!-- door upper soft-touch insert -->
+      <rect x="60" y="384" width="88" height="86" rx="14" fill="url(#g-dash)" stroke="#1c2029" stroke-width="1.2"/>
+      <rect x="60" y="384" width="88" height="86" rx="14" fill="url(#p-knit)" opacity="0.35"/>
+      <rect x="1052" y="384" width="88" height="86" rx="14" fill="url(#g-dash)" stroke="#1c2029" stroke-width="1.2"/>
+      <rect x="1052" y="384" width="88" height="86" rx="14" fill="url(#p-knit)" opacity="0.35"/>
       <!-- door speakers -->
-      <circle cx="104" cy="546" r="26" fill="#0b0c10" stroke="#20232b" stroke-width="1.4"/>
+      <circle cx="104" cy="546" r="26" fill="#0b0c10" stroke="#22262f" stroke-width="1.6" filter="url(#f-ao-sm)"/>
+      <circle cx="104" cy="546" r="21" fill="none" stroke="#262b35" stroke-width="1.2"/>
       <circle cx="104" cy="546" r="15" fill="url(#p-mesh)" stroke="#191c23" stroke-width="1"/>
-      <circle cx="1096" cy="546" r="26" fill="#0b0c10" stroke="#20232b" stroke-width="1.4"/>
+      <circle cx="104" cy="546" r="15" fill="none" stroke="#2d6bff" stroke-opacity="0.25" stroke-width="1.2"/>
+      <circle cx="1096" cy="546" r="26" fill="#0b0c10" stroke="#22262f" stroke-width="1.6" filter="url(#f-ao-sm)"/>
+      <circle cx="1096" cy="546" r="21" fill="none" stroke="#262b35" stroke-width="1.2"/>
       <circle cx="1096" cy="546" r="15" fill="url(#p-mesh)" stroke="#191c23" stroke-width="1"/>
-      <!-- door armrests -->
-      <rect x="60" y="470" width="88" height="16" rx="8" fill="url(#g-trim)"/>
-      <rect x="1052" y="470" width="88" height="16" rx="8" fill="url(#g-trim)"/>
+      <circle cx="1096" cy="546" r="15" fill="none" stroke="#2d6bff" stroke-opacity="0.25" stroke-width="1.2"/>
+      <!-- door armrests + pulls -->
+      <rect x="60" y="470" width="88" height="16" rx="8" fill="url(#g-trim)" filter="url(#f-ao-sm)"/>
+      <rect x="1052" y="470" width="88" height="16" rx="8" fill="url(#g-trim)" filter="url(#f-ao-sm)"/>
+      <rect x="96" y="500" width="16" height="34" rx="7" fill="#0c0d12" stroke="#262b35" stroke-width="1.2"/>
+      <rect x="1088" y="500" width="16" height="34" rx="7" fill="#0c0d12" stroke="#262b35" stroke-width="1.2"/>
+      <!-- door pockets -->
+      <path d="M56 588 H152 V600 H56 Z" fill="#05060a"/>
+      <path d="M1144 588 H1048 V600 H1144 Z" fill="#05060a"/>
       <!-- seats (headrests through glass) -->
       <g id="seats-g">
-        <rect x="352" y="272" width="108" height="90" rx="26" fill="url(#g-seat)"/>
-        <rect x="352" y="272" width="108" height="90" rx="26" fill="url(#p-stitch)" opacity="0.5"/>
-        <rect x="352" y="272" width="108" height="90" rx="26" fill="none" stroke="#2a2c34" stroke-width="1.5"/>
-        <rect x="740" y="272" width="108" height="90" rx="26" fill="url(#g-seat)"/>
-        <rect x="740" y="272" width="108" height="90" rx="26" fill="url(#p-stitch)" opacity="0.5"/>
-        <rect x="740" y="272" width="108" height="90" rx="26" fill="none" stroke="#2a2c34" stroke-width="1.5"/>
+        <!-- left seat -->
+        <path d="M352 236 Q352 272 352 300 L352 362 L460 362 L460 300 Q460 272 460 236 Q406 226 352 236 Z" fill="url(#g-seat)" filter="url(#f-ao)"/>
+        <path d="M352 262 L352 362 L406 362 L406 262 Q379 254 352 262 Z" fill="url(#g-seat-side)" opacity="0.75"/>
+        <path d="M406 262 L406 362 L460 362 L460 262 Q433 254 406 262 Z" fill="#1b1e27" opacity="0.5"/>
+        <path d="M352 236 Q406 226 460 236 L460 262 Q406 252 352 262 Z" fill="url(#g-sheen)" opacity="0.55"/>
+        <path d="M406 262 V362" stroke="#000000" stroke-opacity="0.35" stroke-width="1.6"/>
+        <path d="M352 292 H460 M352 318 H460" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1.2"/>
+        <path d="M356 250 H404 M404 250 H456" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1.4" stroke-dasharray="5 3"/>
+        <!-- right seat -->
+        <path d="M740 236 Q740 272 740 300 L740 362 L848 362 L848 300 Q848 272 848 236 Q794 226 740 236 Z" fill="url(#g-seat)" filter="url(#f-ao)"/>
+        <path d="M740 262 L740 362 L794 362 L794 262 Q767 254 740 262 Z" fill="url(#g-seat-side)" opacity="0.75"/>
+        <path d="M794 262 L794 362 L848 362 L848 262 Q821 254 794 262 Z" fill="#1b1e27" opacity="0.5"/>
+        <path d="M740 236 Q794 226 848 236 L848 262 Q794 252 740 262 Z" fill="url(#g-sheen)" opacity="0.55"/>
+        <path d="M794 262 V362" stroke="#000000" stroke-opacity="0.35" stroke-width="1.6"/>
+        <path d="M740 292 H848 M740 318 H848" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1.2"/>
+        <path d="M744 250 H792 M792 250 H844" stroke="#ffffff" stroke-opacity="0.12" stroke-width="1.4" stroke-dasharray="5 3"/>
       </g>
       <!-- steering wheel -->
-      <g id="wheel">
-        <circle cx="356" cy="510" r="96" fill="url(#g-wheel)"/>
-        <circle cx="356" cy="510" r="96" fill="none" stroke="url(#g-trim)" stroke-width="7"/>
+            <g id="wheel">
+        <circle cx="356" cy="510" r="96" fill="url(#g-wheel)" filter="url(#f-ao)"/>
+        <circle cx="356" cy="510" r="96" fill="none" stroke="url(#g-wheel-rim)" stroke-width="8"/>
         <circle cx="356" cy="510" r="96" fill="none" stroke="#050507" stroke-width="1.2"/>
-        <path d="M356 414 L356 606 M270 552 Q356 596 442 552" fill="none" stroke="#1c1e25" stroke-width="10" stroke-linecap="round"/>
-        <rect x="340" y="470" width="32" height="66" rx="12" fill="#121319"/>
-        <text x="356" y="500" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="15" font-weight="700" fill="#3b3f4a">M</text>
+        <circle cx="356" cy="510" r="88" fill="none" stroke="#0d0f14" stroke-width="3"/>
+        <circle cx="356" cy="510" r="84" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+        <circle cx="356" cy="510" r="88" fill="none" stroke="#ffffff" stroke-opacity="0.09" stroke-width="0.8" stroke-dasharray="2.5 3.5"/>
+        <!-- 3 spokes -->
+        <g stroke="url(#g-wheel-rim)" stroke-width="9" stroke-linecap="round">
+          <path d="M356 414 V448"/>
+          <path d="M276 552 L306 530"/>
+          <path d="M436 552 L406 530"/>
+        </g>
+        <g stroke="#050507" stroke-width="1.4" opacity="0.5">
+          <path d="M356 414 V448"/><path d="M276 552 L306 530"/><path d="M436 552 L406 530"/>
+        </g>
+        <!-- hub pad -->
+        <rect x="334" y="452" width="44" height="62" rx="14" fill="url(#g-dash)" stroke="#262b35" stroke-width="1.2"/>
+        <path d="M330 480 Q356 456 382 480" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="8"/>
+        <!-- hub cap -->
+        <circle cx="356" cy="510" r="20" fill="#0d1017" stroke="url(#g-wheel-rim)" stroke-width="1.6"/>
+        <circle cx="356" cy="510" r="13" fill="url(#g-moon)" opacity="0.35"/>
+        <text x="356" y="515" text-anchor="middle" font-family="'Space Grotesk',sans-serif" font-size="13" font-weight="700" fill="#e8eefc">M</text>
+        <!-- subtle green glow (MUNDA) on the lower rim -->
+        <path d="M272 522 Q356 476 440 522" fill="none" stroke="#22c55e" stroke-opacity="0.06" stroke-width="10"/>
       </g>
-      <!-- footwell floor -->
-      <rect x="50" y="600" width="1100" height="118" fill="#050608"/>
+      <!-- footwell floor + AO --></g>
+      <!-- footwell floor + AO -->
+      <rect x="50" y="600" width="1100" height="118" fill="url(#g-floor)"/>
       <rect x="50" y="600" width="1100" height="118" fill="url(#g-footwell)"/>
+      <ellipse cx="406" cy="628" rx="120" ry="16" fill="url(#g-ao-s)"/>
+      <ellipse cx="794" cy="628" rx="120" ry="16" fill="url(#g-ao-s)"/>
+      <ellipse cx="600" cy="632" rx="110" ry="18" fill="url(#g-ao-s)"/>
+      <ellipse cx="330" cy="648" rx="80" ry="12" fill="url(#g-ao-s)"/>
       <!-- pedals -->
-      <rect x="300" y="640" width="30" height="52" rx="6" fill="#0c0d11" stroke="#1d2027" stroke-width="1.2"/>
-      <rect x="346" y="648" width="30" height="46" rx="6" fill="#0c0d11" stroke="#1d2027" stroke-width="1.2"/>
+      <rect x="300" y="640" width="30" height="52" rx="6" fill="#0d0e12" stroke="#262b35" stroke-width="1.2"/>
+      <rect x="300" y="640" width="30" height="6" rx="3" fill="#3a404e"/>
+      <rect x="346" y="648" width="30" height="46" rx="6" fill="#0d0e12" stroke="#262b35" stroke-width="1.2"/>
+      <rect x="346" y="648" width="30" height="6" rx="3" fill="#3a404e"/>
     </g>
+    <!-- ===== CABIN V3 — premium German interior details (Audi-inspired) ===== -->
+      <g id="cabin-v3" pointer-events="none">
+        <!-- MUNDA LED channels: recessed housings the strips sit in -->
+        <rect x="240" y="83" width="720" height="10" rx="5" fill="#030409" stroke="#1a1f2c" stroke-width="1"/>
+        <rect x="240" y="85" width="720" height="2" rx="1" fill="#262c3d" opacity="0.8"/>
+        <rect x="210" y="389" width="780" height="10" rx="5" fill="#030409" stroke="#1a1f2c" stroke-width="1"/>
+        <rect x="210" y="391" width="780" height="2" rx="1" fill="#262c3d" opacity="0.8"/>
+        <rect x="185" y="370" width="10" height="238" rx="5" fill="#030409" stroke="#1a1f2c" stroke-width="1"/>
+        <rect x="1005" y="370" width="10" height="238" rx="5" fill="#030409" stroke="#1a1f2c" stroke-width="1"/>
+        <rect x="565" y="446" width="10" height="168" rx="5" fill="#030409" stroke="#1a1f2c" stroke-width="1"/>
+        <rect x="625" y="446" width="10" height="168" rx="5" fill="#030409" stroke="#1a1f2c" stroke-width="1"/>
+        <path d="M352 296 Q406 284 460 296" fill="none" stroke="#030409" stroke-width="7" stroke-linecap="round"/>
+        <path d="M740 296 Q794 284 848 296" fill="none" stroke="#030409" stroke-width="7" stroke-linecap="round"/>
 
-    <!-- ===== MATERIAL OVERLAY ===== -->
-    <g id="material-layer" style="mix-blend-mode:soft-light; opacity:0.5; pointer-events:none">
+        <!-- gloss-black dash band -->
+        <polygon points="70,436 1130,436 1140,452 60,452" fill="#07080d"/>
+        <polygon points="70,436 1130,436 1140,452 60,452" fill="url(#g-dash-gloss)" opacity="0.5"/>
+        <path d="M70 444 H1130" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+
+        <!-- horizontal vent slats -->
+        <rect x="250" y="476" width="220" height="28" rx="8" fill="#0a0c11" stroke="#22262f" stroke-width="1"/>
+        <g stroke="#2a2f3b" stroke-width="2.4" stroke-linecap="round">
+          <path d="M256 482 H464 M256 490 H464 M256 498 H464"/>
+        </g>
+        <g stroke="#ffffff" stroke-opacity="0.07" stroke-width="1">
+          <path d="M256 482 H464 M256 490 H464 M256 498 H464"/>
+        </g>
+        <rect x="730" y="476" width="220" height="28" rx="8" fill="#0a0c11" stroke="#22262f" stroke-width="1"/>
+        <g stroke="#2a2f3b" stroke-width="2.4" stroke-linecap="round">
+          <path d="M736 482 H944 M736 490 H944 M736 498 H944"/>
+        </g>
+        <g stroke="#ffffff" stroke-opacity="0.07" stroke-width="1">
+          <path d="M736 482 H944 M736 490 H944 M736 498 H944"/>
+        </g>
+
+        <!-- diamond-quilt seat detail -->
+        <g stroke="#ffffff" stroke-opacity="0.05" fill="none" stroke-width="0.9">
+          <path d="M358 262 L382 282 M382 282 L406 262 M382 282 V362"/>
+          <path d="M406 262 L430 282 M430 282 L454 262 M430 282 V362"/>
+          <path d="M746 262 L770 282 M770 282 L794 262 M770 282 V362"/>
+          <path d="M794 262 L818 282 M818 282 L842 262 M818 282 V362"/>
+        </g>
+        <path d="M352 262 Q406 252 460 262" fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1.6"/>
+        <path d="M740 262 Q794 252 848 262" fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1.6"/>
+
+        <!-- leather grain (kept from v2) -->
+        <rect x="358" y="248" width="96" height="104" rx="10" fill="url(#p-grain)" opacity="0.5" style="mix-blend-mode:soft-light"/>
+        <rect x="746" y="248" width="96" height="104" rx="10" fill="url(#p-grain)" opacity="0.5" style="mix-blend-mode:soft-light"/>
+        <rect x="370" y="258" width="72" height="84" rx="8" fill="url(#p-perf)" opacity="0.45"/>
+        <rect x="758" y="258" width="72" height="84" rx="8" fill="url(#p-perf)" opacity="0.45"/>
+        <rect x="150" y="440" width="900" height="120" fill="url(#p-grain)" opacity="0.35" style="mix-blend-mode:soft-light"/>
+        <rect x="52" y="380" width="80" height="250" fill="url(#p-grain)" opacity="0.3" style="mix-blend-mode:soft-light"/>
+        <rect x="1068" y="380" width="80" height="250" fill="url(#p-grain)" opacity="0.3" style="mix-blend-mode:soft-light"/>
+
+        <!-- stitching along dash lower edge -->
+        <path d="M168 540 H1032" stroke="url(#p-stitch)" stroke-width="3" opacity="0.6"/>
+
+        <!-- gloss specular: dash top + front sheen -->
+        <path d="M244 364 Q600 352 956 364 L956 372 Q600 360 244 372 Z" fill="url(#g-dash-gloss)" opacity="0.55"/>
+        <path d="M214 394 Q600 380 986 394 L986 402 Q600 388 214 402 Z" fill="url(#g-sheen)" opacity="0.55"/>
+        <path d="M560 440 H640 V448 H640 Z" fill="url(#g-dash-gloss)" opacity="0.4"/>
+
+        <!-- AO pools: floor under dash / seats / console / doors -->
+        <ellipse cx="600" cy="646" rx="480" ry="30" fill="url(#g-ao-s)" opacity="0.5"/>
+        <ellipse cx="406" cy="352" rx="62" ry="15" fill="url(#g-ao-s)" opacity="0.55"/>
+        <ellipse cx="794" cy="352" rx="62" ry="15" fill="url(#g-ao-s)" opacity="0.55"/>
+        <ellipse cx="600" cy="640" rx="84" ry="18" fill="url(#g-ao-s)" opacity="0.6"/>
+        <ellipse cx="102" cy="640" rx="92" ry="18" fill="url(#g-ao-s)" opacity="0.6"/>
+        <ellipse cx="1098" cy="640" rx="92" ry="18" fill="url(#g-ao-s)" opacity="0.6"/>
+        <ellipse cx="600" cy="474" rx="72" ry="10" fill="url(#g-ao-s)" opacity="0.45"/>
+
+        <!-- door aluminium inserts + stitching -->
+        <path d="M64 396 H144 M1056 396 H1136" stroke="url(#g-trim)" stroke-width="1.6" opacity="0.5"/>
+        <path d="M64 470 H144 M1056 470 H1136" stroke="url(#p-stitch)" stroke-width="3" opacity="0.5"/>
+
+        <!-- center console gloss + gear boot + screen strip -->
+        <path d="M566 440 Q560 430 566 424 L634 424 Q640 430 634 440 L638 640 L562 640 Z" fill="url(#g-dash-gloss)" opacity="0.35"/>
+        <path d="M582 488 Q580 484 584 480 L616 480 Q620 484 618 488 L618 512 L582 512 Z" fill="#0a0b10" stroke="#232833" stroke-width="1"/>
+        <rect x="572" y="452" width="56" height="12" rx="6" fill="#0a0c12" stroke="#232833" stroke-width="1"/>
+        <rect x="575" y="455" width="50" height="6" rx="3" fill="url(#g-screen)"/>
+        <path d="M576 456 L600 454 L596 460 Z" fill="#22c55e" opacity="0.5"/>
+
+        <!-- A-pillar ambient wash (navy) -->
+        <path d="M176 70 L206 118 L222 352 L210 120 Z" fill="#0b2a6b" opacity="0.08"/>
+        <path d="M1024 70 L994 118 L978 352 L990 120 Z" fill="#0b2a6b" opacity="0.08"/>
+
+        <!-- glass top ambient occlusion -->
+        <path d="M262 62 L938 62 L938 80 L262 80 Z" fill="url(#g-ao-top)" opacity="0.45"/>
+
+        <!-- soft green ambience hint in headliner (brand, very subtle) -->
+        <rect x="176" y="52" width="848" height="44" rx="8" fill="#16a34a" opacity="0.035"/>
+      </g>
+
+    <!-- ===== MATERIAL OVERLAY<!-- ===== MATERIAL OVERLAY ===== -->
+    <g id="material-layer" style="mix-blend-mode:soft-light; opacity:0.5; pointer-events:none">      <rect x="176" y="52" width="848" height="44" rx="8"/>      <polygon points="152,356 232,356 210,120 176,64"/>      <polygon points="1048,356 968,356 990,120 1024,64"/>
       <polygon points="140,356 1060,356 1130,432 70,432"/>
       <polygon points="70,432 1130,432 1150,592 50,592"/>
       <polygon points="52,340 156,340 156,600 52,600"/>
@@ -408,19 +694,27 @@
       <path d="M560 432 Q555 420 560 414 L640 414 Q645 420 640 432 L646 640 L554 640 Z"/>
     </g>
 
-    <!-- ===== LIGHTS ===== -->
+        <!-- ===== LIGHTS ===== -->
     <g id="lights">
       <!-- ROOF -->
       <g class="zone" data-zone="roof">
         <path class="strip-halo" d="M246 88 Q600 72 954 88" fill="none" stroke="#2d6bff" stroke-width="34" stroke-linecap="round" filter="url(#f-glow-huge)" opacity="0.35"/>
         <path class="strip-bloom" d="M246 88 Q600 72 954 88" fill="none" stroke="#2d6bff" stroke-width="16" stroke-linecap="round" filter="url(#f-glow-soft)"/>
         <path class="strip-core" d="M246 88 Q600 72 954 88" fill="none" stroke="#2d6bff" stroke-width="5" stroke-linecap="round"/>
+        <path class="strip-bloom" d="M250 356 Q600 342 950 356" fill="none" stroke="#2d6bff" stroke-width="24" stroke-linecap="round" filter="url(#f-glow-soft)" opacity="0.5"/>
+        <path class="strip-bloom" d="M300 128 Q600 108 900 128" fill="none" stroke="#2d6bff" stroke-width="9" stroke-linecap="round" filter="url(#f-glow)"/>
+        <path class="strip-bloom" d="M240 366 Q600 354 960 366" fill="none" stroke="#2d6bff" stroke-width="50" stroke-linecap="round" filter="url(#f-soft30)" opacity="0.30"/>
+        <path class="strip-bloom" d="M300 124 Q600 104 900 124" fill="none" stroke="#2d6bff" stroke-width="14" stroke-linecap="round" filter="url(#f-soft15)" opacity="0.30"/>
       </g>
       <!-- DASHBOARD -->
       <g class="zone" data-zone="dashboard">
         <path class="strip-halo" d="M214 394 Q600 380 986 394" fill="none" stroke="#2d6bff" stroke-width="34" stroke-linecap="round" filter="url(#f-glow-huge)" opacity="0.35"/>
         <path class="strip-bloom" d="M214 394 Q600 380 986 394" fill="none" stroke="#2d6bff" stroke-width="16" stroke-linecap="round" filter="url(#f-glow-soft)"/>
         <path class="strip-core" d="M214 394 Q600 380 986 394" fill="none" stroke="#2d6bff" stroke-width="5" stroke-linecap="round"/>
+        <ellipse class="strip-bloom" cx="600" cy="640" rx="320" ry="26" fill="#2d6bff" filter="url(#f-glow-soft)" opacity="0.4"/>
+        <path class="strip-bloom" d="M290 132 Q600 116 910 132" fill="none" stroke="#2d6bff" stroke-width="8" stroke-linecap="round" filter="url(#f-glow)"/>
+        <ellipse class="strip-bloom" cx="600" cy="642" rx="520" ry="38" fill="#2d6bff" filter="url(#f-soft30)" opacity="0.26"/>
+        <path class="strip-bloom" d="M214 400 Q600 386 986 400" fill="none" stroke="#2d6bff" stroke-width="22" stroke-linecap="round" filter="url(#f-soft15)" opacity="0.35"/>
       </g>
       <!-- DOORS -->
       <g class="zone" data-zone="doors">
@@ -430,6 +724,12 @@
         <path class="strip-halo" d="M1010 372 L1010 604" fill="none" stroke="#2d6bff" stroke-width="30" stroke-linecap="round" filter="url(#f-glow-huge)" opacity="0.35"/>
         <path class="strip-bloom" d="M1010 372 L1010 604" fill="none" stroke="#2d6bff" stroke-width="16" stroke-linecap="round" filter="url(#f-glow-soft)"/>
         <path class="strip-core" d="M1010 372 L1010 604" fill="none" stroke="#2d6bff" stroke-width="5" stroke-linecap="round"/>
+        <ellipse class="strip-bloom" cx="108" cy="592" rx="34" ry="10" fill="#2d6bff" filter="url(#f-glow-soft)" opacity="0.5"/>
+        <ellipse class="strip-bloom" cx="1092" cy="592" rx="34" ry="10" fill="#2d6bff" filter="url(#f-glow-soft)" opacity="0.5"/>
+        <ellipse class="strip-bloom" cx="128" cy="642" rx="52" ry="13" fill="#2d6bff" filter="url(#f-glow-soft)" opacity="0.4"/>
+        <ellipse class="strip-bloom" cx="1072" cy="642" rx="52" ry="13" fill="#2d6bff" filter="url(#f-glow-soft)" opacity="0.4"/>
+        <ellipse class="strip-bloom" cx="148" cy="498" rx="64" ry="230" fill="#2d6bff" filter="url(#f-soft30)" opacity="0.22"/>
+        <ellipse class="strip-bloom" cx="1052" cy="498" rx="64" ry="230" fill="#2d6bff" filter="url(#f-soft30)" opacity="0.22"/>
       </g>
       <!-- CONSOLE -->
       <g class="zone" data-zone="console">
@@ -437,11 +737,17 @@
         <path class="strip-core" d="M570 448 L570 612" fill="none" stroke="#2d6bff" stroke-width="5" stroke-linecap="round"/>
         <path class="strip-bloom" d="M630 448 L630 612" fill="none" stroke="#2d6bff" stroke-width="16" stroke-linecap="round" filter="url(#f-glow-soft)"/>
         <path class="strip-core" d="M630 448 L630 612" fill="none" stroke="#2d6bff" stroke-width="5" stroke-linecap="round"/>
+        <ellipse class="strip-bloom" cx="600" cy="634" rx="74" ry="20" fill="#2d6bff" filter="url(#f-glow-soft)" opacity="0.45"/>
+        <ellipse class="strip-bloom" cx="600" cy="600" rx="120" ry="44" fill="#2d6bff" filter="url(#f-soft30)" opacity="0.26"/>
+        <path class="strip-bloom" d="M600 420 L600 380" fill="none" stroke="#2d6bff" stroke-width="12" stroke-linecap="round" filter="url(#f-soft15)" opacity="0.3"/>
       </g>
       <!-- FOOTWELL -->
       <g class="zone" data-zone="footwell">
         <ellipse class="strip-bloom" cx="600" cy="686" rx="470" ry="46" fill="#2d6bff" opacity="0.5" filter="url(#f-glow-soft)"/>
         <ellipse class="strip-core" cx="600" cy="688" rx="470" ry="40" fill="#2d6bff" opacity="0.5"/>
+        <ellipse class="strip-bloom" cx="600" cy="686" rx="330" ry="30" fill="#2d6bff" opacity="0.45" filter="url(#f-glow)"/>
+        <ellipse class="strip-core" cx="600" cy="688" rx="190" ry="18" fill="#2d6bff" opacity="0.6"/>
+        <ellipse class="strip-bloom" cx="600" cy="686" rx="560" ry="58" fill="#2d6bff" filter="url(#f-soft30)" opacity="0.28"/>
       </g>
       <!-- SEATS -->
       <g class="zone" data-zone="seats">
@@ -449,6 +755,10 @@
         <path class="strip-core" d="M352 300 Q406 288 460 300" fill="none" stroke="#2d6bff" stroke-width="4.5" stroke-linecap="round"/>
         <path class="strip-bloom" d="M740 300 Q794 288 848 300" fill="none" stroke="#2d6bff" stroke-width="14" stroke-linecap="round" filter="url(#f-glow-soft)"/>
         <path class="strip-core" d="M740 300 Q794 288 848 300" fill="none" stroke="#2d6bff" stroke-width="4.5" stroke-linecap="round"/>
+        <ellipse class="strip-bloom" cx="406" cy="344" rx="46" ry="12" fill="#2d6bff" filter="url(#f-glow-soft)" opacity="0.4"/>
+        <ellipse class="strip-bloom" cx="794" cy="344" rx="46" ry="12" fill="#2d6bff" filter="url(#f-glow-soft)" opacity="0.4"/>
+        <ellipse class="strip-bloom" cx="406" cy="312" rx="66" ry="18" fill="#2d6bff" filter="url(#f-soft15)" opacity="0.25"/>
+        <ellipse class="strip-bloom" cx="794" cy="312" rx="66" ry="18" fill="#2d6bff" filter="url(#f-soft15)" opacity="0.25"/>
       </g>
     </g>
 
@@ -477,36 +787,14 @@
 <!-- ===================== SCREENS ===================== -->
 <main id="app">
 
-  <!-- ========== 0. BOOT / IDENTITY ========== -->
+  <!-- ========== 0. BOOT — one screen, one button: START ========== -->
   <section class="screen active" id="screen-boot" data-screen="boot">
-    <div class="boot-inner">
-      <div class="boot-badge">
-        <span class="boot-mark">M</span>
-      </div>
-      <p class="kicker" data-i18n="boot.kicker">MUNDA FUTURE LAB · ACCESS</p>
-      <h1 class="boot-title" data-i18n-html="boot.title">DESIGN THE LIGHT.<br><span>SHAPE THE FUTURE.</span></h1>
-      <p class="boot-sub" data-i18n="boot.sub">You are a MUNDA design engineer. Build the illuminated interior of tomorrow's premium vehicle.</p>
-
-      <div class="boot-form">
-        <label for="boot-name" class="boot-label" data-i18n="boot.nameLabel">ENGINEER NAME</label>
-        <input id="boot-name" type="text" maxlength="14" autocomplete="off" spellcheck="false"
-               data-i18n-attr="placeholder:boot.namePlaceholder" placeholder="Type your name">
-        <p class="boot-err" id="boot-err" hidden data-i18n="boot.nameErr">Please enter a name to continue.</p>
-        <button class="btn-primary btn-huge btn-pulse" id="boot-start">
-          <span data-i18n="boot.start">PLAY</span>
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-
-      <div class="boot-lang">
-        <span data-i18n="boot.language">Language</span>
-        <div class="lang-switch big" role="group" aria-label="Language">
-          <button data-lang-set="en">ENGLISH</button>
-          <button data-lang-set="sq">SHQIP</button>
-        </div>
-      </div>
-      <a class="boot-site" href="index.html" data-i18n="boot.site">← BACK TO THE MUNDA WEBSITE</a>
-      <p class="boot-foot" data-i18n="boot.foot">Sound is generated live in your browser · MUNDA Kosova · Digital School</p>
+    <div class="launch-center">
+      <h1 class="launch-title">MUNDA</h1>
+      <p class="launch-sub">Future Lab</p>
+      <button class="launch-start" id="boot-start">
+        <span data-i18n="boot.start">START</span>
+      </button>
     </div>
   </section>
 
@@ -1092,5 +1380,6 @@
 <script src="js/game.js"></script>
 <script src="js/futurelab.js"></script>
 <script src="js/app.js"></script>
+<script src="js/launcher.js"></script>
 </body>
 </html>

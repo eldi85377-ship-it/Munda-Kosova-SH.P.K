@@ -71,21 +71,21 @@
           break;
         case 1:
           glow.style.opacity = '0.18';
-          fabric.style.background = 'linear-gradient(135deg,rgba(77,243,255,0.04),rgba(255,255,255,0.01)),repeating-linear-gradient(0deg,rgba(77,243,255,0.06) 0 2px,transparent 2px 8px),repeating-linear-gradient(90deg,rgba(77,243,255,0.06) 0 2px,transparent 2px 8px)';
+          fabric.style.background = 'linear-gradient(135deg,rgba(34,197,94,0.04),rgba(255,255,255,0.01)),repeating-linear-gradient(0deg,rgba(34,197,94,0.06) 0 2px,transparent 2px 8px),repeating-linear-gradient(90deg,rgba(34,197,94,0.06) 0 2px,transparent 2px 8px)';
           break;
         case 2:
           glow.style.opacity = '0.55';
-          fabric.style.background = 'linear-gradient(135deg,rgba(77,243,255,0.08),rgba(255,255,255,0.01)),repeating-linear-gradient(45deg,rgba(77,243,255,0.05) 0 2px,transparent 2px 7px)';
+          fabric.style.background = 'linear-gradient(135deg,rgba(34,197,94,0.08),rgba(255,255,255,0.01)),repeating-linear-gradient(45deg,rgba(34,197,94,0.05) 0 2px,transparent 2px 7px)';
           fabric.style.boxShadow = 'inset 0 0 60px rgba(0,0,0,0.35),0 0 60px -6px var(--accent)';
           break;
         case 3:
           glow.style.opacity = '0.7';
-          fabric.style.background = 'linear-gradient(135deg,rgba(77,243,255,0.1),rgba(9,9,13,0.4)),radial-gradient(60% 80% at 50% 20%,rgba(77,243,255,0.15),transparent)';
+          fabric.style.background = 'linear-gradient(135deg,rgba(34,197,94,0.1),rgba(9,9,13,0.4)),radial-gradient(60% 80% at 50% 20%,rgba(34,197,94,0.15),transparent)';
           fabric.style.boxShadow = 'inset 0 0 40px rgba(0,0,0,0.25),0 0 80px -4px var(--accent)';
           break;
         case 4:
           glow.style.opacity = '0.95';
-          fabric.style.background = 'radial-gradient(60% 60% at 50% 50%,rgba(77,243,255,0.2),transparent)';
+          fabric.style.background = 'radial-gradient(60% 60% at 50% 50%,rgba(34,197,94,0.2),transparent)';
           fabric.style.boxShadow = '0 0 120px 0 var(--accent)';
           break;
       }

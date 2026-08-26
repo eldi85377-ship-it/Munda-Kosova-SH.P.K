@@ -14,12 +14,20 @@
 (function () {
   'use strict';
 
-  /* ---- EDIT ME: the real team of MUNDA Kosova SH.P.K ---- */
+  /* ---- the real team of MUNDA (leadership from munda.tech / ARBK) ---- */
   var TEAM = [
-    { name: '', role: 'General Manager', bio: 'Leads MUNDA Kosova SH.P.K and its automotive partnerships from Obiliq.', photo: 'assets/photos/manager.jpg' },
-    { name: '', role: 'Operations', bio: 'Keeps the production line and illuminated textile processes running.', photo: 'assets/photos/operations.jpg' },
-    { name: '', role: 'Quality & Testing', bio: 'Runs the automotive tests behind every certified MUNDA product.', photo: 'assets/photos/quality.jpg' },
-    { name: '', role: 'Engineering', bio: 'Designs the flexible LED systems woven into every interior.', photo: 'assets/photos/engineering.jpg' }
+    { name: 'Kai Muxel', role: 'Managing Director · MUNDA',
+      bio: 'Leads MUNDA Textile Lichtsysteme GmbH — the joint venture between AUNDE & MENTOR behind MUNDA Kosova.',
+      photo: 'assets/photos/real-person.jpg' },
+    { name: 'Kushtrim Grainca', role: 'Authorized Representative · MUNDA Kosova',
+      bio: 'Represents MUNDA Kosova SH.P.K. in Obiliq, delivering for the Volkswagen Group supply chain.',
+      photo: '' },
+    { name: '', role: 'Production & Operations',
+      bio: 'Runs the illuminated-textile production line at the Obiliq plant.',
+      photo: 'assets/photos/real-worker.jpg' },
+    { name: '', role: 'Quality & Testing',
+      bio: 'Runs the automotive tests behind every certified MUNDA component.',
+      photo: '' }
   ];
 
   function $(id) { return document.getElementById(id); }
@@ -49,9 +57,9 @@
       card.style.setProperty('--i', i);
 
       var photoHtml;
-      if (member.photo && name) {
+      if (member.photo) {
         photoHtml = '<span class="tc-photo"><img src="' + esc(member.photo) +
-          '" alt="' + esc(name) + '" loading="lazy" onerror="this.parentNode.classList.add(\'noimg\');this.remove()">' +
+          '" alt="' + esc(name || role) + '" loading="lazy" onerror="this.parentNode.classList.add(\'noimg\');this.remove()">' +
           '<i class="tc-initials">' + esc(initials(name, role)) + '</i></span>';
       } else {
         photoHtml = '<span class="tc-photo noimg"><i class="tc-initials">' + esc(initials(name, role)) + '</i></span>';

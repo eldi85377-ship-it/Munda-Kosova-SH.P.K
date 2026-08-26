@@ -468,11 +468,15 @@
     stopScheduler();
     schedTimer = setInterval(scheduler, 30);
     if (name === 'ambient') startAmbientTone();
+    startEngineHum();          // low electric hum — the cabin feels alive
+    if (name === 'lab' || name === 'showcase') startLabAmbience();  // lab ventilation + equipment
   }
 
   function stopMusic(fade) {
     if (!ctx) return;
     stopScheduler();
+    stopEngineHum();
+    stopLabAmbience();
     currentName = null;
     currentTrack = null;
     var f = fade != null ? fade : 700;
@@ -497,6 +501,79 @@
       ambientSrc.connect(f); f.connect(g); g.connect(musicBus);
       ambientSrc.start();
     } catch (e) { ambientSrc = null; }
+  }
+
+  /* low electric-hum ambience — the car is always alive under the music */
+  var hum = null;
+  function startEngineHum() {
+    if (!ctx || hum) return;
+    try {
+      var o1 = ctx.createOscillator(); o1.type = 'sine'; o1.frequency.value = 50;
+      var o2 = ctx.createOscillator(); o2.type = 'sine'; o2.frequency.value = 76.4;
+      var g = ctx.createGain(); g.gain.value = 0;
+      var f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 150;
+      var lfo = ctx.createOscillator(); lfo.frequency.value = 0.07;
+      var lg = ctx.createGain(); lg.gain.value = 0.012;
+      o1.connect(g); o2.connect(g); g.connect(f); f.connect(musicBus);
+      lfo.connect(lg); lg.connect(g.gain);
+      g.gain.setTargetAtTime(0.045, ctx.currentTime, 2.8);
+      o1.start(); o2.start(); lfo.start();
+      hum = { o1: o1, o2: o2, lfo: lfo, g: g };
+    } catch (e) { hum = null; }
+  }
+  function stopEngineHum() {
+    if (!hum) return;
+    try {
+      hum.g.gain.setTargetAtTime(0, ctx.currentTime, 0.7);
+      var n = hum;
+      setTimeout(function () {
+        try { n.o1.stop(); n.o2.stop(); n.lfo.stop(); } catch (e) {}
+      }, 2600);
+    } catch (e) {}
+    hum = null;
+  }
+
+  /* ============ LAB AMBIENCE (build screen) — ventilation + equipment ============ */
+  var lab = null;
+  function startLabAmbience() {
+    if (!ctx || !noiseBuf || lab) return;
+    try {
+      var src = ctx.createBufferSource();
+      src.buffer = noiseBuf;
+      src.loop = true;
+      var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 340; bp.Q.value = 0.5;
+      var g = ctx.createGain(); g.gain.value = 0;
+      var lfo = ctx.createOscillator(); lfo.frequency.value = 0.11;
+      var lg = ctx.createGain(); lg.gain.value = 0.01;
+      lfo.connect(lg); lg.connect(g.gain);
+      src.connect(bp); bp.connect(g); g.connect(musicBus);
+      g.gain.setTargetAtTime(0.03, ctx.currentTime, 2.2);
+      src.start(); lfo.start();
+      var beep = function () {
+        try {
+          var o = ctx.createOscillator(); o.type = 'sine';
+          o.frequency.value = 1050 + Math.random() * 260;
+          var bg = ctx.createGain();
+          bg.gain.setValueAtTime(0, ctx.currentTime);
+          bg.gain.linearRampToValueAtTime(0.011, ctx.currentTime + 0.02);
+          bg.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.24);
+          o.connect(bg); bg.connect(musicBus);
+          o.start(); o.stop(ctx.currentTime + 0.32);
+        } catch (e) {}
+      };
+      var beepT = setInterval(function () { beep(); }, 9000 + Math.random() * 5000);
+      lab = { src: src, lfo: lfo, g: g, beepT: beepT };
+    } catch (e) { lab = null; }
+  }
+  function stopLabAmbience() {
+    if (!lab) return;
+    try {
+      clearInterval(lab.beepT);
+      lab.g.gain.setTargetAtTime(0, ctx.currentTime, 1);
+      var n = lab;
+      setTimeout(function () { try { n.src.stop(); n.lfo.stop(); } catch (e) {} }, 3200);
+    } catch (e) {}
+    lab = null;
   }
 
   /* ================= CROWD (arena ambience) ================= */

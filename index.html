@@ -4,586 +4,315 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#050507">
-<title>MUNDA FUTURE LAB — Design the Light. Shape the Future.</title>
-<meta name="description" content="MUNDA Kosova — illuminated textile systems for the automotive industry. Enter the Future Lab and design the lighting experience of tomorrow's mobility.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232d6bff'/%3E%3Cstop offset='1' stop-color='%234df3ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cpath d='M20 44V20l12 14 12-14v24' fill='none' stroke='%2305070f' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<title>MUNDA Kosova — Lighting the Future of Mobility</title>
+<meta name="description" content="MUNDA Kosova SH.P.K. — illuminated textile systems for the automotive industry. The first Volkswagen Group-approved supplier in Kosovo.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/light.css">
 </head>
 <body>
 
 <div class="grain" aria-hidden="true"></div>
 <div class="vignette" aria-hidden="true"></div>
+<div id="grade" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="lg-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2d6bff"/>
+      <stop offset="1" stop-color="#4df3ff"/>
+    </linearGradient>
+  </defs>
+</svg>
 
-<!-- ===================== NAV ===================== -->
+<!-- ===================== MINIMAL TOP BAR ===================== -->
 <header class="site-nav" id="site-nav">
-  <a class="site-brand" href="#hero" data-scroll>
+  <a class="site-brand" href="#hero">
     <span class="brand-mark">M</span>
     <span class="site-brand-text">MUNDA <em>KOSOVA</em></span>
   </a>
-  <nav class="site-links" id="site-links" aria-label="Main">
-    <a href="#about" data-scroll data-i18n="nav.about">About</a>
-    <a href="#technology" data-scroll data-i18n="nav.tech">Technology</a>
-    <a href="#how" data-scroll data-i18n="nav.how">How it works</a>
-    <a href="#score" data-scroll data-i18n="nav.score">MUNDA Score</a>
-    <a href="#gallery" data-scroll data-i18n="nav.gallery">Gallery</a>
-    <a href="#team" data-scroll data-i18n="nav.team">Team</a>
-    <a href="#game" data-scroll data-i18n="nav.game">The Game</a>
-    <a class="play-mobile" href="experience.html" data-i18n="nav.playGame">PLAY THE GAME</a>
-  </nav>
   <div class="site-nav-right">
     <div class="lang-switch" role="group" aria-label="Language">
       <button data-lang-set="en">EN</button>
       <button data-lang-set="sq">SQ</button>
     </div>
     <a class="btn btn-primary btn-sm btn-pulse" href="experience.html" data-i18n="nav.playGame">PLAY THE GAME</a>
-    <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </header>
 
 <main>
 
-<!-- ===================== 1. HERO ===================== -->
+<!-- ===================== 1. HERO — full-screen cinematic ===================== -->
 <section class="hero" id="hero">
   <canvas id="hero-canvas" aria-hidden="true"></canvas>
 
-  <div class="hero-svg" id="hero-svg" aria-hidden="true">
-    <!-- cinematic car interior silhouette with breathing light strips -->
-    <svg viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet">
-      <defs>
-        <linearGradient id="hs-glass" x1="0" y1="0" x2="0.35" y2="1">
-          <stop offset="0%" stop-color="#0b1120"/><stop offset="100%" stop-color="#05060b"/>
-        </linearGradient>
-        <linearGradient id="hs-dash" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#171a22"/><stop offset="100%" stop-color="#0a0b10"/>
-        </linearGradient>
-        <linearGradient id="hs-seat" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#1c1f27"/><stop offset="100%" stop-color="#101117"/>
-        </linearGradient>
-        <radialGradient id="hs-bg" cx="50%" cy="40%" r="75%">
-          <stop offset="0%" stop-color="#10131d"/><stop offset="60%" stop-color="#08090f"/><stop offset="100%" stop-color="#040406"/>
-        </radialGradient>
-        <filter id="hs-glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="14"/></filter>
-      </defs>
-      <rect x="-40" y="-40" width="1280" height="840" fill="url(#hs-bg)"/>
-      <!-- city glow behind glass -->
-      <polygon points="260,64 940,64 1048,356 152,356" fill="#0a1424"/>
-      <g fill="#0d1626">
-        <rect x="300" y="210" width="46" height="146"/><rect x="356" y="176" width="34" height="180"/>
-        <rect x="400" y="232" width="52" height="124"/><rect x="466" y="196" width="30" height="160"/>
-        <rect x="508" y="244" width="60" height="112"/><rect x="580" y="186" width="38" height="170"/>
-        <rect x="630" y="228" width="48" height="128"/><rect x="800" y="214" width="40" height="142"/>
-      </g>
-      <g class="hero-wins" fill="#4df3ff" fill-opacity="0.5">
-        <rect x="308" y="222" width="4" height="6"/><rect x="364" y="196" width="4" height="6"/>
-        <rect x="412" y="250" width="4" height="6"/><rect x="474" y="214" width="4" height="6"/>
-        <rect x="520" y="262" width="4" height="6"/><rect x="588" y="206" width="4" height="6"/>
-        <rect x="642" y="246" width="4" height="6"/><rect x="810" y="232" width="4" height="6"/>
-      </g>
-      <polygon points="260,64 940,64 1048,356 152,356" fill="url(#hs-glass)" opacity="0.6"/>
-      <!-- headliner -->
-      <rect x="176" y="52" width="848" height="44" rx="8" fill="#0d0e13"/>
-      <!-- A pillars -->
-      <polygon points="152,356 232,356 210,120 176,64" fill="#0a0b0f"/>
-      <polygon points="1048,356 968,356 990,120 1024,64" fill="#0a0b0f"/>
-      <!-- dash -->
-      <polygon points="140,356 1060,356 1130,432 70,432" fill="url(#hs-dash)"/>
-      <polygon points="70,432 1130,432 1150,592 50,592" fill="url(#hs-dash)"/>
-      <polyline points="86,452 1114,452" fill="none" stroke="#3a3f4c" stroke-width="5" stroke-linecap="round"/>
-      <!-- doors -->
-      <polygon points="52,340 156,340 156,600 52,600" fill="#0b0c10"/>
-      <polygon points="1148,340 1044,340 1044,600 1148,600" fill="#0b0c10"/>
-      <!-- seats -->
-      <rect x="352" y="272" width="108" height="90" rx="26" fill="url(#hs-seat)"/>
-      <rect x="740" y="272" width="108" height="90" rx="26" fill="url(#hs-seat)"/>
-      <!-- steering wheel -->
-      <circle cx="356" cy="510" r="96" fill="#0b0c11"/>
-      <circle cx="356" cy="510" r="96" fill="none" stroke="#333947" stroke-width="7"/>
-      <!-- console -->
-      <path d="M560 432 Q555 420 560 414 L640 414 Q645 420 640 432 L646 640 L554 640 Z" fill="#0d0e13"/>
-      <!-- footwell -->
-      <rect x="50" y="600" width="1100" height="118" fill="#050608"/>
-
-      <!-- BREATHING LIGHT STRIPS (the brand moment) -->
-      <g class="hs-strip">
-        <path class="hs-halo" d="M246 88 Q600 72 954 88" fill="none" stroke="#2d6bff" stroke-width="30" stroke-linecap="round" filter="url(#hs-glow)" opacity="0.5"/>
-        <path class="hs-core" d="M246 88 Q600 72 954 88" fill="none" stroke="#4df3ff" stroke-width="5" stroke-linecap="round"/>
-      </g>
-      <g class="hs-strip hs-delay">
-        <path class="hs-halo" d="M214 394 Q600 380 986 394" fill="none" stroke="#2d6bff" stroke-width="30" stroke-linecap="round" filter="url(#hs-glow)" opacity="0.5"/>
-        <path class="hs-core" d="M214 394 Q600 380 986 394" fill="none" stroke="#4df3ff" stroke-width="5" stroke-linecap="round"/>
-      </g>
-      <g class="hs-strip hs-delay2">
-        <path class="hs-halo" d="M190 372 L190 604" fill="none" stroke="#2d6bff" stroke-width="26" stroke-linecap="round" filter="url(#hs-glow)" opacity="0.5"/>
-        <path class="hs-core" d="M190 372 L190 604" fill="none" stroke="#4df3ff" stroke-width="5" stroke-linecap="round"/>
-        <path class="hs-halo" d="M1010 372 L1010 604" fill="none" stroke="#2d6bff" stroke-width="26" stroke-linecap="round" filter="url(#hs-glow)" opacity="0.5"/>
-        <path class="hs-core" d="M1010 372 L1010 604" fill="none" stroke="#4df3ff" stroke-width="5" stroke-linecap="round"/>
-      </g>
-    </svg>
+  <div class="hero-svg" id="hero-svg">
+    <img class="hero-photo" src="assets/photos/real-brochure-1.jpg" fetchpriority="high"
+         alt="MUNDA textile lighting — official photography">
   </div>
 
   <div class="hero-content">
-    <p class="kicker hero-kicker" data-i18n="hero.kicker">MUNDA KOSOVA SH.P.K · AUTOMOTIVE TEXTILE LIGHTING</p>
-    <h1 data-i18n-html="hero.title">MUNDA<br><span class="grad">FUTURE LAB</span></h1>
-    <p class="hero-sub" data-i18n="hero.sub">Designing the lighting experience of tomorrow's mobility.</p>
-    <div class="hero-cta">
-      <a class="btn btn-primary btn-lg btn-pulse" href="experience.html" data-i18n="hero.play">PLAY THE EXPERIENCE</a>
-      <a class="btn btn-ghost btn-lg" href="#technology" data-scroll data-i18n="hero.explore">EXPLORE MUNDA</a>
+    <img class="hero-logo" src="assets/photos/real-logo.png" alt="MUNDA" width="220">
+    <h1 data-i18n="hero.title" data-i18n-html="hero.title">LIGHTING THE FUTURE<br><span class="grad">OF MOBILITY</span></h1>
+    <p class="hero-sub" data-i18n="hero.sub">Illuminated textile systems for the vehicles of tomorrow — designed in Kosovo, engineered for the world.</p>
+    <div class="hero-cta reveal" style="--d:.18s">
+      <a class="btn btn-primary btn-lg" href="experience.html" data-i18n="nav.playGame">PLAY THE GAME</a>
+      <a class="btn btn-ghost btn-lg" href="contact.html" data-i18n="nav.contact">Contact</a>
     </div>
-    <p class="hero-foot" data-i18n="hero.foot">A Digital School project · Made in Kosovo</p>
   </div>
 
-  <a class="hero-scroll" href="#interior" data-scroll aria-label="Scroll down">
+  <a class="hero-scroll" href="#munda" data-scroll aria-label="Scroll down">
     <span></span>
   </a>
 </section>
 
+<!-- ===================== 2. MUNDA — WHO WE ARE ===================== -->
+<section class="sec" id="munda">
+  <div class="sec-head">
+    <p class="kicker" data-i18n="about.kicker">THE COMPANY</p>
+    <h2 data-i18n="about.title" data-i18n-html="about.title">MUNDA Kosova <em>SH.P.K.</em><br>Light from the heart of the Balkans.</h2>
+  </div>
 
-
-<!-- ===================== 2. THE COMPANY ===================== -->
-<section class="sec" id="about">
   <div class="about-wrap">
     <div class="about-copy">
-      <p class="kicker" data-i18n="about.kicker">ABOUT THE COMPANY</p>
-      <h2 data-i18n-html="about.title">MUNDA Kosova <em>SH.P.K.</em><br>Light from the heart of the Balkans.</h2>
       <p data-i18n="about.p1">MUNDA Kosova SH.P.K produces illuminated textile systems for the automotive industry — flexible LED technology woven directly into fabric, manufactured at the company's factory in Obiliq, Kosovo.</p>
-      <p data-i18n="about.p2">This experience is a Digital School competition project. It lets you step into the role of a MUNDA design engineer and build the interior lighting of tomorrow's premium vehicle — exactly the way the real product works: design, illuminate, connect, test, showcase.</p>
-      <div class="about-stats">
-        <div class="as-stat"><b>6</b><span data-i18n="about.s1">interior zones</span></div>
-        <div class="as-stat"><b>5</b><span data-i18n="about.s2">automotive tests</span></div>
-        <div class="as-stat"><b>100</b><span data-i18n="about.s3">MUNDA SCORE</span></div>
-        <div class="as-stat"><b>1</b><span data-i18n="about.s4">future</span></div>
+      <p data-i18n="about.p2">The Kosovo subsidiary of MUNDA Textile Lichtsysteme GmbH — the joint venture of AUNDE and MENTOR — and the first supplier approved by the Volkswagen Group in Kosovo, delivering components for brands like Audi.</p>
+      <div class="about-facts">
+        <div class="af">
+          <b data-i18n="about.r1t">Joint venture</b>
+          <span data-i18n="about.r1d">MUNDA Textile Lichtsysteme GmbH — founded 2019 by AUNDE &amp; MENTOR, Erkrath, Germany.</span>
+        </div>
+        <div class="af">
+          <b data-i18n="about.r2t">Audi A3 Facelift</b>
+          <span data-i18n="about.r2d">2024 — the first series-production car with MUNDA textile light in the door trims.</span>
+        </div>
+        <div class="af">
+          <b data-i18n="about.r3t">Obiliq plant</b>
+          <span data-i18n="about.r3d">MUNDA Kosova SH.P.K. since March 2023 · plant inaugurated April 2025.</span>
+        </div>
+        <div class="af">
+          <b data-i18n="about.r4t">First in Kosovo</b>
+          <span data-i18n="about.r4d">The first Volkswagen Group-approved supplier in Kosovo.</span>
+        </div>
+      </div>
+      <div class="about-logos">
+        <img src="assets/photos/logo-aunde.png" alt="AUNDE Group" loading="lazy">
+        <span class="about-logos-x">×</span>
+        <img src="assets/photos/logo-mentor.png" alt="MENTOR" loading="lazy">
       </div>
       <p class="about-note" data-i18n="about.note">The vehicle interior is a design concept created for this experience. No brand partnership is implied.</p>
     </div>
+
     <div class="about-visual">
-      <svg viewBox="0 0 420 420" aria-hidden="true">
-        <circle cx="210" cy="210" r="180" fill="none" stroke="rgba(45,107,255,.25)" stroke-width="1.5"/>
-        <circle cx="210" cy="210" r="130" fill="none" stroke="rgba(77,243,255,.2)" stroke-width="1.5" stroke-dasharray="4 6"/>
-        <path d="M210 210 L210 60 M210 210 L330 150 M210 210 L330 300 M210 210 L120 330" stroke="#2d6bff" stroke-opacity=".5" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="210" cy="210" r="34" fill="#2d6bff" opacity=".15" stroke="#4df3ff" stroke-width="2"/>
-        <circle cx="210" cy="210" r="8" fill="#4df3ff"/>
-        <text x="210" y="216" text-anchor="middle" fill="#fff" font-family="Space Grotesk,sans-serif" font-size="20" font-weight="700">M</text>
-        <g fill="#ffc861">
-          <circle cx="210" cy="60" r="5"/><circle cx="330" cy="150" r="5"/><circle cx="330" cy="300" r="5"/><circle cx="120" cy="330" r="5"/>
-        </g>
-      </svg>
+      <img class="about-photo-main" src="assets/photos/real-brochure-7.jpg" alt="MUNDA textile lighting — official photography" loading="lazy">
+      <img class="about-photo-detail" src="assets/photos/real-partners.png" alt="MUNDA joint-venture partners — AUNDE & MENTOR" loading="lazy">
     </div>
   </div>
 </section>
 
-<!-- ===================== 3. TECHNOLOGY ===================== -->
+<!-- ===================== 3. TECHNOLOGY — TEXTILES + LED ===================== -->
 <section class="sec" id="technology">
   <div class="sec-head">
     <p class="kicker" data-i18n="tech.kicker">THE TECHNOLOGY</p>
-    <h2 data-i18n-html="tech.title">Textile. Light. <em>Matter.</em></h2>
+    <h2 data-i18n="tech.title" data-i18n-html="tech.title">Textile. Light. <em>Matter.</em></h2>
     <p class="sec-sub" data-i18n="tech.sub">What MUNDA actually does — flexible LED systems woven into textile for the automotive industry.</p>
   </div>
 
   <div class="tech-grid">
-    <article class="tech-card glass">
+    <article class="tech-card glass reveal">
       <div class="tc-vis tc-textile">
-        <svg viewBox="0 0 120 90" aria-hidden="true">
-          <rect width="120" height="90" rx="10" fill="#101318"/>
-          <g stroke="#4df3ff" stroke-opacity=".5" stroke-width="1.6">
-            <path d="M10 18 H110 M10 30 H110 M10 42 H110 M10 54 H110 M10 66 H110 M10 78 H110"/>
-          </g>
-          <g stroke="#2d6bff" stroke-opacity=".7" stroke-width="1.6">
-            <path d="M18 8 V82 M30 8 V82 M42 8 V82 M54 8 V82 M66 8 V82 M78 8 V82 M90 8 V82 M102 8 V82"/>
-          </g>
-        </svg>
+        <img class="tc-photo" src="assets/photos/real-brochure-3.jpg" alt="Illuminated woven textile — MUNDA" loading="lazy">
       </div>
       <h3 data-i18n="tech.c1t">ILLUMINATED TEXTILES</h3>
       <p data-i18n="tech.c1d">Micro-LEDs are woven directly into soft fabric — a material that conducts light, not just threads.</p>
     </article>
-
-    <article class="tech-card glass">
+    <article class="tech-card glass reveal">
       <div class="tc-vis tc-led">
-        <svg viewBox="0 0 120 90" aria-hidden="true">
-          <rect width="120" height="90" rx="10" fill="#0e1118"/>
-          <circle cx="60" cy="40" r="16" fill="none" stroke="#ffc861" stroke-width="2"/>
-          <circle cx="60" cy="40" r="7" fill="#ffc861" opacity=".9"/>
-          <g stroke="#2d6bff" stroke-width="2" stroke-linecap="round">
-            <path d="M60 16 V8 M60 64 V72 M36 40 H28 M84 40 H92"/>
-          </g>
-          <g fill="#4df3ff" opacity=".8">
-            <circle cx="24" cy="68" r="2"/><circle cx="92" cy="70" r="2"/><circle cx="34" cy="20" r="2"/>
-          </g>
-        </svg>
+        <img class="tc-photo" src="assets/photos/real-product-2.jpg" alt="Flexible LED emitters" loading="lazy">
       </div>
       <h3 data-i18n="tech.c2t">LED INTEGRATION</h3>
       <p data-i18n="tech.c2d">Flexible emitters that bend, fold and wrap every surface of the cabin — one seamless light.</p>
     </article>
-
-    <article class="tech-card glass">
-      <div class="tc-vis tc-auto">
-        <svg viewBox="0 0 120 90" aria-hidden="true">
-          <rect width="120" height="90" rx="10" fill="#10131a"/>
-          <path d="M22 62 L46 30 H74 L98 62 Z" fill="#151923" stroke="#2d6bff" stroke-width="1.6" stroke-linejoin="round"/>
-          <circle cx="38" cy="62" r="8" fill="#0a0b10" stroke="#333947" stroke-width="2"/>
-          <circle cx="82" cy="62" r="8" fill="#0a0b10" stroke="#333947" stroke-width="2"/>
-          <path d="M46 30 Q60 22 74 30" fill="none" stroke="#4df3ff" stroke-width="2.4" stroke-linecap="round"/>
-        </svg>
+    <article class="tech-card glass reveal">
+      <div class="tc-vis tc-systems">
+        <img class="tc-photo" src="assets/photos/real-brochure-4.jpg" alt="Textile light system structure — MUNDA" loading="lazy">
       </div>
-      <h3 data-i18n="tech.c3t">AUTOMOTIVE INTERIOR TECHNOLOGY</h3>
-      <p data-i18n="tech.c3d">Integrated into dashboards, doors, seats and roofs of premium vehicles from the MUNDA factory in Obiliq.</p>
+      <h3>TEXTILE LIGHT SYSTEMS</h3>
+      <p>Large illuminated surfaces, free shapes and dynamic light — drapable and safe in any zone of the cabin.</p>
     </article>
-
-    <article class="tech-card glass">
-      <div class="tc-vis tc-innov">
-        <svg viewBox="0 0 120 90" aria-hidden="true">
-          <rect width="120" height="90" rx="10" fill="#0f1117"/>
-          <circle cx="60" cy="42" r="20" fill="none" stroke="#9a4dff" stroke-width="1.6" stroke-dasharray="4 4"/>
-          <path d="M60 22 A20 20 0 0 1 80 42" fill="none" stroke="#4df3ff" stroke-width="2.4" stroke-linecap="round"/>
-          <circle cx="60" cy="42" r="6" fill="#ffc861"/>
-          <g stroke="rgba(255,255,255,.3)" stroke-width="1.4">
-            <path d="M20 70 L40 70 M80 70 L100 70 M60 78 L60 60"/>
-          </g>
-        </svg>
+    <article class="tech-card glass reveal">
+      <div class="tc-vis tc-grade">
+        <img class="tc-photo" src="assets/photos/real-tech.jpg" alt="MUNDA technology rendering" loading="lazy">
       </div>
-      <h3 data-i18n="tech.c4t">INNOVATION</h3>
-      <p data-i18n="tech.c4d">Infinite colours, patterns and moods — generated on demand by a single connected textile.</p>
+      <h3>AUTOMOTIVE GRADE</h3>
+      <p>Built for series production — tested, certified and approved for the world's leading carmakers.</p>
     </article>
   </div>
 </section>
 
-
-
-<!-- ===================== 4. HOW IT WORKS ===================== -->
-<section class="sec" id="how">
+<!-- ===================== 4. AUTOMOTIVE — REAL INTERIORS ===================== -->
+<section class="sec" id="automotive">
   <div class="sec-head">
-    <p class="kicker" data-i18n="how.kicker">THE METHOD</p>
-    <h2 data-i18n-html="how.title">How the <em>Future Lab</em> works.</h2>
-    <p class="sec-sub" data-i18n="how.sub">Four steps turn a piece of textile into a living light experience.</p>
+    <p class="kicker" data-i18n="auto.kicker">AUTOMOTIVE</p>
+    <h2 data-i18n="auto.title" data-i18n-html="auto.title">Real light, <em>real cars.</em></h2>
+    <p class="sec-sub" data-i18n="auto.sub">From the first series-production Audi with MUNDA textile light to the cabins of tomorrow — our systems live inside premium vehicles.</p>
   </div>
 
-  <div class="how-grid">
-    <article class="how-step glass">
-      <span class="how-num">01</span>
-      <svg viewBox="0 0 160 110" aria-hidden="true">
-        <rect x="20" y="30" width="120" height="56" rx="12" fill="url(#hs-dash)" stroke="rgba(255,255,255,.12)"/>
-        <g stroke="#4df3ff" stroke-opacity=".55" stroke-width="2">
-          <path d="M36 44 H124"/><path d="M36 56 H100"/><path d="M36 68 H112"/>
-        </g>
-        <path d="M30 30 L44 20 L60 30" fill="none" stroke="#2d6bff" stroke-width="2.5"/>
-        <circle cx="44" cy="22" r="3" fill="#4df3ff"/>
-        <path d="M120 86 Q128 76 136 86" fill="none" stroke="#ffc861" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <h3 data-i18n="how.s1t">DESIGN</h3>
-      <p data-i18n="how.s1d">Choose the illuminated textile — every weave diffuses light differently.</p>
-    </article>
-
-    <article class="how-step glass">
-      <span class="how-num">02</span>
-      <svg viewBox="0 0 160 110" aria-hidden="true">
-        <path d="M30 84 L80 26 L130 84 Z" fill="none" stroke="#2d6bff" stroke-width="2.5" stroke-linejoin="round"/>
-        <circle cx="80" cy="26" r="6" fill="#4df3ff" opacity=".9"/>
-        <path d="M52 62 L68 62 M92 62 L108 62 M60 46 L76 46 M84 46 L100 46" stroke="#4df3ff" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
-        <circle cx="80" cy="84" r="4" fill="#ffc861"/>
-        <path d="M80 30 L80 80" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>
-      </svg>
-      <h3 data-i18n="how.s2t">ILLUMINATE</h3>
-      <p data-i18n="how.s2d">Place LED zones across the cabin — colour, pattern and intensity are live.</p>
-    </article>
-
-    <article class="how-step glass">
-      <span class="how-num">03</span>
-      <svg viewBox="0 0 160 110" aria-hidden="true">
-        <rect x="24" y="34" width="44" height="34" rx="8" fill="#12141b" stroke="#2d6bff" stroke-width="2"/>
-        <rect x="92" y="34" width="44" height="34" rx="8" fill="#12141b" stroke="#2d6bff" stroke-width="2"/>
-        <path d="M68 51 C 78 51 82 51 92 51" fill="none" stroke="#35e07f" stroke-width="2.5" stroke-dasharray="4 3"/>
-        <circle cx="46" cy="43" r="3" fill="#35e07f"/>
-        <circle cx="114" cy="43" r="3" fill="#35e07f"/>
-        <path d="M30 82 L60 82 M100 82 L130 82" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
-        <path d="M40 78 L40 86 M120 78 L120 86" stroke="#ffc861" stroke-width="2"/>
-      </svg>
-      <h3 data-i18n="how.s3t">TEST</h3>
-      <p data-i18n="how.s3d">Five automotive tests — light, vibration, temperature, durability, efficiency.</p>
-    </article>
-
-    <article class="how-step glass">
-      <span class="how-num">04</span>
-      <svg viewBox="0 0 160 110" aria-hidden="true">
-        <path d="M80 20 L140 55 L80 90 L20 55 Z" fill="none" stroke="#ffc861" stroke-width="2.5" stroke-linejoin="round"/>
-        <path d="M80 34 L80 76 M44 55 L116 55" stroke="rgba(255,255,255,.18)" stroke-width="1.5"/>
-        <circle cx="80" cy="55" r="10" fill="none" stroke="#4df3ff" stroke-width="2.5"/>
-        <circle cx="80" cy="55" r="3.5" fill="#4df3ff"/>
-      </svg>
-      <h3 data-i18n="how.s4t">INNOVATE</h3>
-      <p data-i18n="how.s4d">Get your MUNDA SCORE, climb the ranks and unlock the future.</p>
-    </article>
+  <div class="auto-band">
+    <figure class="auto-feature reveal">
+      <img src="assets/photos/real-audi-a3.jpg" alt="Audi A3 Facelift with MUNDA textile lighting" loading="lazy">
+      <figcaption data-i18n="auto.c1">Audi A3 Facelift — the world's first series car with textile light in the door trims.</figcaption>
+    </figure>
+    <figure class="auto-side reveal">
+      <img src="assets/photos/real-brochure-6.jpg" alt="MUNDA luminous lines inside a vehicle" loading="lazy">
+      <figcaption data-i18n="auto.c2">Ambient textile lighting — large illuminated surfaces, crash-safe.</figcaption>
+    </figure>
+    <figure class="auto-side reveal">
+      <img src="assets/photos/real-brochure-10.jpg" alt="MUNDA automotive focus — textile light in use" loading="lazy">
+      <figcaption data-i18n="auto.c3">Premium cabin interiors with MUNDA lighting technology.</figcaption>
+    </figure>
   </div>
 </section>
 
-
-
-<!-- ===================== 5. INTERACTIVE CAR ===================== -->
-<section class="sec" id="interior">
+<!-- ===================== 5. INNOVATION — TIMELINE ===================== -->
+<section class="sec" id="innovation">
   <div class="sec-head">
-    <p class="kicker" data-i18n="interior.kicker">EXPERIENCE THE TECHNOLOGY</p>
-    <h2 data-i18n-html="interior.title">Touch the <em>cabin.</em></h2>
-    <p class="sec-sub" data-i18n="interior.sub">Hover or click the glowing zones to discover how MUNDA technology lives inside a premium vehicle. Then play with the light yourself.</p>
+    <p class="kicker" data-i18n="innov.kicker">INNOVATION</p>
+    <h2 data-i18n="innov.title" data-i18n-html="innov.title">From yarn to <em>light.</em></h2>
+    <p class="sec-sub" data-i18n="innov.sub">How MUNDA brings a new technology from the laboratory to the road.</p>
   </div>
 
-  <div class="car-wrap glass">
-    <div class="car-stage">
-      <svg id="interior-svg" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Interactive MUNDA vehicle interior">
-        <defs>
-          <linearGradient id="ic-glass" x1="0" y1="0" x2="0.35" y2="1">
-            <stop offset="0%" stop-color="#0a0d16"/><stop offset="55%" stop-color="#05060b"/><stop offset="100%" stop-color="#0b0c12"/>
-          </linearGradient>
-          <linearGradient id="ic-dash" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#171a22"/><stop offset="100%" stop-color="#0a0b10"/>
-          </linearGradient>
-          <linearGradient id="ic-seat" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#1c1f27"/><stop offset="100%" stop-color="#101117"/>
-          </linearGradient>
-          <radialGradient id="ic-bg" cx="50%" cy="38%" r="75%">
-            <stop offset="0%" stop-color="#101118"/><stop offset="45%" stop-color="#09090d"/><stop offset="100%" stop-color="#040405"/>
-          </radialGradient>
-          <filter id="ic-glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="15"/></filter>
-          <filter id="ic-glow2" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="26"/></filter>
-        </defs>
-        <rect x="-40" y="-40" width="1280" height="840" fill="url(#ic-bg)"/>
-        <polygon points="260,64 940,64 1048,356 152,356" fill="#0a1424"/>
-        <g fill="#0d1626">
-          <rect x="300" y="210" width="46" height="146"/><rect x="356" y="176" width="34" height="180"/>
-          <rect x="400" y="232" width="52" height="124"/><rect x="466" y="196" width="30" height="160"/>
-          <rect x="580" y="186" width="38" height="170"/><rect x="630" y="228" width="48" height="128"/>
-        </g>
-        <polygon points="260,64 940,64 1048,356 152,356" fill="url(#ic-glass)" opacity="0.55"/>
-        <rect x="176" y="52" width="848" height="44" rx="8" fill="#0d0e13"/>
-        <polygon points="152,356 232,356 210,120 176,64" fill="#0a0b0f"/>
-        <polygon points="1048,356 968,356 990,120 1024,64" fill="#0a0b0f"/>
-        <polygon points="140,356 1060,356 1130,432 70,432" fill="url(#ic-dash)"/>
-        <polygon points="70,432 1130,432 1150,592 50,592" fill="url(#ic-dash)"/>
-        <polyline points="86,452 1114,452" fill="none" stroke="#3a3f4c" stroke-width="5" stroke-linecap="round"/>
-        <rect x="252" y="372" width="212" height="66" rx="12" fill="#0b1018" stroke="#20242e" stroke-width="1.4"/>
-        <rect x="516" y="368" width="188" height="74" rx="10" fill="#0b1018" stroke="#20242e" stroke-width="1.4"/>
-        <g stroke="#000" stroke-opacity="0.45" stroke-width="3" stroke-linecap="round">
-          <path d="M250 480 H470"/><path d="M730 480 H950"/>
-        </g>
-        <path d="M560 432 Q555 420 560 414 L640 414 Q645 420 640 432 L646 640 L554 640 Z" fill="#0d0e13"/>
-        <polygon points="52,340 156,340 156,600 52,600" fill="#0b0c10"/>
-        <polygon points="1148,340 1044,340 1044,600 1148,600" fill="#0b0c10"/>
-        <rect x="352" y="272" width="108" height="90" rx="26" fill="url(#ic-seat)"/>
-        <rect x="740" y="272" width="108" height="90" rx="26" fill="url(#ic-seat)"/>
-        <g>
-          <circle cx="356" cy="510" r="96" fill="#0b0c11"/>
-          <circle cx="356" cy="510" r="96" fill="none" stroke="#333947" stroke-width="7"/>
-          <path d="M356 414 L356 606" fill="none" stroke="#1c1e25" stroke-width="10" stroke-linecap="round"/>
-        </g>
-        <rect x="50" y="600" width="1100" height="118" fill="#050608"/>
-
-        <!-- LIGHT ZONES -->
-        <g class="ic-zone" data-zone="roof">
-          <path d="M246 88 Q600 72 954 88" fill="none" stroke="var(--zc,#2d6bff)" stroke-width="30" stroke-linecap="round" filter="url(#ic-glow2)" opacity="0.35"/>
-          <path d="M246 88 Q600 72 954 88" fill="none" stroke="var(--zc,#4df3ff)" stroke-width="5" stroke-linecap="round"/>
-        </g>
-        <g class="ic-zone" data-zone="dashboard">
-          <path d="M214 394 Q600 380 986 394" fill="none" stroke="var(--zc,#2d6bff)" stroke-width="30" stroke-linecap="round" filter="url(#ic-glow2)" opacity="0.35"/>
-          <path d="M214 394 Q600 380 986 394" fill="none" stroke="var(--zc,#4df3ff)" stroke-width="5" stroke-linecap="round"/>
-        </g>
-        <g class="ic-zone" data-zone="doors">
-          <path d="M190 372 L190 604 M1010 372 L1010 604" fill="none" stroke="var(--zc,#2d6bff)" stroke-width="26" stroke-linecap="round" filter="url(#ic-glow2)" opacity="0.35"/>
-          <path d="M190 372 L190 604 M1010 372 L1010 604" fill="none" stroke="var(--zc,#4df3ff)" stroke-width="5" stroke-linecap="round"/>
-        </g>
-        <g class="ic-zone" data-zone="console">
-          <path d="M570 448 L570 612 M630 448 L630 612" fill="none" stroke="var(--zc,#2d6bff)" stroke-width="14" stroke-linecap="round" filter="url(#ic-glow)" opacity="0.5"/>
-          <path d="M570 448 L570 612 M630 448 L630 612" fill="none" stroke="var(--zc,#4df3ff)" stroke-width="5" stroke-linecap="round"/>
-        </g>
-        <g class="ic-zone" data-zone="seats">
-          <path d="M352 300 Q406 288 460 300 M740 300 Q794 288 848 300" fill="none" stroke="var(--zc,#2d6bff)" stroke-width="14" stroke-linecap="round" filter="url(#ic-glow)" opacity="0.5"/>
-          <path d="M352 300 Q406 288 460 300 M740 300 Q794 288 848 300" fill="none" stroke="var(--zc,#4df3ff)" stroke-width="4.5" stroke-linecap="round"/>
-        </g>
-        <g class="ic-zone" data-zone="footwell">
-          <ellipse cx="600" cy="686" rx="470" ry="46" fill="var(--zc,#2d6bff)" opacity="0.28" filter="url(#ic-glow2)"/>
-          <ellipse cx="600" cy="688" rx="470" ry="40" fill="var(--zc,#4df3ff)" opacity="0.18"/>
-        </g>
-
-        <!-- invisible hotspot hit areas -->
-        <g fill="transparent" stroke="none">
-          <path data-hot="roof" d="M246 88 Q600 72 954 88" stroke="transparent" stroke-width="52"/>
-          <path data-hot="dashboard" d="M214 394 Q600 380 986 394" stroke="transparent" stroke-width="52"/>
-          <path data-hot="doors" d="M190 372 L190 604 M1010 372 L1010 604" stroke="transparent" stroke-width="52"/>
-          <path data-hot="console" d="M570 448 L570 612 M630 448 L630 612" stroke="transparent" stroke-width="52"/>
-          <path data-hot="seats" d="M352 300 Q406 288 460 300 M740 300 Q794 288 848 300" stroke="transparent" stroke-width="52"/>
-          <rect data-hot="footwell" x="130" y="640" width="940" height="60"/>
-        </g>
-      </svg>
-
-      <!-- floating info panel -->
-      <div class="zone-info glass" id="zone-info" hidden>
-        <b id="zone-info-title">Roof / Ambient</b>
-        <p id="zone-info-desc"></p>
-      </div>
+  <div class="timeline">
+    <div class="tl-step reveal">
+      <span class="tl-year">2019</span>
+      <b data-i18n="innov.y1t">The joint venture</b>
+      <p data-i18n="innov.y1d">AUNDE &amp; MENTOR found MUNDA Textile Lichtsysteme GmbH in Erkrath — technical textiles meet LED technology.</p>
     </div>
-
-    <div class="car-controls">
-      <div class="cc-group">
-        <span class="cc-label" data-i18n="interior.color">COLOUR</span>
-        <div class="cc-swatches" id="car-colors">
-          <button class="cc-swatch active" style="--c:#2d6bff" data-car-color="#2d6bff" aria-label="Blue"></button>
-          <button class="cc-swatch" style="--c:#4df3ff" data-car-color="#4df3ff" aria-label="Cyan"></button>
-          <button class="cc-swatch" style="--c:#ffc861" data-car-color="#ffc861" aria-label="Gold"></button>
-          <button class="cc-swatch" style="--c:#ff4d8d" data-car-color="#ff4d8d" aria-label="Pink"></button>
-          <button class="cc-swatch" style="--c:#35e07f" data-car-color="#35e07f" aria-label="Green"></button>
-        </div>
-      </div>
-      <div class="cc-group">
-        <span class="cc-label" data-i18n="interior.brightness">BRIGHTNESS</span>
-        <input type="range" id="car-bright" min="20" max="100" value="80" aria-label="Brightness">
-      </div>
-      <a class="btn btn-primary btn-sm" href="experience.html" data-i18n="interior.cta">BUILD YOUR OWN →</a>
+    <div class="tl-step reveal">
+      <span class="tl-year">2023</span>
+      <b data-i18n="innov.y2t">Kosovo steps in</b>
+      <p data-i18n="innov.y2d">MUNDA Kosova SH.P.K. is registered in Obiliq with €500,000 capital — production starts close to home.</p>
+    </div>
+    <div class="tl-step reveal">
+      <span class="tl-year">2024</span>
+      <b data-i18n="innov.y3t">World premiere</b>
+      <p data-i18n="innov.y3d">The Audi A3 Facelift is the first series vehicle with MUNDA textile lighting in its door trims.</p>
+    </div>
+    <div class="tl-step reveal">
+      <span class="tl-year">2025</span>
+      <b data-i18n="innov.y4t">Inauguration</b>
+      <p data-i18n="innov.y4d">The Obiliq plant opens officially — Kosovo's first Volkswagen Group-approved supplier delivers components.</p>
     </div>
   </div>
 </section>
 
-
-
-<!-- ===================== 6. MUNDA SCORE DEMO ===================== -->
-<section class="sec" id="score">
+<!-- ===================== 6. GAME — PREVIEW + PLAY ===================== -->
+<section class="sec" id="game">
   <div class="sec-head">
-    <p class="kicker" data-i18n="score.kicker">TRY IT NOW</p>
-    <h2 data-i18n-html="score.title">What would your <em>MUNDA SCORE</em> be?</h2>
-    <p class="sec-sub" data-i18n="score.sub">Move the sliders — the same score the game computes, live in your browser.</p>
+    <p class="kicker" data-i18n="game.kicker">THE EXPERIENCE</p>
+    <h2 data-i18n="game.title" data-i18n-html="game.title">Become a MUNDA <em>design engineer.</em></h2>
+    <p class="sec-sub" data-i18n="game.sub">A five-phase journey: DESIGN → LIGHT → CONNECT → TEST → SHOWCASE. Then a MUNDA SCORE reveals how close you came to building the future.</p>
   </div>
 
-  <div class="score-wrap glass">
-    <div class="score-ring-side">
-      <svg viewBox="0 0 200 200" class="score-ring" aria-hidden="true">
-        <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="12"/>
-        <circle id="score-arc" cx="100" cy="100" r="86" fill="none" stroke="#2d6bff" stroke-width="12"
-                stroke-linecap="round" stroke-dasharray="540" stroke-dashoffset="540" transform="rotate(-90 100 100)"/>
-      </svg>
-      <div class="score-ring-mid">
-        <b id="score-num">70</b>
-        <span data-i18n="score.of">/ 100</span>
+  <div class="shots">
+    <figure class="shot reveal">
+      <div class="shot-frame">
+        <img class="shot-photo" src="assets/photos/game-design.png" alt="MUNDA Future Lab — Design phase" loading="lazy">
       </div>
-      <span class="score-rank" id="score-rank" data-rank="designer">DESIGNER</span>
-    </div>
+      <figcaption data-i18n="game.shot1">Choose the textile — the base of every design.</figcaption>
+    </figure>
+    <figure class="shot reveal">
+      <div class="shot-frame">
+        <img class="shot-photo" src="assets/photos/game-connect.png" alt="MUNDA Future Lab — Connect phase" loading="lazy">
+      </div>
+      <figcaption data-i18n="game.shot2">Connect every LED module to its controller port.</figcaption>
+    </figure>
+    <figure class="shot reveal">
+      <div class="shot-frame">
+        <img class="shot-photo" src="assets/photos/game-test.png" alt="MUNDA Future Lab — Test phase" loading="lazy">
+      </div>
+      <figcaption data-i18n="game.shot3">Five automotive tests decide your fate.</figcaption>
+    </figure>
+    <figure class="shot reveal">
+      <div class="shot-frame">
+        <img class="shot-photo" src="assets/photos/game-showcase.png" alt="MUNDA Future Lab — Showcase phase" loading="lazy">
+      </div>
+      <figcaption data-i18n="game.shot4">The showcase — your interior comes alive.</figcaption>
+    </figure>
+  </div>
 
-    <div class="score-sliders">
-      <label class="sl-row">
-        <span data-i18n="score.bright">BRIGHTNESS</span>
-        <input type="range" data-score-var="brightness" min="0" max="100" value="75">
-        <b>75</b>
-      </label>
-      <label class="sl-row">
-        <span data-i18n="score.eff">EFFICIENCY</span>
-        <input type="range" data-score-var="efficiency" min="0" max="100" value="60">
-        <b>60</b>
-      </label>
-      <label class="sl-row">
-        <span data-i18n="score.prec">PRECISION</span>
-        <input type="range" data-score-var="precision" min="0" max="100" value="65">
-        <b>65</b>
-      </label>
-      <label class="sl-row">
-        <span data-i18n="score.dur">DURABILITY</span>
-        <input type="range" data-score-var="durability" min="0" max="100" value="70">
-        <b>70</b>
-      </label>
-      <p class="score-note" data-i18n="score.note">This is a concept demonstration — in the game, every value comes from your real choices.</p>
-    </div>
+  <div class="game-feats">
+    <span data-i18n="game.f1">⚡ Live lighting engine</span>
+    <span data-i18n="game.f2">🧵 4 textile materials</span>
+    <span data-i18n="game.f3">🎨 8 colours · 7 patterns</span>
+    <span data-i18n="game.f4">🔌 Wiring mini-game</span>
+    <span data-i18n="game.f5">🧪 5 automotive tests</span>
+    <span data-i18n="game.f6">🏆 XP · levels · badges</span>
+  </div>
+
+  <div class="game-cta">
+    <a class="btn btn-primary btn-xl btn-pulse" href="experience.html" data-i18n="nav.playGame">PLAY THE GAME</a>
   </div>
 </section>
 
-
-
-<!-- ===================== 7. GALLERY ===================== -->
+<!-- ===================== 7. GALLERY — REAL PHOTOS ===================== -->
 <section class="sec" id="gallery">
   <div class="sec-head">
     <p class="kicker" data-i18n="gallery.kicker">VISUAL STORY</p>
-    <h2 data-i18n-html="gallery.title">A look inside the <em>Future Lab.</em></h2>
+    <h2 data-i18n="gallery.title" data-i18n-html="gallery.title">A look inside the <em>Future Lab.</em></h2>
   </div>
 
   <div class="gallery-grid" id="gallery-grid">
-    <button class="g-tile gt-1" data-caption="gallery.c1" aria-label="Vehicle interior">
-      <span class="gt-inner">
-        <svg viewBox="0 0 200 130">
-          <path d="M24 26 Q100 20 176 26 M24 64 Q100 58 176 64" stroke="#4df3ff" stroke-width="5" stroke-linecap="round" fill="none"/>
-          <path d="M16 38 V104 M184 38 V104" stroke="#2d6bff" stroke-width="4" stroke-linecap="round" fill="none"/>
-          <ellipse cx="100" cy="118" rx="78" ry="6" fill="#2d6bff" opacity=".5"/>
-        </svg>
+    <button class="g-tile gt-1" data-caption="gallery.c1" aria-label="The cabin">
+      <span class="gt-inner gt-photo">
+        <img class="gt-photo-img" src="assets/photos/hero-cabin.jpg" alt="The illuminated cabin" loading="lazy">
       </span>
       <b data-i18n="gallery.t1">The cabin</b>
     </button>
-
-    <button class="g-tile gt-2" data-caption="gallery.c2" aria-label="Illuminated textile macro">
-      <span class="gt-inner">
-        <svg viewBox="0 0 200 130">
-          <g stroke="#4df3ff" stroke-opacity=".6" stroke-width="2"><path d="M10 30 H190 M10 50 H190 M10 70 H190 M10 90 H190 M10 110 H190"/></g>
-          <g stroke="#2d6bff" stroke-opacity=".8" stroke-width="2"><path d="M30 10 V120 M50 10 V120 M70 10 V120 M90 10 V120 M110 10 V120 M130 10 V120 M150 10 V120 M170 10 V120"/></g>
-        </svg>
+    <button class="g-tile gt-2" data-caption="gallery.c2" aria-label="Textile macro">
+      <span class="gt-inner gt-photo">
+        <img class="gt-photo-img" src="assets/photos/real-product-1.jpg" alt="MUNDA illuminated textile" loading="lazy">
       </span>
       <b data-i18n="gallery.t2">Textile macro</b>
     </button>
-
     <button class="g-tile gt-3" data-caption="gallery.c3" aria-label="The lab">
-      <span class="gt-inner">
-        <svg viewBox="0 0 200 130">
-          <rect x="14" y="18" width="172" height="86" rx="10" fill="none" stroke="#2d6bff" stroke-width="2"/>
-          <path d="M40 50 H160 M40 68 H130" stroke="#4df3ff" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="170" cy="34" r="5" fill="#ffc861"/>
-        </svg>
+      <span class="gt-inner gt-photo">
+        <img class="gt-photo-img" src="assets/photos/real-worker.jpg" alt="Inside the MUNDA plant" loading="lazy">
       </span>
       <b data-i18n="gallery.t3">The lab</b>
     </button>
-
-    <button class="g-tile gt-4" data-caption="gallery.c4" aria-label="LED system">
-      <span class="gt-inner">
-        <svg viewBox="0 0 200 130">
-          <circle cx="100" cy="62" r="26" fill="none" stroke="#ffc861" stroke-width="2.5"/>
-          <circle cx="100" cy="62" r="10" fill="#ffc861" opacity=".85"/>
-          <g stroke="#4df3ff" stroke-width="2"><path d="M100 26 V14 M100 98 V110 M64 62 H52 M136 62 H148"/></g>
-        </svg>
+    <button class="g-tile gt-4" data-caption="gallery.c4" aria-label="LED core">
+      <span class="gt-inner gt-photo">
+        <img class="gt-photo-img" src="assets/photos/real-product-3.jpg" alt="The MUNDA LED core" loading="lazy">
       </span>
       <b data-i18n="gallery.t4">LED core</b>
     </button>
-
-    <button class="g-tile gt-5" data-caption="gallery.c5" aria-label="Gameplay moment">
-      <span class="gt-inner">
-        <svg viewBox="0 0 200 130">
-          <rect x="24" y="20" width="60" height="34" rx="8" fill="none" stroke="#35e07f" stroke-width="2"/>
-          <rect x="116" y="20" width="60" height="34" rx="8" fill="none" stroke="#35e07f" stroke-width="2"/>
-          <path d="M84 37 C 96 37 104 37 116 37" stroke="#35e07f" stroke-width="2.5" stroke-dasharray="5 4" fill="none"/>
-          <text x="100" y="90" text-anchor="middle" fill="#ffc861" font-family="Space Grotesk,sans-serif" font-size="20" font-weight="700">94%</text>
-        </svg>
+    <button class="g-tile gt-5" data-caption="gallery.c5" aria-label="Gameplay">
+      <span class="gt-inner gt-photo">
+        <img class="gt-photo-img" src="assets/photos/game-hub.png" alt="MUNDA Future Lab gameplay" loading="lazy">
       </span>
       <b data-i18n="gallery.t5">Gameplay</b>
     </button>
-
-    <button class="g-tile gt-6" data-caption="gallery.c6" aria-label="Final showcase">
-      <span class="gt-inner">
-        <svg viewBox="0 0 200 130">
-          <rect x="30" y="34" width="140" height="70" rx="14" fill="none" stroke="#9a4dff" stroke-width="2"/>
-          <path d="M60 46 Q100 40 140 46 M60 76 Q100 70 140 76" stroke="#ffc861" stroke-width="4" stroke-linecap="round" fill="none"/>
-          <path d="M44 52 V92 M156 52 V92" stroke="#4df3ff" stroke-width="3" stroke-linecap="round" fill="none"/>
-        </svg>
+    <button class="g-tile gt-6" data-caption="gallery.c6" aria-label="MUNDA technology">
+      <span class="gt-inner gt-photo">
+        <img class="gt-photo-img" src="assets/photos/real-tech.jpg" alt="MUNDA textile light technology" loading="lazy">
       </span>
-      <b data-i18n="gallery.t6">Showcase</b>
+      <b data-i18n="gallery.t6">Technology</b>
     </button>
-
     <button class="g-tile gt-7 wide" data-caption="gallery.c7" aria-label="MUNDA wordmark">
       <span class="gt-inner gt-word">
-        <b>MUNDA</b><i data-i18n="gallery.wsub">LIGHTING THE FUTURE OF MOBILITY</i>
-      </span>
-    </button>
-
-    <button class="g-tile gt-8" data-caption="gallery.c8" aria-label="Kosovo">
-      <span class="gt-inner">
-        <svg viewBox="0 0 200 130">
-          <circle cx="100" cy="65" r="34" fill="none" stroke="#2d6bff" stroke-width="2"/>
-          <circle cx="100" cy="65" r="6" fill="#4df3ff"/>
-          <g stroke="#4df3ff" stroke-opacity=".6" stroke-width="2" stroke-linecap="round">
-            <path d="M100 65 L100 22 M100 65 L138 42 M100 65 L140 78"/>
-          </g>
+        <svg viewBox="0 0 200 60" aria-hidden="true">
+          <text x="100" y="40" text-anchor="middle" font-size="34" font-weight="800" fill="url(#lg-grad)" font-family="'Space Grotesk',sans-serif">MUNDA</text>
         </svg>
+      </span>
+      <b data-i18n="gallery.t7">MUNDA</b>
+    </button>
+    <button class="g-tile gt-8" data-caption="gallery.c8" aria-label="Made in Kosovo">
+      <span class="gt-inner gt-photo">
+        <img class="gt-photo-img" src="assets/photos/gallery-city.jpg" alt="Made in Kosovo — city at night" loading="lazy">
       </span>
       <b data-i18n="gallery.t8">Made in Kosovo</b>
     </button>
@@ -597,130 +326,15 @@
   </div>
 </section>
 
-<!-- ===================== 8. TEAM / STAFF ===================== -->
-<section class="sec" id="team">
-  <div class="sec-head">
-    <p class="kicker" data-i18n="team.kicker">THE PEOPLE</p>
-    <h2 data-i18n-html="team.title">The team behind <em>MUNDA Kosova SH.P.K.</em></h2>
-    <p class="sec-sub" data-i18n="team.sub">The specialists who weave light into textile and bring the Future Lab to life — from the factory in Obiliq to the world.</p>
-  </div>
-  <div class="team-grid" id="team-grid"></div>
-  <p class="team-note" data-i18n="team.note">Photos and names are updated from the assets/photos folder — real team photos coming soon.</p>
-</section>
-
-
-
-<!-- ===================== 9. THE GAME ===================== -->
-<section class="sec" id="game">
-  <div class="sec-head">
-    <p class="kicker" data-i18n="game.kicker">THE EXPERIENCE</p>
-    <h2 data-i18n-html="game.title">Become a MUNDA <em>design engineer.</em></h2>
-    <p class="sec-sub" data-i18n="game.sub">A five-phase journey: DESIGN → LIGHT → CONNECT → TEST → SHOWCASE. Then a MUNDA SCORE reveals how close you came to building the future.</p>
-  </div>
-
-  <div class="shots">
-    <figure class="shot">
-      <div class="shot-frame">
-        <div class="mock mock-design">
-          <div class="mock-hud"><i>MUNDA FUTURE LAB</i><b>PHASE 01 · DESIGN</b></div>
-          <div class="mock-mats">
-            <span class="mm active"><s></s>Carbon Weave</span>
-            <span class="mm"><s></s>Soft Knit</span>
-            <span class="mm"><s></s>Lumen Silk</span>
-          </div>
-          <div class="mock-car">
-            <svg viewBox="0 0 200 90">
-              <path d="M20 18 Q100 12 180 18" fill="none" stroke="#2d6bff" stroke-width="5" stroke-linecap="round"/>
-              <path d="M20 46 Q100 42 180 46" fill="none" stroke="#4df3ff" stroke-width="4" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-      <figcaption data-i18n="game.shot1">Choose the textile — the base of every design.</figcaption>
-    </figure>
-
-    <figure class="shot">
-      <div class="shot-frame">
-        <div class="mock mock-wire">
-          <div class="mock-hud"><i>PHASE 03 · CONNECT</i><b>WIRE THE SYSTEM</b></div>
-          <div class="mock-pins">
-            <span class="pin l active">DASH-01</span>
-            <span class="pin l">DOOR-L</span>
-            <span class="pin l">ROOF-01</span>
-          </div>
-          <div class="mock-links"><i></i><i></i><i></i></div>
-          <div class="mock-pins">
-            <span class="pin r">PORT A</span>
-            <span class="pin r done">PORT B</span>
-            <span class="pin r">PORT C</span>
-          </div>
-        </div>
-      </div>
-      <figcaption data-i18n="game.shot2">Connect every LED module to its controller port.</figcaption>
-    </figure>
-
-    <figure class="shot">
-      <div class="shot-frame">
-        <div class="mock mock-test">
-          <div class="mock-hud"><i>PHASE 04 · VALIDATION</i><b>TEST BENCH</b></div>
-          <div class="mock-tests">
-            <span><i>LIGHT OUTPUT</i><s><b style="width:88%"></b></s><em>PASS</em></span>
-            <span><i>VIBRATION</i><s><b style="width:72%"></b></s><em>PASS</em></span>
-            <span><i>TEMPERATURE</i><s><b style="width:54%"></b></s><em>FAIL</em></span>
-          </div>
-        </div>
-      </div>
-      <figcaption data-i18n="game.shot3">Five automotive tests decide your fate.</figcaption>
-    </figure>
-
-    <figure class="shot">
-      <div class="shot-frame">
-        <div class="mock mock-show">
-          <div class="mock-showcar">
-            <svg viewBox="0 0 200 90">
-              <path d="M20 18 Q100 12 180 18" fill="none" stroke="#ffc861" stroke-width="6" stroke-linecap="round"/>
-              <path d="M20 46 Q100 42 180 46" fill="none" stroke="#4df3ff" stroke-width="5" stroke-linecap="round"/>
-              <path d="M14 26 V72 M186 26 V72" fill="none" stroke="#2d6bff" stroke-width="4" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <div class="mock-score"><b>94</b><span>MUNDA SCORE</span></div>
-        </div>
-      </div>
-      <figcaption data-i18n="game.shot4">The showcase — your interior comes alive.</figcaption>
-    </figure>
-  </div>
-
-  <div class="game-strip">
-    <div class="gs-feats">
-      <span data-i18n="game.f1">⚡ Live lighting engine</span>
-      <span data-i18n="game.f2">🧵 4 textile materials</span>
-      <span data-i18n="game.f3">🎨 8 colours · 7 patterns</span>
-      <span data-i18n="game.f4">🔌 Wiring mini-game</span>
-      <span data-i18n="game.f5">🧪 5 automotive tests</span>
-      <span data-i18n="game.f6">🏆 XP · levels · badges</span>
-    </div>
-    <div class="gs-ranks">
-      <span data-rank="rookie">ROOKIE</span><i></i>
-      <span data-rank="engineer">ENGINEER</span><i></i>
-      <span data-rank="designer">DESIGNER</span><i></i>
-      <span data-rank="senior">SENIOR</span><i></i>
-      <span data-rank="master">MUNDA MASTER</span><i></i>
-      <span data-rank="architect">FUTURE ARCHITECT</span>
-    </div>
-    <a class="btn btn-primary btn-xl" href="experience.html" data-i18n="game.cta">PLAY MUNDA FUTURE LAB</a>
-  </div>
-</section>
-
-
-
-
-<!-- ===================== 10. FINAL CTA ===================== -->
-<section class="final-cta">
-  <div class="fcta-glow" aria-hidden="true"></div>
+<!-- ===================== 8. FINAL CTA ===================== -->
+<section class="sec final-cta" id="cta">
   <p class="kicker" data-i18n="cta.kicker">THE CHALLENGE</p>
-  <h2 data-i18n-html="cta.title">Ready to design<br>the <em>future?</em></h2>
+  <h2 data-i18n="cta.title" data-i18n-html="cta.title">Ready to design<br>the <em>future?</em></h2>
   <p class="cta-sub" data-i18n="cta.sub">Enter the MUNDA Future Lab and create your own automotive lighting experience.</p>
-  <a class="btn btn-primary btn-xl btn-pulse" href="experience.html" id="cta-play" data-i18n="cta.btn">START DESIGNING</a>
+  <div class="cta-row">
+    <a class="btn btn-primary btn-xl btn-pulse" href="experience.html" data-i18n="cta.btn">DISCOVER THE FUTURE</a>
+    <a class="btn btn-ghost btn-xl" href="contact.html" data-i18n="nav.contact">Contact</a>
+  </div>
 </section>
 
 </main>
@@ -732,10 +346,11 @@
     <b>MUNDA <em>KOSOVA</em></b>
   </div>
   <nav class="foot-links" aria-label="Footer">
-    <a href="#about" data-scroll data-i18n="nav.about">About</a>
+    <a href="#munda" data-scroll data-i18n="nav.about">About</a>
     <a href="#technology" data-scroll data-i18n="nav.tech">Technology</a>
-    <a href="#team" data-scroll data-i18n="nav.team">Team</a>
+    <a href="#innovation" data-scroll>Innovation</a>
     <a href="#gallery" data-scroll data-i18n="nav.gallery">Gallery</a>
+    <a href="contact.html" data-i18n="nav.contact">Contact</a>
     <a href="experience.html" data-i18n="nav.play">Play</a>
   </nav>
   <div class="lang-switch" role="group" aria-label="Language">
@@ -745,10 +360,52 @@
   <p class="foot-note" data-i18n="foot.note">Made in Kosovo. Designed for the future. · Digital School Competition · Design concept — no brand partnership implied.</p>
 </footer>
 
+<!-- ===================== MONDO — AI ASSISTANT ===================== -->
+<button class="mondo-btn" id="mondo-btn" aria-label="AI assistant">
+  <span class="mb-ic">🤖</span>
+  <span data-i18n="mondo.btn">AI PËR TY</span>
+  <span class="mb-dot" aria-hidden="true"></span>
+</button>
+
+<div class="mondo-panel" id="mondo-panel" role="dialog" aria-label="Mondo AI assistant">
+  <div class="mondo-head">
+    <span class="mondo-avatar" aria-hidden="true">
+      <svg viewBox="0 0 40 40" width="34" height="34">
+        <defs>
+          <linearGradient id="mg-face" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0e7a3d"/><stop offset="1" stop-color="#22c55e"/>
+          </linearGradient>
+        </defs>
+        <circle cx="20" cy="20" r="19" fill="url(#mg-face)"/>
+        <circle cx="20" cy="20" r="19" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1"/>
+        <g class="mondo-eyes">
+          <circle cx="14.5" cy="17" r="2.4" fill="#06281a"/><circle cx="25.5" cy="17" r="2.4" fill="#06281a"/>
+          <circle cx="15.3" cy="16.2" r="0.8" fill="#fff" opacity=".85"/><circle cx="26.3" cy="16.2" r="0.8" fill="#fff" opacity=".85"/>
+        </g>
+        <path d="M12.5 23 Q20 29 27.5 23" fill="none" stroke="#06281a" stroke-width="2" stroke-linecap="round"/>
+        <path d="M20 6.5 V4" stroke="#c8f5da" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="20" cy="3.4" r="1.7" fill="#a7f3c9"/>
+      </svg>
+    </span>
+    <div>
+      <b>MONDO</b>
+      <i data-i18n="mondo.status">MUNDA AI · knowledge base</i>
+    </div>
+    <button class="mondo-close" id="mondo-close" aria-label="Close">✕</button>
+  </div>
+  <div class="mondo-body" id="mondo-body"></div>
+  <div class="mondo-chips" id="mondo-chips"></div>
+  <div class="mondo-inputbar">
+    <input type="text" id="mondo-input" maxlength="200" autocomplete="off"
+           data-i18n-attr="placeholder:mondo.ph" placeholder="Ask Mondo about MUNDA…">
+    <button class="mondo-send" id="mondo-send" aria-label="Send">➤</button>
+  </div>
+</div>
+
 <script src="js/i18n.js"></script>
 <script src="js/audio.js"></script>
 <script src="js/fx.js"></script>
-<script src="js/team.js"></script>
+<script src="js/mondo.js"></script>
 <script src="js/site.js"></script>
 </body>
 </html>

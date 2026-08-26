@@ -83,6 +83,7 @@
   var timerInterval = null;
   var timerStart = 0;
   var wire = { selected: null, done: 0, mistakes: 0, total: 6, pairs: [], ports: [] };
+  var wireDrag = null; // active drag: { module, x1, y1, path, pointerId, sx, sy }
   var tests = [];      // results of the 5 tests
   var lastScore = null;
   var cineRunning = false;
@@ -115,23 +116,33 @@
      Open the game → short intro → PLAY → straight into Challenge 1.
      ===================================================================== */
   function bootInit() {
-    var start = $('boot-start'), name = $('boot-name');
-    if (!start || !name) return;
-    // pre-fill from saved player; default ENGINEER so the button always works
-    if (window.Progress) {
-      var d = Progress.data;
-      if (d && d.player) name.value = d.player;
+    var start = $('boot-start');
+    if (!start) return;
+    // keep a saved engineer name; default ENGINEER so START always works
+    function ensurePlayer() {
+      if (window.Progress) safe(function () {
+        if (!(Progress.data && Progress.data.player)) Progress.setPlayer('ENGINEER');
+      });
     }
-    if (!name.value) name.value = 'ENGINEER';
-    name.addEventListener('keydown', function (e) { if (e.key === 'Enter') start.click(); });
-    start.addEventListener('click', function () {
+    function doStart() {
       sfx('select');
-      var val = name.value.trim() || 'ENGINEER';
-      if (window.Progress) safe(function () { Progress.setPlayer(val.slice(0, 14)); });
+      ensurePlayer();
       if (window.Sound) safe(function () { Sound.unlock(); });
       startBuild();          // straight into Challenge 1 (DESIGN phase, 1:30 clock)
       maybeTutorial();       // 3-step quick start, first time only
+    }
+    start.addEventListener('click', function () {
+      if (window.MundaLauncher) {
+        MundaLauncher.play(doStart);   // short cinematic → straight into gameplay
+      } else {
+        doStart();
+      }
     });
+    // arrived from the website launcher (?auto=1): skip the splash, straight in
+    if ((location.search || '').indexOf('auto=1') !== -1) {
+      document.body.classList.add('auto-start');
+      setTimeout(doStart, 420);
+    }
   }
 
   /* Quick 3-step tutorial overlay (first build only) */
@@ -357,7 +368,7 @@
     if (window.Interior) safe(function () {
       Interior.reset({
         zones: { dashboard: true, roof: true, doors: false, console: false, footwell: false, seats: false },
-        color: 'blue', pattern: 'linear', brightness: 70, animation: 'static',
+        color: 'green', pattern: 'linear', brightness: 70, animation: 'static',
         speed: 'medium', material: 'carbon', mode: 'city'
       });
     });
@@ -399,6 +410,7 @@
     if (next) {
       next.hidden = idx === PHASES.length - 1;
       next.disabled = idx === 3; // TEST advances itself
+      if (phase === 'connect') next.disabled = wire.done < wire.total; // must wire everything first
     }
     var chip = $('brief-chip');
     if (chip) chip.textContent = (idx + 1) + ' / ' + PHASES.length + ' · ' + t('phase.' + phase, phase.toUpperCase());
@@ -552,11 +564,8 @@
     if (!svg || !nodes) return;
     nodes.innerHTML = '';
     var W = 420, H = 340;
-    var leftY = [60, 116, 172, 228, 284, 340].slice(0, wire.total);
-    var rightY = [60, 116, 172, 228, 284, 340].slice(0, wire.total);
-
-    var pairMap = {};
-    wire.pairs.forEach(function (p) { pairMap[p.port] = p.module; });
+    var leftY = [48, 94, 140, 186, 232, 278].slice(0, wire.total);
+    var rightY = [48, 94, 140, 186, 232, 278].slice(0, wire.total);
 
     wire.ports.forEach(function (port, i) {
       var g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
@@ -572,7 +581,7 @@
         '<rect x="300" y="' + (cy - 16) + '" width="92" height="32" rx="9" class="wn-box"/>' +
         '<text x="346" y="' + (cy + 5) + '" text-anchor="middle" class="wn-label">' +
         esc(t('wire.port')) + ' ' + port + '</text>';
-      g.style.cursor = 'pointer';
+      g.addEventListener('pointerdown', function (e) { e.preventDefault(); }); // ports are drop targets
       g.addEventListener('click', wireClick);
       g.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); wireClick({ currentTarget: this }); }
@@ -586,6 +595,7 @@
       g.setAttribute('data-kind', 'module');
       g.setAttribute('data-module', p.module);
       g.setAttribute('data-port', p.port);
+      g.setAttribute('data-zone', wireZoneOf(p.module));
       g.setAttribute('data-linked', 'false');
       g.setAttribute('tabindex', '0');
       g.setAttribute('role', 'button');
@@ -595,16 +605,194 @@
         '<rect x="28" y="' + (cy - 16) + '" width="92" height="32" rx="9" class="wn-box"/>' +
         '<circle cx="44" cy="' + cy + '" r="5" class="wn-led"/>' +
         '<text x="86" y="' + (cy + 5) + '" text-anchor="middle" class="wn-label">' + esc(p.module) + '</text>';
-      g.style.cursor = 'pointer';
+      g.addEventListener('pointerdown', wireDragStart);
       g.addEventListener('click', wireClick);
       g.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); wireClick({ currentTarget: this }); }
       });
       nodes.appendChild(g);
     });
+
+    window.removeEventListener('pointermove', wireDragMove);
+    window.removeEventListener('pointerup', wireDragEnd);
+    window.addEventListener('pointermove', wireDragMove, { passive: true });
+    window.addEventListener('pointerup', wireDragEnd, { passive: true });
   }
 
+  /* ---------- drag helpers ---------- */
+  function wireZoneOf(moduleId) {
+    if (moduleId.indexOf('DASH') === 0) return 'dashboard';
+    if (moduleId.indexOf('DOOR') === 0) return 'doors';
+    if (moduleId.indexOf('CONS') === 0) return 'console';
+    if (moduleId.indexOf('ROOF') === 0) return 'roof';
+    if (moduleId.indexOf('SEAT') === 0) return 'seats';
+    return 'footwell';
+  }
+
+  function svgPoint(clientX, clientY) {
+    var svg = $('wire-svg');
+    if (!svg) return { x: clientX, y: clientY };
+    var ctm = svg.getScreenCTM();
+    if (!ctm) return { x: clientX, y: clientY };
+    var p = svg.createSVGPoint();
+    p.x = clientX; p.y = clientY;
+    var t = p.matrixTransform(ctm.inverse());
+    return { x: t.x, y: t.y };
+  }
+
+  function wireDragStart(e) {
+    if (e.button != null && e.button !== 0) return; // left button / touch only
+    var g = e.currentTarget;
+    if (g.getAttribute('data-linked') === 'true') return;
+    if (wireDrag) wireDragEnd({}); // safety: end any stale drag first
+    e.preventDefault();
+    var bbox = g.getBBox();
+    var x1 = bbox.x + bbox.width, y1 = bbox.y + bbox.height / 2;
+    var pt = svgPoint(e.clientX, e.clientY);
+    var svg = $('wire-svg'), links = $('wire-links');
+    var path = null;
+    if (svg && links) {
+      path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('class', 'wire-drag');
+      path.setAttribute('d', 'M' + x1 + ' ' + y1 + ' L' + pt.x + ' ' + pt.y);
+      links.appendChild(path);
+    }
+    g.classList.add('dragging');
+    wireDrag = { module: g, x1: x1, y1: y1, path: path, pointerId: e.pointerId, sx: e.clientX, sy: e.clientY };
+    sfx('hover');
+  }
+
+  function wireDragMove(e) {
+    if (!wireDrag) return;
+    if (wireDrag.pointerId != null && e.pointerId != null && wireDrag.pointerId !== e.pointerId) return;
+    var pt = svgPoint(e.clientX, e.clientY);
+    if (wireDrag.path) {
+      var x1 = wireDrag.x1, y1 = wireDrag.y1, x2 = pt.x, y2 = pt.y;
+      wireDrag.path.setAttribute('d', 'M' + x1 + ' ' + y1 + ' C ' + ((x1 + x2) / 2) + ' ' + y1 + ', ' + ((x1 + x2) / 2) + ' ' + y2 + ', ' + x2 + ' ' + y2);
+    }
+    qsa('.wire-node.port.drag-hover').forEach(function (el) { el.classList.remove('drag-hover'); });
+    var under = document.elementFromPoint(e.clientX, e.clientY);
+    var port = under && under.closest ? under.closest('.wire-node.port') : null;
+    if (port && port.getAttribute('data-linked') !== 'true') port.classList.add('drag-hover');
+  }
+
+  function wireDragEnd(e) {
+    if (!wireDrag) return;
+    if (e.pointerId != null && wireDrag.pointerId != null && e.pointerId !== wireDrag.pointerId) return;
+    var drag = wireDrag;
+    wireDrag = null;
+    var g = drag.module;
+    g.classList.remove('dragging');
+    qsa('.wire-node.port.drag-hover').forEach(function (el) { el.classList.remove('drag-hover'); });
+    if (drag.path) { try { drag.path.remove(); } catch (err) {} }
+
+    // find the drop target: element under the pointer, else nearest port
+    var target = null;
+    var under = document.elementFromPoint(e.clientX, e.clientY);
+    if (under && under.closest) target = under.closest('.wire-node.port');
+    if (!target && e.clientX != null) {
+      var svg = $('wire-svg');
+      if (svg) {
+        var r = svg.getBoundingClientRect();
+        var scale = r.width / 420;
+        var best = null, bestD = 1e9;
+        qsa('.wire-node.port').forEach(function (p) {
+          if (p.getAttribute('data-linked') === 'true') return;
+          var pr = p.getBoundingClientRect();
+          var pcx = pr.left + pr.width / 2, pcy = pr.top + pr.height / 2;
+          var dist = Math.sqrt(Math.pow(e.clientX - pcx, 2) + Math.pow(e.clientY - pcy, 2));
+          if (dist < 84 * scale && dist < bestD) { bestD = dist; best = p; }
+        });
+        target = best;
+      }
+    }
+    if (!target || target.getAttribute('data-linked') === 'true') return; // dropped on empty space — wire returns
+
+    if (g.getAttribute('data-port') === target.getAttribute('data-port')) {
+      wireLink(g, target);
+      drag.suppress = true;
+      setTimeout(function () { drag.suppress = false; }, 400);
+    } else {
+      wireMiss(target);
+    }
+  }
+
+  /* ---- shared success / failure paths ---- */
+  function wireLink(moduleNode, portNode) {
+    moduleNode.setAttribute('data-linked', 'true');
+    portNode.setAttribute('data-linked', 'true');
+    moduleNode.classList.add('linked');
+    portNode.classList.add('linked');
+    moduleNode.classList.remove('selected');
+    if (wire.selected === moduleNode) wire.selected = null;
+    wire.done++;
+    var d = $('wire-done'); if (d) d.textContent = wire.done;
+    sfx('connect');
+    var mbox = moduleNode.getBBox(), pbox = portNode.getBBox();
+    var x1 = mbox.x + mbox.width, y1 = mbox.y + mbox.height / 2;
+    var x2 = pbox.x, y2 = pbox.y + pbox.height / 2;
+    var svg = $('wire-svg');
+    if (svg) {
+      var links = $('wire-links');
+      var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', 'M' + x1 + ' ' + y1 + ' C ' + ((x1 + x2) / 2) + ' ' + y1 + ', ' + ((x1 + x2) / 2) + ' ' + y2 + ', ' + x2 + ' ' + y2);
+      path.setAttribute('class', 'wire-beam');
+      links.appendChild(path);
+    }
+    if (window.FX) safe(function () {
+      var r = svg ? svg.getBoundingClientRect() : null;
+      if (r) {
+        var sx = r.left + r.width * (x1 / 420), sy = r.top + r.height * (y1 / 340);
+        var tx = r.left + r.width * (x2 / 420), ty = r.top + r.height * (y2 / 340);
+        FX.beam(sx, sy, tx, ty, { color: '#35e07f', life: 700 });
+        FX.burst((sx + tx) / 2, (sy + ty) / 2, { count: 14, color: '#35e07f', size: 2.6 });
+        FX.flash('rgba(53,224,127,0.07)', 400); // the interior energizes
+      }
+    });
+    floatAt(moduleNode, '+1 LINK', { color: '#35e07f', size: 12 });
+    syncWireNav();
+    if (wire.done >= wire.total) wireComplete();
+  }
+
+  function wireMiss(portNode) {
+    wire.mistakes++;
+    var ms = $('wire-miss'); if (ms) ms.textContent = wire.mistakes;
+    sfx('connectFail');
+    if (window.FX) safe(function () { FX.shake(7, 320); FX.flash('rgba(255,45,85,0.16)', 320); });
+    portNode.classList.add('shake');
+    setTimeout(function () { portNode.classList.remove('shake'); }, 350);
+    floatAt(portNode, '✕', { color: '#ff2d55', size: 16 });
+  }
+
+  function wireComplete() {
+    if (window.Progress) safe(function () { Progress.trackEvent('wiring', { mistakes: wire.mistakes }); });
+    sfx('mission');
+    if (window.FX) safe(function () { FX.confetti({ count: 60, colors: ['#35e07f', '#4df3ff', '#0b2a6b'] }); });
+    var hint = $('wire-hint');
+    if (hint) hint.textContent = t('connect.done', 'ALL MODULES LINKED — SYSTEM POWERED');
+    setTimeout(function () { nextPhase(); }, 700);
+  }
+
+  /* ---- connect-phase navigation lock ---- */
+  function syncWireNav() {
+    var next = $('btn-phase-next');
+    if (next) next.disabled = (phaseIndex === 3) || (phase === 'connect' && wire.done < wire.total);
+  }
+
+  function wireBlocked() {
+    sfx('error');
+    if (window.FX) safe(function () { FX.shake(5, 260); });
+    var hint = $('wire-hint');
+    if (hint) {
+      hint.classList.add('warn');
+      hint.textContent = t('connect.locked', 'LINK ALL MODULES FIRST (' + wire.done + '/' + wire.total + ')');
+      setTimeout(function () { hint.classList.remove('warn'); }, 1600);
+    }
+  }
+
+  /* ---- click-to-select fallback (kept for keyboard/accessibility) ---- */
   function wireClick(e) {
+    if (wireDrag && wireDrag.suppress) return;
     var g = e.currentTarget;
     if (g.getAttribute('data-linked') === 'true') return;
     if (g.getAttribute('data-kind') === 'module') {
@@ -615,63 +803,13 @@
       sfx('hover');
       return;
     }
-    // port clicked
+    // port clicked after a selected module (click-click fallback)
     if (!wire.selected) { sfx('error'); return; }
     var moduleNode = wire.selected;
-    var modulePort = moduleNode.getAttribute('data-port');
-    var port = g.getAttribute('data-port');
-    if (modulePort === port) {
-      // correct
-      moduleNode.setAttribute('data-linked', 'true');
-      g.setAttribute('data-linked', 'true');
-      moduleNode.classList.add('linked');
-      g.classList.add('linked');
-      moduleNode.classList.remove('selected');
-      wire.selected = null;
-      wire.done++;
-      var d = $('wire-done'); if (d) d.textContent = wire.done;
-      sfx('connect');
-      if (window.FX) {
-        var mbox = moduleNode.getBBox(), pbox = g.getBBox();
-        var x1 = mbox.x + mbox.width, y1 = mbox.y + mbox.height / 2;
-        var x2 = pbox.x, y2 = pbox.y + pbox.height / 2;
-        var svg = $('wire-svg');
-        if (svg) {
-          var links = $('wire-links');
-          var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          path.setAttribute('d', 'M' + x1 + ' ' + y1 + ' C ' + ((x1 + x2) / 2) + ' ' + y1 + ', ' + ((x1 + x2) / 2) + ' ' + y2 + ', ' + x2 + ' ' + y2);
-          path.setAttribute('class', 'wire-beam');
-          links.appendChild(path);
-        }
-        var r = svg.getBoundingClientRect();
-        var sx = r.left + r.width * (x1 / 420), sy = r.top + r.height * (y1 / 340);
-        var tx = r.left + r.width * (x2 / 420), ty = r.top + r.height * (y2 / 340);
-        FX.beam(sx, sy, tx, ty, { color: '#35e07f', life: 700 });
-        FX.burst((sx + tx) / 2, (sy + ty) / 2, { count: 14, color: '#35e07f', size: 2.6 });
-      }
-      floatAt(g, '+' + 1 + ' LINK', { color: '#35e07f', size: 12 });
-      if (wire.done >= wire.total) {
-        if (window.Progress) safe(function () {
-          Progress.trackEvent('wiring', { mistakes: wire.mistakes });
-        });
-        setTimeout(function () {
-          sfx('mission');
-          if (window.FX) safe(function () { FX.confetti({ count: 60, colors: ['#35e07f', '#4df3ff', '#2d6bff'] }); });
-          nextPhase();
-        }, 500);
-      }
+    if (moduleNode.getAttribute('data-port') === g.getAttribute('data-port')) {
+      wireLink(moduleNode, g);
     } else {
-      // wrong
-      wire.mistakes++;
-      var ms = $('wire-miss'); if (ms) ms.textContent = wire.mistakes;
-      sfx('connectFail');
-      if (window.FX) safe(function () {
-        FX.shake(7, 320);
-        FX.flash('rgba(255,45,85,0.16)', 320);
-      });
-      g.classList.add('shake');
-      setTimeout(function () { g.classList.remove('shake'); }, 350);
-      floatAt(g, '✕', { color: '#ff2d55', size: 16 });
+      wireMiss(g);
     }
   }
 
@@ -1227,10 +1365,22 @@
     // phase nav
     var next = $('btn-phase-next');
     if (next) next.addEventListener('click', function () {
+      // CONNECT is locked until every module is linked correctly
+      if (phase === 'connect' && wire.done < wire.total) { wireBlocked(); return; }
       // DESIGN, LIGHT and CONNECT advance manually; TEST advances itself
       // after the bench finishes, SHOWCASE is the last step.
       if (phase === 'design' || phase === 'light' || phase === 'connect') nextPhase();
       else if (phase === 'test' && !testRunning) nextPhase();
+    });
+    var wreset = $('wire-reset');
+    if (wreset) wreset.addEventListener('click', function () {
+      if (phase !== 'connect') return;
+      sfx('back');
+      wireReset();
+      var links = $('wire-links'); if (links) links.innerHTML = '';
+      syncWireNav();
+      var hint = $('wire-hint');
+      if (hint) hint.textContent = t('connect.hint', 'Connect each module to its port.');
     });
     var back = $('btn-phase-back');
     if (back) back.addEventListener('click', function () {
@@ -1241,6 +1391,8 @@
       s.addEventListener('click', function () {
         var i = PHASES.indexOf(s.getAttribute('data-phase'));
         if (i < 0 || i > phaseIndex + 1) { sfx('error'); return; }
+        // CONNECT must be completed before TEST/SHOWCASE can be entered
+        if (phase === 'connect' && i > 2 && wire.done < wire.total) { wireBlocked(); return; }
         setPhase(i);
       });
     });

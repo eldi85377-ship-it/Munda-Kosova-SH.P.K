@@ -6,14 +6,14 @@
 
 :root{
   /* ---- surfaces ---- */
-  --bg:#050507;
-  --bg-2:#0a0a0e;
-  --bg-3:#0f1016;
+  --bg:#05070d;
+  --bg-2:#0a0f1e;
+  --bg-3:#0d1428;
   --surface:rgba(255,255,255,0.045);
   --surface-2:rgba(255,255,255,0.08);
   --surface-3:rgba(255,255,255,0.12);
-  --glass:rgba(16,18,26,0.55);
-  --glass-2:rgba(22,24,34,0.72);
+  --glass:rgba(10,17,40,0.6);
+  --glass-2:rgba(13,21,48,0.72);
   --border:rgba(255,255,255,0.09);
   --border-soft:rgba(255,255,255,0.05);
   --border-strong:rgba(255,255,255,0.16);
@@ -25,13 +25,13 @@
   --faint:#5d5d6a;
   --ghost:#33333d;
 
-  /* ---- brand ---- */
-  --brand:#2d6bff;          /* MUNDA electric blue — never overwritten */
-  --brand-deep:#1440c8;
-  --brand-soft:rgba(45,107,255,0.14);
-  --accent:#2d6bff;         /* live accent — the game re-tints this */
-  --accent-2:#e6ddc8;
-  --cyan:#4df3ff;
+  /* ---- brand: navy + green (automotive premium) ---- */
+  --brand:#0b2a6b;          /* MUNDA navy */
+  --brand-deep:#081d4d;
+  --brand-soft:rgba(11,42,107,0.16);
+  --accent:#16a34a;         /* MUNDA green — live accent */
+  --accent-2:#d9f3e4;
+  --cyan:#22c55e;
   --gold:#ffc861;
   --gold-deep:#c9902b;
   --danger:#ff2d55;
@@ -93,11 +93,11 @@
 
 /* ---------- gradients as reusable values ---------- */
 :root{
-  --grad-brand:linear-gradient(135deg,#2d6bff,#4df3ff);
+  --grad-brand:linear-gradient(135deg,#0e7a3d,#22c55e);
   --grad-gold:linear-gradient(135deg,#ffc861,#c9902b);
-  --grad-legend:linear-gradient(135deg,#ff4d8d,#9a4dff 50%,#2d6bff);
+  --grad-legend:linear-gradient(135deg,#ff4d8d,#9a4dff 50%,#0b2a6b);
   --grad-surface:linear-gradient(160deg,rgba(255,255,255,0.07),rgba(255,255,255,0.015));
-  --grad-fade:linear-gradient(180deg,transparent,rgba(5,5,7,0.9));
+  --grad-fade:linear-gradient(180deg,transparent,rgba(5,7,13,0.9));
 }
 
 /* ---------- shared primitives ---------- */

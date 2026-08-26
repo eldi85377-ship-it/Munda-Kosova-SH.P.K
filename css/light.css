@@ -1,0 +1,210 @@
+/* =====================================================================
+   MUNDA — LIGHT PREMIUM THEME (website only)
+   ---------------------------------------------------------------------
+   Navy Blue primary · Green accent · Black text · White/light-grey
+   surfaces. Load AFTER tokens.css + site.css on index.html/contact.html
+   ONLY — the game keeps its dark cinematic theme.
+   ===================================================================== */
+
+:root{
+  /* ---- surfaces: light ---- */
+  --bg:#f4f6fb;
+  --bg-2:#ffffff;
+  --bg-3:#e9edf5;
+  --surface:rgba(11,42,107,0.05);
+  --surface-2:rgba(11,42,107,0.09);
+  --surface-3:rgba(11,42,107,0.14);
+  --glass:rgba(255,255,255,0.78);
+  --glass-2:rgba(255,255,255,0.92);
+  --border:rgba(11,42,107,0.10);
+  --border-soft:rgba(11,42,107,0.06);
+  --border-strong:rgba(11,42,107,0.20);
+
+  /* ---- ink: near-black on light ---- */
+  --ink:#0b1220;
+  --ink-dim:#26304a;
+  --muted:#57627a;
+  --faint:#8b95ab;
+  --ghost:#c6cddc;
+
+  /* ---- brand: NAVY primary, GREEN accent ---- */
+  --brand:#0b2a6b;
+  --brand-deep:#081d4d;
+  --brand-soft:rgba(11,42,107,0.10);
+  --accent:#16a34a;
+  --accent-2:#d9f3e4;
+  --cyan:#16a34a;
+  --gold:#16a34a;
+  --gold-deep:#0f7a38;
+
+  --grad-brand:linear-gradient(135deg,#0b2a6b,#1e40af);
+  --grad-gold:linear-gradient(135deg,#15803d,#22c55e);
+  --grad-surface:linear-gradient(160deg,rgba(255,255,255,0.94),rgba(255,255,255,0.72));
+  --grad-fade:linear-gradient(180deg,transparent,rgba(6,16,40,0.92));
+
+  --shadow-sm:0 4px 14px rgba(11,42,107,0.08);
+  --shadow:0 18px 46px rgba(11,42,107,0.12);
+  --shadow-lg:0 34px 90px rgba(11,42,107,0.16);
+  --glow:0 0 24px -4px rgba(22,163,74,0.4);
+  --glow-brand:0 0 28px -6px rgba(22,163,74,0.45);
+}
+
+body{background:var(--bg);color:var(--ink)}
+::selection{background:rgba(22,163,74,0.25);color:#0b1220}
+
+/* ---------- overlays light ---------- */
+.grain{opacity:.05;mix-blend-mode:multiply}
+.vignette{opacity:.35;background:radial-gradient(120% 90% at 50% 40%,transparent 58%,rgba(11,42,107,0.16))}
+#grade{opacity:.45;background:linear-gradient(165deg,rgba(11,42,107,.04),rgba(255,255,255,.06) 48%,rgba(22,163,74,.03))}
+#grade::after{background:radial-gradient(120% 95% at 50% 42%,transparent 62%,rgba(11,42,107,.08))}
+
+/* ---------- top bar ---------- */
+.site-nav{color:var(--ink)}
+.site-nav.scrolled{
+  background:rgba(255,255,255,.88);backdrop-filter:blur(18px) saturate(1.4);
+  -webkit-backdrop-filter:blur(18px) saturate(1.4);
+  box-shadow:0 10px 34px rgba(11,42,107,.10),inset 0 -1px 0 rgba(11,42,107,.06);
+}
+.site-brand-text em{color:#16a34a}
+
+/* ---------- HERO: photo + navy cinematic (contrast band) ---------- */
+.hero-photo{opacity:.86;filter:saturate(1.08) brightness(.72) contrast(1.05)}
+.hero-svg::after{
+  background:
+    radial-gradient(78% 70% at 50% 38%,rgba(6,16,40,.30),rgba(6,16,40,.66) 72%,rgba(5,12,32,.92)),
+    linear-gradient(180deg,rgba(6,16,40,.58),transparent 36%,rgba(6,16,40,.40) 68%,rgba(5,12,32,.95));
+}
+.hero h1{color:#fff;text-shadow:0 2px 44px rgba(4,10,28,.65)}
+.hero h1 .grad{background:linear-gradient(120deg,#4ade80,#86efac);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{color:rgba(255,255,255,.86)}
+.hero-kicker{color:#4ade80}
+.hero-kicker::before,.hero-kicker::after{background:linear-gradient(90deg,transparent,#4ade80)}
+.hero-kicker::after{background:linear-gradient(90deg,#4ade80,transparent)}
+.hero-logo{filter:drop-shadow(0 0 30px rgba(255,255,255,.28))}
+.hero-scroll span{border-color:#4ade80}
+.hero-scroll span::after{background:#4ade80}
+
+/* ---------- buttons: GREEN ---------- */
+.btn-primary{
+  background:linear-gradient(135deg,#15803d,#22c55e);
+  box-shadow:0 12px 32px -10px rgba(22,163,74,.7),inset 0 1px 0 rgba(255,255,255,.35);
+  color:#fff;text-shadow:0 1px 2px rgba(0,40,20,.35);
+}
+.btn-primary:hover{box-shadow:0 16px 44px -10px rgba(22,163,74,.9),inset 0 1px 0 rgba(255,255,255,.4);filter:brightness(1.05)}
+.btn-ghost{background:#fff;color:#0b2a6b;border-color:rgba(11,42,107,.28);box-shadow:0 8px 24px -12px rgba(11,42,107,.25)}
+.btn-ghost:hover{border-color:#16a34a;color:#16a34a;background:rgba(22,163,74,.06)}
+.btn-pulse::after{background:linear-gradient(90deg,rgba(255,255,255,.16),rgba(255,255,255,0))}
+
+/* ---------- glass & cards: white, clean ---------- */
+.glass,.sec .glass,.glass.card{
+  background:linear-gradient(165deg,rgba(255,255,255,.96),rgba(255,255,255,.8));
+  border-color:rgba(11,42,107,.12);
+  box-shadow:inset 0 1px 0 #fff,0 22px 50px -22px rgba(11,42,107,.18);
+}
+.tech-card{background:linear-gradient(170deg,#ffffff,#f4f7fc);border-color:rgba(11,42,107,.12);box-shadow:0 20px 46px -22px rgba(11,42,107,.18)}
+.tech-card h3{color:#0b2a6b}
+.tech-card p{color:var(--muted)}
+.tc-vis{border-bottom-color:rgba(11,42,107,.08);background:linear-gradient(180deg,rgba(11,42,107,.04),transparent)}
+.tc-photo{filter:saturate(1.02)}
+
+/* ---------- MUNDA section ---------- */
+.af{background:linear-gradient(160deg,rgba(22,163,74,.08),rgba(255,255,255,.85));border-color:rgba(22,163,74,.30)}
+.af b{color:#0b2a6b}
+.af b::before{background:linear-gradient(135deg,#15803d,#22c55e);box-shadow:0 0 10px rgba(22,163,74,.6)}
+.af span{color:var(--muted)}
+.about-photo-main{box-shadow:0 34px 80px -26px rgba(11,42,107,.4),0 0 0 1px rgba(11,42,107,.10);border-color:rgba(11,42,107,.12)}
+.about-photo-detail{border-color:rgba(22,163,74,.4)}
+.about-logos img{filter:brightness(0) opacity(.7)}
+.about-logos img:hover{filter:brightness(0) opacity(1)}
+.about-note{color:var(--faint)}
+
+/* ---------- AUTOMOTIVE band ---------- */
+.auto-band img{border-color:rgba(11,42,107,.12);box-shadow:0 34px 80px -26px rgba(11,42,107,.32)}
+.auto-band figcaption{
+  background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.94));
+  color:#0b2a6b;border-color:rgba(255,255,255,.65);
+}
+
+/* ---------- INNOVATION timeline ---------- */
+.timeline::before{background:linear-gradient(90deg,transparent,rgba(22,163,74,.55),transparent)}
+.tl-step{background:linear-gradient(170deg,#ffffff,#f3f6fc);border-color:rgba(11,42,107,.12);box-shadow:inset 0 1px 0 #fff,0 20px 44px -22px rgba(11,42,107,.16)}
+.tl-step b{color:#0b2a6b}
+.tl-step p{color:var(--muted)}
+.tl-year{background:linear-gradient(135deg,#15803d,#22c55e);box-shadow:0 8px 22px -8px rgba(22,163,74,.8),0 0 0 6px #fff,0 0 0 7px rgba(22,163,74,.28)}
+
+/* ---------- GAME section ---------- */
+.shot-frame{background:#fff;border-color:rgba(11,42,107,.14);box-shadow:0 22px 50px -22px rgba(11,42,107,.22)}
+.shot figcaption{color:var(--faint)}
+.game-feats span{background:rgba(11,42,107,.05);border-color:rgba(11,42,107,.14);color:var(--ink-dim)}
+
+/* ---------- GALLERY ---------- */
+.g-tile{background:#fff;border-color:rgba(11,42,107,.10)}
+.g-tile b{background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.95));color:#0b2a6b}
+.gt-inner.gt-photo::after{background:linear-gradient(180deg,transparent 58%,rgba(255,255,255,.40))}
+.lightbox{background:rgba(240,243,249,.94)}
+.lb-caption{color:#0b1220}
+.lb-close{color:#26304a;border-color:rgba(11,42,107,.15)}
+
+/* ---------- FINAL CTA: navy contrast band ---------- */
+.final-cta{
+  background:
+    radial-gradient(90% 140% at 50% -10%,#17407f 0%,#0b2a6b 55%,#081d4d 100%);
+  border-radius:var(--radius-xl);
+  margin:0 var(--gutter) var(--sec-pad);
+  box-shadow:0 40px 90px -30px rgba(11,42,107,.5);
+}
+.final-cta .kicker{color:#4ade80}
+.final-cta h2{color:#fff}
+.final-cta .cta-sub{color:rgba(255,255,255,.82)}
+
+/* ---------- FOOTER: navy ---------- */
+.site-footer{background:linear-gradient(180deg,#0b1e44,#07132e);color:#fff;border-top:1px solid rgba(255,255,255,.06)}
+.foot-brand b{color:#fff}
+.foot-brand em{color:#4ade80}
+.foot-links a{color:rgba(255,255,255,.82)}
+.foot-links a:hover{color:#4ade80}
+.foot-note{color:rgba(255,255,255,.55)}
+
+/* ---------- MONDO: light ---------- */
+.mondo-btn{background:linear-gradient(135deg,#15803d,#22c55e);color:#fff;box-shadow:0 14px 40px -10px rgba(22,163,74,.65)}
+.mondo-btn .mb-ic{background:#fff;color:#15803d;box-shadow:0 0 0 2px rgba(255,255,255,.3),0 0 18px rgba(74,222,128,.8)}
+.mondo-panel{background:linear-gradient(170deg,#ffffff,#f2f5fa);border-color:rgba(11,42,107,.14);box-shadow:0 40px 110px -24px rgba(11,42,107,.35)}
+.mondo-head{background:linear-gradient(135deg,rgba(22,163,74,.14),rgba(11,42,107,.05));border-bottom-color:rgba(11,42,107,.08)}
+.mondo-head b{color:#0b2a6b}
+.mondo-head i{color:var(--muted)}
+.mondo-avatar{background:linear-gradient(135deg,#15803d,#22c55e);color:#fff;box-shadow:0 6px 20px -6px rgba(22,163,74,.7)}
+.mondo-close{color:var(--muted);border-color:rgba(11,42,107,.15)}
+.mondo-close:hover{color:#16a34a;border-color:#16a34a}
+.mondo-msg.bot{background:#edf1f8;border-color:rgba(11,42,107,.10);color:#26304a}
+.mondo-msg.bot b{color:#0b2a6b}
+.mondo-msg.bot a{color:#16a34a;border-color:rgba(22,163,74,.4)}
+.mondo-msg.user{background:linear-gradient(135deg,#15803d,#22c55e);box-shadow:0 8px 24px -10px rgba(22,163,74,.5)}
+.mondo-chip{background:#fff;border-color:rgba(11,42,107,.18);color:var(--ink-dim)}
+.mondo-chip:hover{border-color:#16a34a;background:rgba(22,163,74,.10);color:#0b2a6b}
+.mondo-inputbar{background:#f6f8fc;border-top-color:rgba(11,42,107,.08)}
+.mondo-inputbar input{background:#fff;border-color:rgba(11,42,107,.18);color:#0b1220}
+.mondo-inputbar input:focus{border-color:#16a34a;box-shadow:0 0 0 3px rgba(22,163,74,.15)}
+.mondo-send{background:linear-gradient(135deg,#15803d,#22c55e);color:#fff;box-shadow:0 6px 18px -6px rgba(22,163,74,.6)}
+.mondo-typing i{background:#16a34a}
+.mondo-start{background:linear-gradient(135deg,#15803d,#22c55e);color:#fff !important}
+
+/* ---------- CONTACT page (light) ---------- */
+.contact-card b{color:var(--ink-dim)}
+.contact-card a{color:#0b2a6b}
+.contact-card a:hover{color:#16a34a;border-color:#16a34a}
+.contact-form input,.contact-form textarea{background:#fff;border-color:rgba(11,42,107,.18);color:#0b1220}
+.contact-form input:focus,.contact-form textarea:focus{border-color:#16a34a;box-shadow:0 0 0 4px rgba(22,163,74,.12)}
+.contact-map iframe{filter:none;background:#eef1f7}
+.cc-label{color:#16a34a}
+.team-leadership img{box-shadow:0 30px 70px -24px rgba(11,42,107,.35)}
+.team-leadership figcaption{color:var(--faint)}
+
+/* ---------- micro polish ---------- */
+.kicker{color:#16a34a}
+.sec-sub{color:var(--muted)}
+.brand-mark{background:var(--grad-brand);color:#fff}
+:focus-visible{outline-color:#16a34a}
+/* MONDO character (light theme) */
+.mondo-avatar{background:transparent}
+.mondo-avatar svg{box-shadow:0 8px 22px -6px rgba(22,163,74,.55)}
+.mb-ic{background:transparent}

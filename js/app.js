@@ -243,6 +243,27 @@
     }
   };
 
+  /* ---------- cinematic camera parallax (subtle depth on mouse move) ---------- */
+  function initParallax() {
+    var cam = document.getElementById('camera');
+    if (!cam) return;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+    var tx = 0, ty = 0, cx = 0, cy = 0, raf = null;
+    window.addEventListener('mousemove', function (e) {
+      tx = (e.clientX / window.innerWidth - 0.5) * 2;
+      ty = (e.clientY / window.innerHeight - 0.5) * 2;
+    }, { passive: true });
+    (function tick() {
+      cx += (tx - cx) * 0.045;
+      cy += (ty - cy) * 0.045;
+      cam.style.setProperty('--rx', (cy * -2.4).toFixed(2) + 'deg');
+      cam.style.setProperty('--ry', (cx * 3.2).toFixed(2) + 'deg');
+      raf = requestAnimationFrame(tick);
+    })();
+    window.addEventListener('beforeunload', function () { if (raf) cancelAnimationFrame(raf); });
+  }
+
   /* ---------- init ---------- */
   function init() {
     if (window.Progress) { try { Progress.load(); } catch (e) {} }
@@ -252,6 +273,7 @@
     if (window.FutureLab) FutureLab.init();
     if (window.Particles) { try { Particles.start(); } catch (e) {} }
     wireButtons();
+    initParallax();
     document.body.dataset.screen = 'boot';
   }
 
