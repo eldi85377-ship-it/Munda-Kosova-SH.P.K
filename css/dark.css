@@ -112,7 +112,7 @@ body{
 .hero-kicker{color:#4ade80}
 .hero-kicker::before,.hero-kicker::after{background:linear-gradient(90deg,transparent,#4ade80)}
 .hero-kicker::after{background:linear-gradient(90deg,#4ade80,transparent)}
-.hero-logo{filter:drop-shadow(0 0 28px rgba(74,222,128,.25))}
+.hero-logo{filter:invert(1) drop-shadow(0 0 28px rgba(74,222,128,.25))}
 .hero-scroll{border-color:rgba(74,222,128,.4)}
 .hero-scroll span{background:#4ade80;box-shadow:0 0 10px rgba(74,222,128,.8)}
 
@@ -512,7 +512,7 @@ body{
 /* =====================================================================
    MUNDA DIGITAL SHOWROOM — cinematic entrance sequence
    ===================================================================== */
-.site-logo{height:34px;width:auto;display:block;filter:drop-shadow(0 0 14px rgba(74,222,128,.28))}
+.site-logo{height:34px;width:auto;display:block;filter:invert(1) drop-shadow(0 0 14px rgba(74,222,128,.28))}
 
 /* exterior showroom overlay */
 .conf-exterior{
@@ -568,3 +568,86 @@ body{
 #conf-interior .cfg-screen.lit,#conf-interior .cfg-power.lit{opacity:1}
 #conf-interior .cfg-screen.lit{filter:drop-shadow(0 0 6px rgba(74,222,128,.5))}
 #conf-interior .cfg-power.lit{filter:drop-shadow(0 0 5px rgba(74,222,128,.8))}
+
+/* =====================================================================
+   TEAM — LEADERSHIP & OWNERSHIP (#team)
+   ===================================================================== */
+#team .team-lead{
+  display:block;margin:6px auto 34px;max-width:860px;padding:14px;
+  border:1px solid var(--border-soft);border-radius:20px;overflow:hidden;
+}
+#team .team-lead img{width:100%;display:block;border-radius:12px}
+#team .team-lead figcaption{
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.05em;line-height:1.6;
+  color:var(--muted);text-align:center;padding:12px 8px 2px;
+}
+.team-group{margin-bottom:30px}
+.team-group-title{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--cyan);text-align:center;margin:0 0 18px;
+}
+.team-group-title::before,.team-group-title::after{
+  content:'';display:inline-block;vertical-align:middle;height:1px;width:44px;
+  background:linear-gradient(90deg,transparent,rgba(74,222,128,.5));margin:0 12px;
+}
+.team-group-title::after{background:linear-gradient(90deg,rgba(74,222,128,.5),transparent)}
+#team .team-grid{max-width:760px;margin:0 auto;grid-template-columns:repeat(2,1fr);gap:18px}
+/* management is only 2 cards — keep them side by side, centered */
+#team-grid-mgmt{max-width:760px}
+/* green-tinted premium cards (overrides the blue rgba from site.css) */
+.team-card:hover{border-color:rgba(34,197,94,.4);box-shadow:0 24px 50px -20px rgba(34,197,94,.32)}
+.tc-photo{background:linear-gradient(160deg,rgba(34,197,94,.16),rgba(255,255,255,.02));border:1px solid var(--border)}
+.tc-photo.noimg{background:linear-gradient(160deg,rgba(34,197,94,.14),rgba(21,128,61,.05))}
+.tc-initials{background:var(--grad-brand);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tc-role{color:var(--cyan);background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.22)}
+.tc-org{
+  display:block;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;
+  color:var(--muted);text-transform:uppercase;margin:-2px 0 12px;
+}
+@media(max-width:640px){
+  #team .team-grid{grid-template-columns:1fr}
+}
+
+/* =====================================================================
+   PREMIUM MICRO-INTERACTIONS (cursor glow · scan line · tilt · magnetic)
+   ===================================================================== */
+/* ✨ Cursor glow — a soft green/blue halo that trails the pointer */
+.cursor-glow{
+  position:fixed;top:0;left:0;width:340px;height:340px;margin:-170px 0 0 -170px;
+  border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:screen;
+  background:radial-gradient(circle,
+    rgba(74,222,128,.16) 0%, rgba(34,197,94,.07) 34%, rgba(80,160,255,.03) 55%, transparent 72%);
+  opacity:0;will-change:transform;
+  transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease),opacity .5s ease;
+}
+.cursor-glow.on{opacity:1}
+.cursor-glow.near{width:520px;height:520px;margin:-260px 0 0 -260px}
+
+/* 🟢 Neon scan line — a thin green/blue line sweeping down through the page */
+.scanline{
+  position:fixed;left:0;right:0;height:2px;z-index:4500;pointer-events:none;opacity:0;
+  background:linear-gradient(90deg,transparent,rgba(74,222,128,.5) 30%,rgba(140,220,255,.5) 70%,transparent);
+  box-shadow:0 0 16px 2px rgba(74,222,128,.22),0 0 34px 6px rgba(80,160,255,.12);
+  animation:scanSweep 10s linear infinite;
+}
+@keyframes scanSweep{
+  0%{top:-2%;opacity:0}
+  7%{opacity:.42}
+  45%{opacity:.42}
+  55%{opacity:0}
+  100%{top:102%;opacity:0}
+}
+
+/* 🔄 3D tilt — applied by js/effects.js to cards & images */
+.tilt{
+  transform-style:preserve-3d;will-change:transform;
+  transition:transform .22s cubic-bezier(.2,.6,.2,1);
+}
+
+/* ⚡ Magnetic buttons — inline transition set by js/effects.js */
+.btn,.btn-primary,.btn-ghost{will-change:transform}
+
+@media (prefers-reduced-motion: reduce){
+  .cursor-glow,.scanline{display:none}
+  .tilt{transition:none}
+}

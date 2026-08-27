@@ -86,6 +86,8 @@
         'team.note': 'Leadership and plant photos from MUNDA — sources: munda.tech · ARBK.',
         'team.role': 'MUNDA Kosova SH.P.K',
         'team.leadCaption': 'The joint-venture partners (l. to r.): Dennis Weyer (MENTOR), Peter Bolten (AUNDE), Wido Weyer (MENTOR) and Kai Muxel (MUNDA).',
+        'team.mgmtTitle': 'MANAGEMENT',
+        'team.ownTitle': 'OWNERS & PARTNERS',
         'about.kicker': 'THE COMPANY',
         'about.title': 'MUNDA Kosova <em>SH.P.K.</em><br>Light from the heart of the Balkans.',
         'about.p1': 'MUNDA Kosova SH.P.K produces illuminated textile systems for the automotive industry — flexible LED technology woven directly into fabric, manufactured at the company\u2019s factory in Obiliq, Kosovo.',
@@ -218,6 +220,8 @@
         'team.note': 'Foto të udhëheqjes dhe fabrikës nga MUNDA — burimet: munda.tech · ARBK.',
         'team.role': 'MUNDA Kosova SH.P.K',
         'team.leadCaption': 'Partnerët e sipërmarrjes së përbashkët (nga e majta): Dennis Weyer (MENTOR), Peter Bolten (AUNDE), Wido Weyer (MENTOR) dhe Kai Muxel (MUNDA).',
+        'team.mgmtTitle': 'MENAXHMENTI',
+        'team.ownTitle': 'PRONARËT & PARTNERËT',
         'about.kicker': 'KOMPANIA',
         'about.title': 'MUNDA Kosova <em>SH.P.K.</em><br>Dritë nga zemra e Ballkanit.',
         'about.p1': 'MUNDA Kosova SH.P.K prodhon sisteme tekstili të ndriçuar për industrinë automobilistike — teknologji LED fleksibël e endur direkt në pëlhurë, e prodhuar në fabrikën e kompanisë në Obiliq, Kosovë.',
@@ -383,6 +387,8 @@
     }
     resize();
     window.addEventListener('resize', resize);
+    var mx = -9999, my = -9999;
+    window.addEventListener('pointermove', function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
     var reduced = false;
     try { reduced = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
     if (reduced) return;
@@ -394,6 +400,15 @@
         p.y -= p.v;
         p.x += Math.sin(p.drift) * 0.16;
         p.drift += 0.006;
+        if (mx > -9999) {
+          var dx = p.x - mx, dy = p.y - my;
+          var d2 = dx * dx + dy * dy, R = 88;
+          if (d2 < R * R && d2 > 0.25) {
+            var d = Math.sqrt(d2), f = (R - d) / R * 0.9;
+            p.x += (dx / d) * f;
+            p.y += (dy / d) * f;
+          }
+        }
         if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
