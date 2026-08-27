@@ -172,6 +172,18 @@
       <linearGradient id="g-floor" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0%" stop-color="#0c0d13"/><stop offset="100%" stop-color="#03040b"/>
       </linearGradient>
+      <!-- moving specular glare for glass screens -->
+      <linearGradient id="g-glare" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
+        <stop offset="50%" stop-color="rgba(210,235,255,0.16)"/>
+        <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+      </linearGradient>
+      <!-- brushed-aluminium trim -->
+      <linearGradient id="g-metal" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#c9d2e0"/><stop offset="22%" stop-color="#8b95a7"/>
+        <stop offset="46%" stop-color="#e6ecf5"/><stop offset="62%" stop-color="#6d7688"/>
+        <stop offset="100%" stop-color="#aab3c4"/>
+      </linearGradient>
 
       <!-- ENVIRONMENTS (behind the windshield, deep navy) -->
       <linearGradient id="env-city" x1="0" y1="0" x2="0" y2="1">
@@ -414,7 +426,7 @@
       <polygon points="70,432 1130,432 1150,592 50,592" fill="url(#g-dash)"/>
       <polygon points="70,432 1130,432 1150,448 50,448" fill="url(#g-sheen)" opacity="0.5"/>
       <!-- trim line -->
-      <polyline points="86,452 1114,452" fill="none" stroke="url(#g-trim)" stroke-width="5" stroke-linecap="round"/>
+      <polyline points="86,452 1114,452" fill="none" stroke="url(#g-metal)" stroke-width="5" stroke-linecap="round"/>
       <polyline points="86,455 1114,455" fill="none" stroke="#000000" stroke-opacity="0.4" stroke-width="1.4"/>
       <!-- dash seams + grain -->
       <path d="M300 452 V590 M900 452 V590" stroke="#000000" stroke-opacity="0.35" stroke-width="1.4" stroke-dasharray="4 3"/>
@@ -432,6 +444,7 @@
             <g id="cluster">
         <rect x="252" y="372" width="212" height="66" rx="12" fill="#0a0c12" stroke="#262b36" stroke-width="1.6" filter="url(#f-ao-sm)"/>
         <rect x="256" y="376" width="204" height="58" rx="9" fill="url(#g-screen)"/>
+        <rect class="glare" x="256" y="376" width="204" height="58" rx="9"/>
         <g class="cluster-live">
           <!-- speed dial -->
           <path d="M272 422 A42 42 0 0 1 314 380" fill="none" stroke="#35e07f" stroke-opacity="0.85" stroke-width="3.2" stroke-linecap="round"/>
@@ -462,6 +475,7 @@
             <g id="infotainment">
         <rect x="516" y="368" width="188" height="74" rx="10" fill="#0a0c12" stroke="#262b36" stroke-width="1.6" filter="url(#f-ao-sm)"/>
         <rect x="520" y="372" width="180" height="66" rx="7" fill="url(#g-screen)"/>
+        <rect class="glare" x="520" y="372" width="180" height="66" rx="7"/>
         <g class="info-live">
           <rect x="530" y="380" width="40" height="6" rx="3" fill="#22c55e" opacity="0.9"/>
           <rect x="574" y="381" width="26" height="4" rx="2" fill="#ffffff" opacity="0.3"/>
@@ -761,6 +775,27 @@
         <ellipse class="strip-bloom" cx="794" cy="312" rx="66" ry="18" fill="#2d6bff" filter="url(#f-soft15)" opacity="0.25"/>
       </g>
     </g>
+
+    <!-- ===== LIGHT REFLECTIONS — dynamic bounce off glossy surfaces ===== -->
+    <g id="reflect" pointer-events="none">
+      <!-- roof light washes the dashboard top -->
+      <polygon class="reflect" data-zone="roof" points="140,356 1060,356 1130,432 70,432" filter="url(#f-soft15)"/>
+      <!-- dashboard light reflects up onto the windshield + across the dash face -->
+      <polygon class="reflect" data-zone="dashboard" points="152,110 1048,110 1048,356 152,356" filter="url(#f-soft30)"/>
+      <polygon class="reflect" data-zone="dashboard" points="70,432 1130,432 1150,592 50,592" filter="url(#f-soft15)"/>
+      <!-- door light bounces off the door panels -->
+      <polygon class="reflect" data-zone="doors" points="52,340 156,340 156,600 52,600" filter="url(#f-soft15)"/>
+      <polygon class="reflect" data-zone="doors" points="1148,340 1044,340 1044,600 1148,600" filter="url(#f-soft15)"/>
+      <!-- console light glows up the centre tunnel -->
+      <path class="reflect" data-zone="console" d="M560 432 Q555 420 560 414 L640 414 Q645 420 640 432 L646 640 L554 640 Z" filter="url(#f-soft15)"/>
+      <!-- seat light halo on the seat backs -->
+      <rect class="reflect" data-zone="seats" x="352" y="236" width="108" height="126" rx="26" filter="url(#f-soft15)"/>
+      <rect class="reflect" data-zone="seats" x="740" y="236" width="108" height="126" rx="26" filter="url(#f-soft15)"/>
+      <!-- footwell light pools on the floor -->
+      <rect class="reflect" data-zone="footwell" x="50" y="600" width="1100" height="118" filter="url(#f-soft30)"/>
+    </g>
+    <!-- ambient cabin wash — the whole cabin picks up the light colour -->
+    <rect id="cabin-wash" x="40" y="40" width="1120" height="680" fill="#2d6bff" fill-opacity="0" style="mix-blend-mode:soft-light" pointer-events="none"/>
 
     <!-- ===== HIGHLIGHTS (selection outline) ===== -->
     <g id="highlights" fill="none">
@@ -1116,7 +1151,6 @@
           <p data-i18n="showcase.lead">The lights go down. The cabin comes alive. This is your moment.</p>
         </div>
         <div class="sc-ready">
-          <div class="sc-preview" id="sc-preview"></div>
           <button class="btn-primary btn-huge btn-glow" id="btn-showcase" data-i18n="showcase.start">BEGIN FINAL SHOWCASE</button>
         </div>
       </div>

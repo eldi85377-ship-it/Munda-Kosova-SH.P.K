@@ -128,6 +128,25 @@
         'cta.kicker': 'THE CHALLENGE', 'cta.title': 'Ready to design<br>the <em>future?</em>',
         'cta.sub': 'Enter the MUNDA Future Lab and create your own automotive lighting experience.',
         'cta.btn': 'DISCOVER THE FUTURE',
+        'hero.enter': 'ENTER THE MUNDA EXPERIENCE',
+        'perf.kicker': 'PERFORMANCE', 'perf.title': 'Engineered to <em>perform.</em>',
+        'perf.sub': 'The numbers behind the MUNDA Future Lab experience.',
+        'perf.n1': 'Interior light zones', 'perf.n2': 'Colours · 7 patterns',
+        'perf.n3': 'Automotive tests', 'perf.n4': 'MUNDA Score max',
+        'cine.kicker': 'THE CRAFT', 'cine.title': 'Light, <em>in motion.</em>',
+        'cine.live': 'Live', 'cine.cap': 'The first series car in the world with textile light — engineered in Erkrath, made in Kosovo.',
+        'intel.kicker': 'MUNDA INTELLIGENCE', 'intel.title': 'The brain behind <em>the light.</em>',
+        'intel.sub': 'One connected textile — sensing, adapting and illuminating in real time.',
+        'intel.ready': 'System ready', 'intel.online': 'Neural textile · online',
+        'intel.b1': 'Light output', 'intel.b2': 'Efficiency', 'intel.b3': 'Durability', 'intel.b4': 'Precision',
+        'intel.s1': 'All 6 zones connected', 'intel.s2': '5/5 tests passed', 'intel.s3': 'Made in Kosovo · ready to build',
+        'cfg.kicker': 'CHOOSE YOUR MUNDA', 'cfg.title': 'Build <em>your</em> MUNDA.',
+        'cfg.sub': 'Pick a model, choose your atmosphere, and watch the interior come alive.',
+        'cfg.pick': 'Configure →', 'cfg.back': 'Change model',
+        'cfg.atmos': 'Choose your atmosphere', 'cfg.color': 'Ambient colour',
+        'cfg.material': 'Interior material', 'cfg.features': 'MUNDA can install',
+        'cfg.enter': 'ENTER INTERIOR',
+        'cfg.a4t': 'Sedan', 'cfg.a5t': 'Sportback', 'cfg.a6t': 'Executive', 'cfg.a7t': 'Flagship',
         'foot.note': 'Made in Kosovo. Designed for the future. · Digital School Competition · Design concept — no brand partnership implied.'
       },
       sq: {
@@ -241,6 +260,25 @@
         'cta.kicker': 'SJELLJA', 'cta.title': 'Gati për ta dizajnuar<br>të <em>ardhmen?</em>',
         'cta.sub': 'Hyr në MUNDA Future Lab dhe krijo përvojën tënde të ndriçimit automotiv.',
         'cta.btn': 'ZBULO TË ARDHMEN',
+        'hero.enter': 'HYR NË EKSPERIENCËN MUNDA',
+        'perf.kicker': 'PERFORMANCA', 'perf.title': 'E inxhinieruar për <em>performancë.</em>',
+        'perf.sub': 'Numrat pas përvojës MUNDA Future Lab.',
+        'perf.n1': 'Zona drite të interiorit', 'perf.n2': 'Ngjyra · 7 modele',
+        'perf.n3': 'Teste automobilistike', 'perf.n4': 'MUNDA Score maksimal',
+        'cine.kicker': 'MJESHTRIA', 'cine.title': 'Dritë, <em>në lëvizje.</em>',
+        'cine.live': 'Live', 'cine.cap': 'Makina e parë serike në botë me dritë tekstili — e inxhinieruar në Erkrath, e bërë në Kosovë.',
+        'intel.kicker': 'MUNDA INTELLIGENCE', 'intel.title': 'Truri pas <em>dritës.</em>',
+        'intel.sub': 'Një tekstil i lidhur — që ndjen, përshtatet dhe ndriçon në kohë reale.',
+        'intel.ready': 'Sistemi gati', 'intel.online': 'Tekstil neural · online',
+        'intel.b1': 'Dalja e dritës', 'intel.b2': 'Eficenca', 'intel.b3': 'Qëndrueshmëria', 'intel.b4': 'Saktësia',
+        'intel.s1': 'Të 6 zonat e lidhura', 'intel.s2': '5/5 teste të kaluara', 'intel.s3': 'Bërë në Kosovë · gati për ndërtim',
+        'cfg.kicker': 'ZGJIDH MUNDA-N TËNDE', 'cfg.title': 'Ndërto <em>MUNDA-n</em> tënd.',
+        'cfg.sub': 'Zgjidh një model, zgjidh atmosferën dhe shiko interiorin që vjen në jetë.',
+        'cfg.pick': 'Konfiguro →', 'cfg.back': 'Ndrysho modelin',
+        'cfg.atmos': 'Zgjidh atmosferën tënde', 'cfg.color': 'Ngjyra ambient',
+        'cfg.material': 'Materiali i interiorit', 'cfg.features': 'MUNDA mund të instalojë',
+        'cfg.enter': 'HYR NË INTERIOR',
+        'cfg.a4t': 'Sedan', 'cfg.a5t': 'Sportback', 'cfg.a6t': 'Ekzekutiv', 'cfg.a7t': 'Flamurtar',
         'foot.note': 'Bërë në Kosovë. Dizajnuar për të ardhmen. · Gara Digital School · Koncept dizajni — pa partneritet markash.'
       }
     });
@@ -297,15 +335,284 @@
 
   function heroParallax() {
     var svg = $('hero-svg');
-    if (!svg) return;
+    var content = document.querySelector('.hero-content');
+    if (!svg && !content) return;
     var reduced = false;
     try { reduced = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
     if (reduced) return;
+    var tx = 0, ty = 0, cx = 0, cy = 0;
     document.addEventListener('mousemove', function (e) {
-      var x = (e.clientX / window.innerWidth - 0.5);
-      var y = (e.clientY / window.innerHeight - 0.5);
-      svg.style.transform = 'scale(1.02) translate(' + (x * -14) + 'px,' + (y * -10) + 'px)';
+      tx = (e.clientX / window.innerWidth - 0.5);
+      ty = (e.clientY / window.innerHeight - 0.5);
+    }, { passive: true });
+    (function tick() {
+      requestAnimationFrame(tick);
+      cx += (tx - cx) * 0.05;
+      cy += (ty - cy) * 0.05;
+      if (svg) {
+        svg.style.transform = 'perspective(1100px) scale(1.04) translate(' + (cx * -16).toFixed(2) + 'px,' + (cy * -12).toFixed(2) + 'px) rotateX(' + (cy * 3).toFixed(2) + 'deg) rotateY(' + (cx * -4).toFixed(2) + 'deg)';
+      }
+      if (content) {
+        content.style.transform = 'translate(' + (cx * 10).toFixed(2) + 'px,' + (cy * 6).toFixed(2) + 'px)';
+      }
+    })();
+  }
+
+  /* =====================================================================
+     FULL-PAGE BACKGROUND PARTICLES (subtle green drift)
+     ===================================================================== */
+  function bgParticles() {
+    var canvas = $('bg-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W = 0, H = 0, pts = [];
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      pts = [];
+      var n = Math.min(46, Math.floor(W / 32));
+      for (var i = 0; i < n; i++) {
+        pts.push({
+          x: Math.random() * W, y: Math.random() * H,
+          r: Math.random() * 1.6 + 0.3,
+          v: Math.random() * 0.22 + 0.05,
+          a: Math.random() * 0.30 + 0.07,
+          drift: Math.random() * Math.PI * 2
+        });
+      }
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    var reduced = false;
+    try { reduced = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    if (reduced) return;
+    (function tick() {
+      requestAnimationFrame(tick);
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i];
+        p.y -= p.v;
+        p.x += Math.sin(p.drift) * 0.16;
+        p.drift += 0.006;
+        if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(120,230,160,' + p.a + ')';
+        ctx.fill();
+      }
+    })();
+  }
+
+  /* =====================================================================
+     ANIMATED NUMBERS (count-up on scroll)
+     ===================================================================== */
+  function initCounters() {
+    var nums = qsa('.perf-num');
+    if (!nums.length) return;
+    function animate(el) {
+      var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+      var suffix = el.getAttribute('data-suffix') || '';
+      var start = null, dur = 1600;
+      function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min(1, (ts - start) / dur);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    if (!('IntersectionObserver' in window)) { nums.forEach(animate); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { animate(en.target); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.4 });
+    nums.forEach(function (el) { io.observe(el); });
+  }
+
+  /* =====================================================================
+     MUNDA INTELLIGENCE DASHBOARD (ring + bars animate on scroll)
+     ===================================================================== */
+  function initIntel() {
+    var dash = document.querySelector('.intel-dash');
+    if (!dash) return;
+    function run() {
+      var arc = dash.querySelector('.ir-arc');
+      var num = $('intel-core-num');
+      var target = 98, C = 527.8; // 2 * PI * 84
+      if (arc) {
+        arc.style.strokeDashoffset = C;
+        setTimeout(function () { arc.style.strokeDashoffset = String(C - C * target / 100); }, 80);
+      }
+      var start = null, dur = 1600;
+      function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min(1, (ts - start) / dur);
+        var eased = 1 - Math.pow(1 - p, 3);
+        if (num) num.textContent = Math.round(target * eased);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      qsa('.ib-track i', dash).forEach(function (bar) {
+        var w = bar.getAttribute('data-w') || '0';
+        setTimeout(function () { bar.style.width = w + '%'; }, 140);
+      });
+    }
+    if (!('IntersectionObserver' in window)) { run(); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { run(); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.3 });
+    io.observe(dash);
+  }
+
+  /* =====================================================================
+     CHOOSE YOUR MUNDA — car configurator
+     ===================================================================== */
+  var CONF_ATMOS = { pure: '#eaf2ff', sport: '#ff2d55', luxury: '#e8c87a', future: '#4ade80' };
+  var CONF_FEATURES = {
+    a4: ['Ambient roof textile', 'Door contour lighting', 'Illuminated dashboard line', 'Dynamic drive modes'],
+    a5: ['Sport contour lighting', 'Door + console light signature', 'Illuminated stitching', 'Performance drive modes'],
+    a6: ['Executive ambient suite', 'Rear cabin lighting', 'Premium seat illumination', 'Comfort drive modes'],
+    a7: ['Flagship light architecture', 'Full-cabin dynamic lighting', 'Signature MUNDA light bar', 'Showcase drive modes']
+  };
+  var confColor = '#4ade80';
+  var confMaterial = 'carbon';
+
+  function confApply() {
+    var svg = $('conf-interior');
+    if (!svg) return;
+    qsa('.cfg-strip', svg).forEach(function (el) { el.setAttribute('stroke', confColor); });
+    qsa('.cfg-halo', svg).forEach(function (el) {
+      if (el.tagName.toLowerCase() === 'ellipse') el.setAttribute('fill', confColor);
+      else el.setAttribute('stroke', confColor);
     });
+    var mat = $('cfg-material');
+    if (mat) qsa('path', mat).forEach(function (p) { p.setAttribute('fill', 'url(#cfg-' + confMaterial + ')'); });
+  }
+
+  function confResetLights() {
+    var svg = $('conf-interior');
+    if (!svg) return;
+    qsa('.cfg-strip, .cfg-halo, .cfg-screen, .cfg-power', svg).forEach(function (el) {
+      el.classList.remove('lit');
+      el.style.transitionDelay = '';
+    });
+  }
+
+  function lightUpInterior() {
+    var svg = $('conf-interior');
+    if (!svg) return;
+    qsa('.cfg-strip, .cfg-halo, .cfg-screen, .cfg-power', svg).forEach(function (el, i) {
+      el.style.transitionDelay = (i * 130) + 'ms';
+      el.classList.add('lit');
+    });
+  }
+
+  function confShow(model) {
+    var grid = $('model-grid');
+    var stage = $('conf-stage');
+    var exterior = $('conf-exterior');
+    var layout = $('conf-layout');
+    var welcome = $('conf-welcome');
+    var panel = $('conf-panel');
+    if (!stage) return;
+    var m = String(model || 'a4').toUpperCase();
+    var label = $('conf-model'); if (label) label.textContent = m;
+    var labelExt = $('conf-model-ext'); if (labelExt) labelExt.textContent = m;
+    var feat = $('conf-features');
+    if (feat) {
+      feat.innerHTML = '';
+      (CONF_FEATURES[model] || []).forEach(function (f, i) {
+        var li = document.createElement('li');
+        li.textContent = f;
+        li.style.animationDelay = (i * 60) + 'ms';
+        feat.appendChild(li);
+      });
+    }
+    if (grid) grid.classList.add('is-hidden');
+    stage.hidden = false;
+    confApply(); // set colours before the light-up
+
+    // reset the cinematic state
+    if (exterior) {
+      exterior.hidden = false;
+      exterior.style.opacity = '';
+      exterior.classList.remove('approach', 'doors-open', 'enter');
+    }
+    if (layout) layout.classList.remove('in');
+    if (welcome) welcome.classList.remove('show');
+    if (panel) panel.classList.remove('show');
+    confResetLights();
+
+    sfx('whoosh');
+    // 1 — camera approaches the car
+    setTimeout(function () { if (exterior) exterior.classList.add('approach'); }, 60);
+    // 2 — doors open
+    setTimeout(function () { if (exterior) exterior.classList.add('doors-open'); sfx('whoosh'); }, 1250);
+    // 3 — camera enters the interior + lights come alive
+    setTimeout(function () {
+      if (exterior) exterior.classList.add('enter');
+      if (layout) layout.classList.add('in');
+      lightUpInterior();
+      sfx('reveal');
+    }, 2450);
+    setTimeout(function () { if (exterior) exterior.hidden = true; }, 3150);
+    // 4 — welcome caption
+    setTimeout(function () { if (welcome) welcome.classList.add('show'); }, 3350);
+    setTimeout(function () { if (welcome) welcome.classList.remove('show'); }, 5150);
+    // 5 — controls fade in
+    setTimeout(function () { if (panel) panel.classList.add('show'); }, 4300);
+  }
+
+  function initConfigurator() {
+    var grid = $('model-grid');
+    if (!grid) return;
+    grid.addEventListener('click', function (e) {
+      var card = e.target.closest('.model-card');
+      if (card) confShow(card.getAttribute('data-model'));
+    });
+    var back = $('conf-back');
+    if (back) back.addEventListener('click', function () {
+      var stage = $('conf-stage');
+      if (stage) stage.hidden = true;
+      grid.classList.remove('is-hidden');
+      var ex = $('conf-exterior');
+      if (ex) { ex.hidden = false; ex.classList.remove('approach', 'doors-open', 'enter'); }
+      var lay = $('conf-layout'); if (lay) lay.classList.remove('in');
+      var wl = $('conf-welcome'); if (wl) wl.classList.remove('show');
+      var pn = $('conf-panel'); if (pn) pn.classList.remove('show');
+      confResetLights();
+      sfx('back');
+    });
+    qsa('.atmos-btn').forEach(function (b) {
+      b.addEventListener('click', function () {
+        confColor = CONF_ATMOS[b.getAttribute('data-atmos')] || CONF_ATMOS.future;
+        qsa('.atmos-btn').forEach(function (x) { x.classList.toggle('active', x === b); });
+        confApply();
+        sfx('select');
+      });
+    });
+    qsa('.conf-swatch').forEach(function (s) {
+      s.addEventListener('click', function () {
+        confColor = s.getAttribute('data-color');
+        qsa('.conf-swatch').forEach(function (x) { x.classList.toggle('active', x === s); });
+        qsa('.atmos-btn').forEach(function (x) { x.classList.remove('active'); });
+        confApply();
+        sfx('select');
+      });
+    });
+    qsa('.conf-mat').forEach(function (m) {
+      m.addEventListener('click', function () {
+        confMaterial = m.getAttribute('data-mat');
+        qsa('.conf-mat').forEach(function (x) { x.classList.toggle('active', x === m); });
+        confApply();
+        sfx('select');
+      });
+    });
+    confApply();
   }
 
   /* =====================================================================
@@ -587,6 +894,10 @@
     if (window.I18N) { try { I18N.apply(); } catch (e) {} }
     heroParticles();
     heroParallax();
+    bgParticles();
+    initCounters();
+    initIntel();
+    initConfigurator();
     initCar();
     initScore();
     initGallery();

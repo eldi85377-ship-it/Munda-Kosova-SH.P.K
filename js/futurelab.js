@@ -534,12 +534,12 @@
      WIRING MINI-GAME
      ===================================================================== */
   var WIRE_MODULES = [
-    { id: 'DASH-01', port: 'A', label: 'DASHBOARD' },
-    { id: 'DOOR-L', port: 'B', label: 'DOOR LEFT' },
-    { id: 'DOOR-R', port: 'C', label: 'DOOR RIGHT' },
-    { id: 'CONSOLE', port: 'D', label: 'CONSOLE' },
-    { id: 'ROOF-01', port: 'E', label: 'ROOF' },
-    { id: 'SEAT-01', port: 'F', label: 'SEATS' }
+    { id: 'DASH-01', port: 'A', label: 'DASHBOARD', num: '1' },
+    { id: 'DOOR-L', port: 'B', label: 'DOOR LEFT', num: '2' },
+    { id: 'DOOR-R', port: 'C', label: 'DOOR RIGHT', num: '3' },
+    { id: 'CONSOLE', port: 'D', label: 'CONSOLE', num: '4' },
+    { id: 'ROOF-01', port: 'E', label: 'ROOF', num: '5' },
+    { id: 'SEAT-01', port: 'F', label: 'SEATS', num: '6' }
   ];
 
   function wireReset() {
@@ -547,9 +547,13 @@
     wire.done = 0;
     wire.mistakes = 0;
     wire.total = WIRE_MODULES.length;
-    wire.pairs = WIRE_MODULES.map(function (m) { return { module: m.id, port: m.port }; });
-    // shuffle ports
-    wire.ports = WIRE_MODULES.map(function (m) { return m.port; }).sort(function () { return Math.random() - 0.5; });
+    wire.pairs = WIRE_MODULES.map(function (m) { return { module: m.id, port: m.port, num: m.num }; });
+    // full shuffle (Fisher–Yates): module 1 → A, 2 → B, … but the ports are mixed up
+    wire.ports = WIRE_MODULES.map(function (m) { return m.port; });
+    for (var pi = wire.ports.length - 1; pi > 0; pi--) {
+      var pj = Math.floor(Math.random() * (pi + 1));
+      var ptmp = wire.ports[pi]; wire.ports[pi] = wire.ports[pj]; wire.ports[pj] = ptmp;
+    }
     var d = $('wire-done'); if (d) d.textContent = '0';
     var tm = $('wire-total'); if (tm) tm.textContent = wire.total;
     var ms = $('wire-miss'); if (ms) ms.textContent = '0';
@@ -599,12 +603,12 @@
       g.setAttribute('data-linked', 'false');
       g.setAttribute('tabindex', '0');
       g.setAttribute('role', 'button');
-      g.setAttribute('aria-label', p.module);
+      g.setAttribute('aria-label', 'MODULE ' + p.num);
       var cy = leftY[i];
       g.innerHTML =
         '<rect x="28" y="' + (cy - 16) + '" width="92" height="32" rx="9" class="wn-box"/>' +
         '<circle cx="44" cy="' + cy + '" r="5" class="wn-led"/>' +
-        '<text x="86" y="' + (cy + 5) + '" text-anchor="middle" class="wn-label">' + esc(p.module) + '</text>';
+        '<text x="86" y="' + (cy + 5) + '" text-anchor="middle" class="wn-label">' + esc(p.num) + '</text>';
       g.addEventListener('pointerdown', wireDragStart);
       g.addEventListener('click', wireClick);
       g.addEventListener('keydown', function (e) {
@@ -1079,14 +1083,22 @@
       if (window.Interior) safe(function () {
         target[z] = true;
         Interior.setZones(target);
-        Interior.setState('brightness', Math.min(100, 25 + i * 15));
+        Interior.setState('brightness', Math.min(100, 40 + i * 12));
       });
       sfx('led');
       if (window.FX) safe(function () {
         var el = qs('#lights [data-zone="' + z + '"]');
-        if (el) FX.burstAt(el, { count: 22, color: '#4df3ff', size: 2.6, spread: 1.4, speed: 2 });
+        if (el) {
+          // a beam sweeps across the zone — the light visibly "builds" itself
+          var r = el.getBoundingClientRect();
+          if (r && r.width > 0 && r.height > 0) {
+            FX.beam(r.left, r.top + r.height * 0.5, r.right, r.top + r.height * 0.5,
+              { color: '#8ff0c0', life: 620 });
+          }
+          FX.burstAt(el, { count: 26, color: '#4df3ff', size: 2.8, spread: 1.4, speed: 2.2 });
+        }
       });
-      setTimeout(function () { illuminateZones(i + 1); }, 820);
+      setTimeout(function () { illuminateZones(i + 1); }, 1050);
     }
 
     function drawLogo() {

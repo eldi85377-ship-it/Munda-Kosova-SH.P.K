@@ -122,6 +122,33 @@
     el.style.setProperty('--lt-shift', '-' + p + 'px');
   }
 
+  function applyReflection() {
+    var c = SOLID[state.color] || '#2d6bff';
+    var b = state.brightness / 100;
+    var anyOn = false;
+    var refs = document.querySelectorAll('#reflect .reflect');
+    for (var i = 0; i < refs.length; i++) {
+      var el = refs[i];
+      var zone = el.getAttribute('data-zone');
+      var on = !!state.zones[zone];
+      if (on) anyOn = true;
+      // per-surface bounce strength (glossiness)
+      var base = 0.08;
+      if (zone === 'footwell') base = 0.15;
+      else if (zone === 'dashboard') base = 0.12;
+      else if (zone === 'roof') base = 0.09;
+      var op = on ? (base + 0.18 * b) : 0;
+      el.style.fill = c;
+      el.style.fillOpacity = op.toFixed(3);
+    }
+    // ambient cabin wash: whole cabin softly picks up the light colour
+    var wash = document.getElementById('cabin-wash');
+    if (wash) {
+      wash.style.fill = c;
+      wash.style.fillOpacity = anyOn ? (0.05 + 0.11 * b).toFixed(3) : '0';
+    }
+  }
+
   function applyLighting() {
     var c = COLORS[state.color] || COLORS.cyan;
     var groups = document.querySelectorAll('#lights .zone');
@@ -156,6 +183,8 @@
     }
     // material overlay
     applyMaterial(state.material);
+    // dynamic light bounce + ambient wash
+    applyReflection();
     // tint the whole UI accent to match the light
     document.documentElement.style.setProperty('--accent', solidColor(state.color));
   }

@@ -564,7 +564,7 @@ input[type="range"]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;b
 /* ---------- cinematic overlay (WOW) ---------- */
 .cine{
   position:fixed;inset:0;z-index:8000;overflow:hidden;
-  background:radial-gradient(80% 70% at 50% 50%,#0a0812,#030307 75%);
+  background:transparent;
   display:grid;place-items:center;pointer-events:auto;
 }
 .cine[hidden]{display:none}
@@ -920,3 +920,59 @@ input[type="range"]::-webkit-slider-thumb{box-shadow:0 0 0 4px rgba(34,197,94,.1
 .wire-board{-webkit-user-select:none;user-select:none}
 .wire-hint.warn{color:var(--danger);animation:wireHint 1.6s ease}
 @keyframes wireHint{0%,100%{opacity:1}30%{opacity:.45}}
+
+/* =====================================================================
+   GRAPHICS UPGRADE — dynamic light bounce, screen glare, physical depth
+   ===================================================================== */
+
+/* light reflections off glossy surfaces (tinted live by interior.js) */
+#reflect .reflect{
+  fill:#2d6bff;
+  fill-opacity:0;
+  mix-blend-mode:screen;
+  pointer-events:none;
+  transition:fill .5s var(--ease),fill-opacity .6s var(--ease);
+}
+#cabin-wash{transition:fill .5s var(--ease),fill-opacity .6s var(--ease)}
+
+/* moving specular glare on the glass screens */
+.glare{
+  fill:url(#g-glare);
+  mix-blend-mode:screen;
+  pointer-events:none;
+  transform-box:fill-box;
+  animation:glareSweep 6.5s ease-in-out infinite;
+}
+@keyframes glareSweep{
+  0%{transform:translateX(-125%) skewX(-18deg);opacity:0}
+  18%{opacity:.95}
+  50%{transform:translateX(0%) skewX(-18deg);opacity:.9}
+  82%{opacity:.95}
+  100%{transform:translateX(125%) skewX(-18deg);opacity:0}
+}
+
+/* richer life on the live cluster / infotainment */
+.cluster-live,.info-live{animation:screenGlow 5s ease-in-out infinite alternate}
+
+/* physical buttons: glossy top edge + press depth */
+.btn-primary::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,0) 46%);
+  opacity:.55;transition:opacity .2s;
+}
+.btn-primary:hover::before{opacity:.9}
+.btn-primary:active::before{opacity:0}
+
+/* buttons & chips: tactile press + spring */
+.zone-btn,.chip,.swatch,.pstep,.mat-card,.icon-btn,.ghost{
+  transition:transform .18s var(--ease-back),box-shadow .25s,border-color .25s,background .25s,color .25s,filter .25s;
+}
+.zone-btn:active,.chip:active,.pstep:active,.mat-card:active,.icon-btn:active{transform:scale(.95)}
+
+/* glass panels: crisp top highlight + deeper inner sheen */
+.glass,.build-panel,.result-panel,.hub-card,.tut-card{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),inset 0 0 0 1px rgba(255,255,255,.02),0 30px 70px -28px rgba(0,0,0,.8);
+}
+
+/* deeper interior grounding shadow */
+#interior{filter:drop-shadow(0 42px 72px rgba(0,0,0,.66))}

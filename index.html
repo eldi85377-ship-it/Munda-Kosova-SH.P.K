@@ -12,10 +12,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/site.css">
-<link rel="stylesheet" href="css/light.css">
+<link rel="stylesheet" href="css/dark.css">
 </head>
 <body>
 
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true"></div>
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
 <div class="vignette" aria-hidden="true"></div>
 <div id="grade" aria-hidden="true"></div>
@@ -25,14 +28,17 @@
       <stop offset="0" stop-color="#2d6bff"/>
       <stop offset="1" stop-color="#4df3ff"/>
     </linearGradient>
+    <linearGradient id="intel-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#15803d"/>
+      <stop offset="1" stop-color="#4ade80"/>
+    </linearGradient>
   </defs>
 </svg>
 
 <!-- ===================== MINIMAL TOP BAR ===================== -->
 <header class="site-nav" id="site-nav">
   <a class="site-brand" href="#hero">
-    <span class="brand-mark">M</span>
-    <span class="site-brand-text">MUNDA <em>KOSOVA</em></span>
+    <img class="site-logo" src="assets/photos/real-logo.png" alt="MUNDA Kosova">
   </a>
   <div class="site-nav-right">
     <div class="lang-switch" role="group" aria-label="Language">
@@ -59,7 +65,7 @@
     <h1 data-i18n="hero.title" data-i18n-html="hero.title">LIGHTING THE FUTURE<br><span class="grad">OF MOBILITY</span></h1>
     <p class="hero-sub" data-i18n="hero.sub">Illuminated textile systems for the vehicles of tomorrow — designed in Kosovo, engineered for the world.</p>
     <div class="hero-cta reveal" style="--d:.18s">
-      <a class="btn btn-primary btn-lg" href="experience.html" data-i18n="nav.playGame">PLAY THE GAME</a>
+      <a class="btn btn-primary btn-lg" href="experience.html" data-i18n="hero.enter">ENTER THE MUNDA EXPERIENCE</a>
       <a class="btn btn-ghost btn-lg" href="contact.html" data-i18n="nav.contact">Contact</a>
     </div>
   </div>
@@ -67,6 +73,219 @@
   <a class="hero-scroll" href="#munda" data-scroll aria-label="Scroll down">
     <span></span>
   </a>
+</section>
+
+<!-- ===================== 1.5 CHOOSE YOUR MUNDA — CAR CONFIGURATOR ===================== -->
+<section class="sec choose" id="choose">
+  <div class="sec-head">
+    <p class="kicker" data-i18n="cfg.kicker">CHOOSE YOUR MUNDA</p>
+    <h2 data-i18n-html="cfg.title">Build <em>your</em> MUNDA.</h2>
+    <p class="sec-sub" data-i18n="cfg.sub">Pick a model, choose your atmosphere, and watch the interior come alive.</p>
+  </div>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="mc-grad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1b2436"/><stop offset="100%" stop-color="#0a0e18"/>
+      </linearGradient>
+    </defs>
+    <symbol id="mc-silhouette" viewBox="0 0 220 96">
+      <path d="M34 66 Q22 66 17 60 L14 55 Q13 51 16 48 L38 43 Q44 35 54 31 L70 25 L120 22 Q138 21 150 27 Q160 33 168 41 L182 47 Q188 50 188 54 L187 58 Q186 63 180 65 L170 67 Z" fill="url(#mc-grad)" stroke="rgba(120,160,220,.28)" stroke-width="1"/>
+      <path d="M52 36 Q59 30 69 28 L92 25 Q104 24 112 27 L138 36 L134 44 L58 46 Z" fill="rgba(120,180,255,.16)"/>
+      <path d="M40 62 L180 62" stroke="#4ade80" stroke-width="1.5" opacity=".45"/>
+      <circle cx="60" cy="70" r="13" fill="#0a0d14" stroke="rgba(255,255,255,.15)" stroke-width="2"/>
+      <circle cx="162" cy="70" r="13" fill="#0a0d14" stroke="rgba(255,255,255,.15)" stroke-width="2"/>
+      <circle cx="60" cy="70" r="5" fill="rgba(74,222,128,.55)"/>
+      <circle cx="162" cy="70" r="5" fill="rgba(74,222,128,.55)"/>
+    </symbol>
+  </svg>
+
+  <!-- STATE 1 — model selection -->
+  <div class="model-grid" id="model-grid">
+    <button class="model-card glass reveal" data-model="a4">
+      <span class="mc-car"><svg viewBox="0 0 220 96"><use href="#mc-silhouette"/></svg></span>
+      <b class="mc-name">A4</b>
+      <span class="mc-tag" data-i18n="cfg.a4t">Sedan</span>
+      <span class="mc-hint" data-i18n="cfg.pick">Configure →</span>
+    </button>
+    <button class="model-card glass reveal" data-model="a5">
+      <span class="mc-car"><svg viewBox="0 0 220 96"><use href="#mc-silhouette"/></svg></span>
+      <b class="mc-name">A5</b>
+      <span class="mc-tag" data-i18n="cfg.a5t">Sportback</span>
+      <span class="mc-hint" data-i18n="cfg.pick">Configure →</span>
+    </button>
+    <button class="model-card glass reveal" data-model="a6">
+      <span class="mc-car"><svg viewBox="0 0 220 96"><use href="#mc-silhouette"/></svg></span>
+      <b class="mc-name">A6</b>
+      <span class="mc-tag" data-i18n="cfg.a6t">Executive</span>
+      <span class="mc-hint" data-i18n="cfg.pick">Configure →</span>
+    </button>
+    <button class="model-card glass reveal" data-model="a7">
+      <span class="mc-car"><svg viewBox="0 0 220 96"><use href="#mc-silhouette"/></svg></span>
+      <b class="mc-name">A7</b>
+      <span class="mc-tag" data-i18n="cfg.a7t">Flagship</span>
+      <span class="mc-hint" data-i18n="cfg.pick">Configure →</span>
+    </button>
+  </div>
+
+  <!-- STATE 2 — configurator stage -->
+  <div class="conf-stage" id="conf-stage" hidden>
+    <button class="conf-back" id="conf-back">← <span data-i18n="cfg.back">Change model</span></button>
+
+    <!-- cinematic entrance: car exterior (approach → doors open → enter) -->
+    <div class="conf-exterior" id="conf-exterior">
+      <svg viewBox="0 0 640 360" preserveAspectRatio="xMidYMid meet" class="conf-car-ext" aria-hidden="true">
+        <defs>
+          <radialGradient id="ce-floor-g" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(74,222,128,0.16)"/><stop offset="100%" stop-color="rgba(74,222,128,0)"/>
+          </radialGradient>
+        </defs>
+        <ellipse class="ce-floor" cx="320" cy="302" rx="292" ry="36" fill="url(#ce-floor-g)"/>
+        <ellipse class="ce-floor-ring" cx="320" cy="302" rx="214" ry="22" fill="none" stroke="rgba(74,222,128,.22)" stroke-width="1.5"/>
+        <g class="ce-car">
+          <use href="#mc-silhouette" x="100" y="92" width="440" height="176"/>
+          <path class="ce-strip" d="M132 226 L508 226" fill="none" stroke="#4ade80" stroke-width="3.5" stroke-linecap="round" filter="url(#cfg-glow)"/>
+          <path class="ce-strip-halo" d="M132 226 L508 226" fill="none" stroke="#4ade80" stroke-width="14" stroke-linecap="round" opacity=".35" filter="url(#cfg-soft)"/>
+          <rect class="ce-glow" x="214" y="150" width="212" height="88" rx="12"/>
+          <g class="ce-door ce-door-l">
+            <rect x="214" y="150" width="104" height="88" rx="9"/>
+            <rect class="ce-handle" x="292" y="186" width="18" height="4" rx="2"/>
+          </g>
+          <g class="ce-door ce-door-r">
+            <rect x="322" y="150" width="104" height="88" rx="9"/>
+            <rect class="ce-handle" x="332" y="186" width="18" height="4" rx="2"/>
+          </g>
+        </g>
+      </svg>
+      <span class="conf-model" id="conf-model-ext">A4</span>
+    </div>
+
+    <!-- welcome caption -->
+    <div class="conf-welcome" id="conf-welcome"><b>WELCOME TO YOUR MUNDA</b><span>.</span></div>
+
+    <div class="conf-layout" id="conf-layout">
+      <div class="conf-car">
+        <svg id="conf-interior" viewBox="0 0 860 470" preserveAspectRatio="xMidYMid meet" role="img" aria-label="MUNDA concept interior showroom">
+          <defs>
+            <radialGradient id="cfg-bg" cx="50%" cy="34%" r="80%">
+              <stop offset="0%" stop-color="#16203a"/><stop offset="46%" stop-color="#0a0e1c"/><stop offset="100%" stop-color="#04050c"/>
+            </radialGradient>
+            <linearGradient id="cfg-glass" x1="0" y1="0" x2="0.3" y2="1">
+              <stop offset="0%" stop-color="#131d36"/><stop offset="100%" stop-color="#060a14"/>
+            </linearGradient>
+            <linearGradient id="cfg-dash" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#232936"/><stop offset="55%" stop-color="#141823"/><stop offset="100%" stop-color="#0a0c12"/>
+            </linearGradient>
+            <linearGradient id="cfg-seat" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2c3140"/><stop offset="100%" stop-color="#12141b"/>
+            </linearGradient>
+            <linearGradient id="cfg-floor" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0d0f16"/><stop offset="100%" stop-color="#04050b"/>
+            </linearGradient>
+            <filter id="cfg-glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6"/></filter>
+            <filter id="cfg-soft" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="14"/></filter>
+            <pattern id="cfg-carbon" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <rect width="12" height="12" fill="transparent"/>
+              <path d="M0 6 H12" stroke="#fff" stroke-opacity="0.10" stroke-width="1.4"/>
+              <path d="M6 0 V12" stroke="#fff" stroke-opacity="0.05" stroke-width="1"/>
+            </pattern>
+            <pattern id="cfg-knit" width="11" height="11" patternUnits="userSpaceOnUse">
+              <rect width="11" height="11" fill="transparent"/>
+              <path d="M0 8 Q5.5 1 11 8" fill="none" stroke="#fff" stroke-opacity="0.09" stroke-width="1"/>
+            </pattern>
+            <pattern id="cfg-mesh" width="13" height="13" patternUnits="userSpaceOnUse">
+              <rect width="13" height="13" fill="transparent"/>
+              <circle cx="4" cy="4" r="1" fill="#fff" fill-opacity="0.13"/>
+              <circle cx="9" cy="9" r="1" fill="#fff" fill-opacity="0.13"/>
+            </pattern>
+            <pattern id="cfg-silk" width="18" height="18" patternUnits="userSpaceOnUse">
+              <rect width="18" height="18" fill="transparent"/>
+              <path d="M2 0 V18 M8 0 V18 M14 0 V18" stroke="#fff" stroke-opacity="0.05" stroke-width="1"/>
+              <path d="M9 0 V18" stroke="#fff" stroke-opacity="0.10" stroke-width="1"/>
+            </pattern>
+          </defs>
+
+          <rect x="-40" y="-40" width="940" height="550" fill="url(#cfg-bg)"/>
+          <!-- windshield -->
+          <path d="M180 60 L680 60 L760 210 L100 210 Z" fill="url(#cfg-glass)"/>
+          <path d="M180 60 L680 60 L680 104 L180 104 Z" fill="#000" opacity="0.28"/>
+          <!-- roof ambient -->
+          <path class="cfg-strip" data-zone="roof" d="M210 82 Q430 64 650 82" fill="none" stroke="#4ade80" stroke-width="5" stroke-linecap="round"/>
+          <path class="cfg-halo" data-zone="roof" d="M210 82 Q430 64 650 82" fill="none" stroke="#4ade80" stroke-width="20" stroke-linecap="round" filter="url(#cfg-soft)"/>
+          <!-- A pillars -->
+          <path d="M100 210 L180 60 L200 60 L130 210 Z" fill="#0a0c11"/>
+          <path d="M760 210 L680 60 L660 60 L740 210 Z" fill="#0a0c11"/>
+          <!-- dashboard -->
+          <path d="M70 210 L790 210 L840 320 L20 320 Z" fill="url(#cfg-dash)"/>
+          <path d="M70 210 L790 210 L840 226 L20 226 Z" fill="#fff" opacity="0.05"/>
+          <path class="cfg-strip" data-zone="dash" d="M110 252 Q430 234 750 252" fill="none" stroke="#4ade80" stroke-width="5" stroke-linecap="round"/>
+          <path class="cfg-halo" data-zone="dash" d="M110 252 Q430 234 750 252" fill="none" stroke="#4ade80" stroke-width="20" stroke-linecap="round" filter="url(#cfg-soft)"/>
+          <!-- centre screen -->
+          <rect x="380" y="222" width="100" height="40" rx="7" fill="#0a0c12" stroke="#262b36" stroke-width="1.4"/>
+          <rect class="cfg-screen" x="384" y="226" width="92" height="32" rx="5" fill="url(#cfg-glass)"/>
+          <rect class="cfg-power" x="390" y="232" width="46" height="4" rx="2" fill="#4ade80"/>
+          <!-- seats -->
+          <path d="M210 220 Q210 260 210 300 L210 340 L300 340 L300 300 Q300 260 300 220 Q255 210 210 220 Z" fill="url(#cfg-seat)"/>
+          <path d="M560 220 Q560 260 560 300 L560 340 L650 340 L650 300 Q650 260 650 220 Q605 210 560 220 Z" fill="url(#cfg-seat)"/>
+          <path class="cfg-strip" data-zone="seat" d="M216 268 Q255 258 294 268" fill="none" stroke="#4ade80" stroke-width="4" stroke-linecap="round"/>
+          <path class="cfg-strip" data-zone="seat" d="M566 268 Q605 258 644 268" fill="none" stroke="#4ade80" stroke-width="4" stroke-linecap="round"/>
+          <!-- doors -->
+          <path d="M20 210 L100 210 L100 400 L20 400 Z" fill="#0b0d14"/>
+          <path d="M840 210 L760 210 L760 400 L840 400 Z" fill="#0b0d14"/>
+          <path class="cfg-strip" data-zone="door" d="M56 240 L56 372" fill="none" stroke="#4ade80" stroke-width="4" stroke-linecap="round"/>
+          <path class="cfg-strip" data-zone="door" d="M804 240 L804 372" fill="none" stroke="#4ade80" stroke-width="4" stroke-linecap="round"/>
+          <!-- floor -->
+          <rect x="20" y="400" width="820" height="60" fill="url(#cfg-floor)"/>
+          <ellipse class="cfg-halo" data-zone="floor" cx="430" cy="418" rx="340" ry="26" fill="#4ade80" filter="url(#cfg-soft)"/>
+          <!-- material overlay -->
+          <g id="cfg-material" opacity="0.5">
+            <path d="M70 210 L790 210 L840 320 L20 320 Z" fill="url(#cfg-carbon)"/>
+            <path d="M210 220 Q210 260 210 300 L210 340 L300 340 L300 300 Q300 260 300 220 Q255 210 210 220 Z" fill="url(#cfg-carbon)"/>
+            <path d="M560 220 Q560 260 560 300 L560 340 L650 340 L650 300 Q650 260 650 220 Q605 210 560 220 Z" fill="url(#cfg-carbon)"/>
+          </g>
+        </svg>
+        <span class="conf-model" id="conf-model">A4</span>
+      </div>
+
+      <div class="conf-panel glass" id="conf-panel">
+        <div class="conf-group">
+          <span class="group-label" data-i18n="cfg.atmos">Choose your atmosphere</span>
+          <div class="conf-atmos">
+            <button class="atmos-btn" data-atmos="pure"><i style="--a:#eaf2ff"></i>PURE</button>
+            <button class="atmos-btn" data-atmos="sport"><i style="--a:#ff2d55"></i>SPORT</button>
+            <button class="atmos-btn" data-atmos="luxury"><i style="--a:#e8c87a"></i>LUXURY</button>
+            <button class="atmos-btn active" data-atmos="future"><i style="--a:#4ade80"></i>FUTURE</button>
+          </div>
+        </div>
+        <div class="conf-group">
+          <span class="group-label" data-i18n="cfg.color">Ambient colour</span>
+          <div class="conf-swatches">
+            <button class="conf-swatch" data-color="#ff2d55" style="--c:#ff2d55" aria-label="Red"></button>
+            <button class="conf-swatch" data-color="#2d6bff" style="--c:#2d6bff" aria-label="Blue"></button>
+            <button class="conf-swatch" data-color="#4df3ff" style="--c:#4df3ff" aria-label="Cyan"></button>
+            <button class="conf-swatch" data-color="#9a4dff" style="--c:#9a4dff" aria-label="Purple"></button>
+            <button class="conf-swatch active" data-color="#4ade80" style="--c:#4ade80" aria-label="Green"></button>
+            <button class="conf-swatch" data-color="#e8c87a" style="--c:#e8c87a" aria-label="Gold"></button>
+            <button class="conf-swatch" data-color="#ffffff" style="--c:#ffffff" aria-label="White"></button>
+          </div>
+        </div>
+        <div class="conf-group">
+          <span class="group-label" data-i18n="cfg.material">Interior material</span>
+          <div class="conf-mats">
+            <button class="conf-mat active" data-mat="carbon">CARBON</button>
+            <button class="conf-mat" data-mat="knit">KNIT</button>
+            <button class="conf-mat" data-mat="mesh">MESH</button>
+            <button class="conf-mat" data-mat="silk">SILK</button>
+          </div>
+        </div>
+        <div class="conf-group">
+          <span class="group-label" data-i18n="cfg.features">MUNDA can install</span>
+          <ul class="conf-features" id="conf-features"></ul>
+        </div>
+        <a class="btn btn-primary btn-xl" href="experience.html" data-i18n="cfg.enter">ENTER INTERIOR</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ===================== 2. MUNDA — WHO WE ARE ===================== -->
@@ -153,6 +372,33 @@
   </div>
 </section>
 
+<!-- ===================== 3.5 PERFORMANCE — ANIMATED NUMBERS ===================== -->
+<section class="sec" id="performance">
+  <div class="sec-head">
+    <p class="kicker" data-i18n="perf.kicker">PERFORMANCE</p>
+    <h2 data-i18n-html="perf.title">Engineered to <em>perform.</em></h2>
+    <p class="sec-sub" data-i18n="perf.sub">The numbers behind the MUNDA Future Lab experience.</p>
+  </div>
+  <div class="perf-grid">
+    <div class="perf-stat glass reveal">
+      <b class="perf-num" data-count="6">0</b>
+      <span data-i18n="perf.n1">Interior light zones</span>
+    </div>
+    <div class="perf-stat glass reveal">
+      <b class="perf-num" data-count="8">0</b>
+      <span data-i18n="perf.n2">Colours · 7 patterns</span>
+    </div>
+    <div class="perf-stat glass reveal">
+      <b class="perf-num" data-count="5">0</b>
+      <span data-i18n="perf.n3">Automotive tests</span>
+    </div>
+    <div class="perf-stat glass reveal">
+      <b class="perf-num" data-count="100" data-suffix="%">0</b>
+      <span data-i18n="perf.n4">MUNDA Score max</span>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== 4. AUTOMOTIVE — REAL INTERIORS ===================== -->
 <section class="sec" id="automotive">
   <div class="sec-head">
@@ -174,6 +420,23 @@
       <img src="assets/photos/real-brochure-10.jpg" alt="MUNDA automotive focus — textile light in use" loading="lazy">
       <figcaption data-i18n="auto.c3">Premium cabin interiors with MUNDA lighting technology.</figcaption>
     </figure>
+  </div>
+</section>
+
+<!-- ===================== 4.5 CINEMATIC VISUAL ===================== -->
+<section class="sec" id="cine">
+  <div class="sec-head">
+    <p class="kicker" data-i18n="cine.kicker">THE CRAFT</p>
+    <h2 data-i18n-html="cine.title">Light, <em>in motion.</em></h2>
+  </div>
+  <div class="cine-frame reveal">
+    <img class="cine-photo" src="assets/photos/real-audi-a3.jpg" alt="MUNDA textile light in motion — Audi A3" loading="lazy">
+    <div class="cine-overlay" aria-hidden="true"></div>
+    <div class="cine-hud" aria-hidden="true">
+      <span class="cine-dot"></span><span data-i18n="cine.live">Live</span>
+      <span class="cine-time">MUNDA · AUDI A3</span>
+    </div>
+    <p class="cine-caption" data-i18n="cine.cap">The world's first series car with textile light — engineered in Erkrath, made in Kosovo.</p>
   </div>
 </section>
 
@@ -205,6 +468,38 @@
       <span class="tl-year">2025</span>
       <b data-i18n="innov.y4t">Inauguration</b>
       <p data-i18n="innov.y4d">The Obiliq plant opens officially — Kosovo's first Volkswagen Group-approved supplier delivers components.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 5.5 MUNDA INTELLIGENCE — FUTURISTIC DASHBOARD ===================== -->
+<section class="sec" id="intelligence">
+  <div class="sec-head">
+    <p class="kicker" data-i18n="intel.kicker">MUNDA INTELLIGENCE</p>
+    <h2 data-i18n-html="intel.title">The brain behind <em>the light.</em></h2>
+    <p class="sec-sub" data-i18n="intel.sub">One connected textile — sensing, adapting and illuminating in real time.</p>
+  </div>
+  <div class="intel-dash reveal">
+    <div class="intel-core">
+      <div class="intel-ring">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <circle class="ir-track" cx="100" cy="100" r="84"/>
+          <circle class="ir-arc" cx="100" cy="100" r="84"/>
+        </svg>
+        <div class="intel-ring-mid"><b id="intel-core-num">0</b><span data-i18n="intel.ready">System ready</span></div>
+      </div>
+      <p class="intel-core-label" data-i18n="intel.online">Neural textile · online</p>
+    </div>
+    <div class="intel-bars">
+      <div class="intel-bar"><span data-i18n="intel.b1">Light output</span><div class="ib-track"><i data-w="98"></i></div><b>98%</b></div>
+      <div class="intel-bar"><span data-i18n="intel.b2">Efficiency</span><div class="ib-track"><i data-w="96"></i></div><b>96%</b></div>
+      <div class="intel-bar"><span data-i18n="intel.b3">Durability</span><div class="ib-track"><i data-w="92"></i></div><b>92%</b></div>
+      <div class="intel-bar"><span data-i18n="intel.b4">Precision</span><div class="ib-track"><i data-w="94"></i></div><b>94%</b></div>
+    </div>
+    <div class="intel-status">
+      <div class="intel-status-row"><span class="is-dot"></span><span data-i18n="intel.s1">All 6 zones connected</span></div>
+      <div class="intel-status-row"><span class="is-dot"></span><span data-i18n="intel.s2">5/5 tests passed</span></div>
+      <div class="intel-status-row"><span class="is-dot warn"></span><span data-i18n="intel.s3">Made in Kosovo · ready to build</span></div>
     </div>
   </div>
 </section>

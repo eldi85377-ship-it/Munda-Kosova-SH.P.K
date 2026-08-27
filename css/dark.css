@@ -1,0 +1,570 @@
+/* =====================================================================
+   MUNDA — DARK PREMIUM THEME (website)
+   ---------------------------------------------------------------------
+   Deep black/navy background · green neon accent (subtle, not RGB).
+   Glassmorphism cards with neon borders, neon button hovers, animated
+   background grid + particles, futuristic MUNDA INTELLIGENCE dashboard.
+   Loads AFTER tokens.css + site.css (replaces css/light.css).
+   ===================================================================== */
+
+:root{
+  /* ---- surfaces: deep black/navy ---- */
+  --bg:#0b2319;
+  --bg-2:#0e2d20;
+  --bg-3:#123a2a;
+  --surface:rgba(255,255,255,0.035);
+  --surface-2:rgba(255,255,255,0.07);
+  --surface-3:rgba(255,255,255,0.11);
+  --glass:rgba(14,36,30,0.6);
+  --glass-2:rgba(16,42,36,0.8);
+  --border:rgba(90,140,255,0.14);
+  --border-soft:rgba(90,140,255,0.08);
+  --border-strong:rgba(90,140,255,0.24);
+
+  /* ---- ink: light on dark ---- */
+  --ink:#e9eef8;
+  --ink-dim:#c3cbd9;
+  --muted:#8a94a8;
+  --faint:#5b6475;
+  --ghost:#333b4a;
+
+  /* ---- brand: deep navy + green neon ---- */
+  --brand:#0b2a6b;
+  --brand-deep:#081d4d;
+  --brand-soft:rgba(11,42,107,0.28);
+  --accent:#22c55e;          /* MUNDA green */
+  --accent-2:#e9fff1;
+  --cyan:#4ade80;            /* bright green for kickers/labels */
+  --gold:#4ade80;
+  --gold-deep:#15803d;
+  --danger:#ff5d7a;
+  --success:#4ade80;
+  --warn:#ffb03a;
+
+  --grad-brand:linear-gradient(135deg,#15803d,#22c55e);
+  --grad-gold:linear-gradient(135deg,#15803d,#4ade80);
+  --grad-surface:linear-gradient(160deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01));
+  --grad-fade:linear-gradient(180deg,transparent,rgba(3,5,10,0.92));
+
+  --shadow-sm:0 4px 14px rgba(0,0,0,0.5);
+  --shadow:0 18px 46px rgba(0,0,0,0.6);
+  --shadow-lg:0 34px 90px rgba(0,0,0,0.7);
+  --glow:0 0 24px -4px rgba(34,197,94,0.4);
+  --glow-brand:0 0 28px -6px rgba(34,197,94,0.45);
+  --neon:0 0 0 1px rgba(34,197,94,0.5),0 0 24px -2px rgba(34,197,94,0.5);
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(130% 100% at 50% -8%,#143f2b 0%,#0c2a30 40%,#091d36 72%,#04070d 100%);
+  color:var(--ink);
+}
+::selection{background:rgba(34,197,94,0.28);color:#fff}
+
+/* ---------- background: grid + glow ---------- */
+.bg-grid{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(90,140,255,0.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(90,140,255,0.05) 1px,transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(80% 60% at 50% 20%,#000 0%,transparent 100%);
+  mask-image:radial-gradient(80% 60% at 50% 20%,#000 0%,transparent 100%);
+}
+.bg-glow{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(46% 36% at 50% 0%,rgba(34,197,94,0.13),transparent 70%),
+    radial-gradient(34% 32% at 10% 92%,rgba(28,80,170,0.30),transparent 70%),
+    radial-gradient(34% 32% at 90% 88%,rgba(34,197,94,0.07),transparent 70%);
+}
+#bg-canvas{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.85}
+
+/* overlays */
+.grain{opacity:.05;mix-blend-mode:overlay}
+.vignette{background:radial-gradient(120% 90% at 50% 40%,transparent 58%,rgba(0,0,0,0.38) 100%);opacity:.65}
+#grade{opacity:.4;background:linear-gradient(165deg,rgba(34,197,94,.05),rgba(26,40,72,.12) 48%,rgba(11,42,107,.07))}
+#grade::after{background:radial-gradient(120% 95% at 50% 42%,transparent 62%,rgba(8,14,30,.34))}
+
+/* ---------- top bar ---------- */
+.site-nav{
+  background:rgba(10,28,22,.5);backdrop-filter:blur(16px) saturate(1.3);
+  border-bottom:1px solid var(--border-soft);
+}
+.site-nav.scrolled{
+  background:rgba(10,28,22,.82);backdrop-filter:blur(20px) saturate(1.4);
+  box-shadow:0 12px 40px -18px rgba(0,0,0,.6),inset 0 -1px 0 rgba(90,140,255,.06);
+}
+.site-brand-text em{color:var(--cyan)}
+.lang-switch button.active{background:var(--accent);color:#04130a;box-shadow:0 0 18px -2px rgba(34,197,94,.6)}
+
+/* ---------- hero: dark cinematic + neon green ---------- */
+.hero-photo{opacity:.72;filter:saturate(1.15) brightness(.68) contrast(1.08)}
+.hero-svg::after{
+  background:
+    radial-gradient(78% 70% at 50% 38%,rgba(4,6,12,.16),rgba(4,6,12,.58) 72%,rgba(3,4,9,.9)),
+    linear-gradient(180deg,rgba(4,6,12,.6),transparent 36%,rgba(4,6,12,.42) 68%,rgba(3,4,9,.95));
+}
+.hero h1{color:#fff;text-shadow:0 2px 48px rgba(0,0,0,.7)}
+.hero h1 .grad{background:linear-gradient(120deg,#4ade80,#a7f3c9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{color:rgba(226,235,255,.86)}
+.hero-kicker{color:#4ade80}
+.hero-kicker::before,.hero-kicker::after{background:linear-gradient(90deg,transparent,#4ade80)}
+.hero-kicker::after{background:linear-gradient(90deg,#4ade80,transparent)}
+.hero-logo{filter:drop-shadow(0 0 28px rgba(74,222,128,.25))}
+.hero-scroll{border-color:rgba(74,222,128,.4)}
+.hero-scroll span{background:#4ade80;box-shadow:0 0 10px rgba(74,222,128,.8)}
+
+/* ---------- buttons: green neon ---------- */
+.btn-primary{
+  background:linear-gradient(135deg,#15803d,#22c55e);
+  color:#04130a;font-weight:700;
+  box-shadow:0 12px 32px -10px rgba(34,197,94,.55),inset 0 1px 0 rgba(255,255,255,.3);
+}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 0 1px rgba(74,222,128,.55),0 0 30px -2px rgba(34,197,94,.65),0 16px 44px -10px rgba(34,197,94,.7);
+  filter:brightness(1.06);
+}
+.btn-ghost{
+  background:rgba(255,255,255,.03);color:var(--ink);
+  border-color:rgba(90,140,255,.28);
+}
+.btn-ghost:hover{border-color:#4ade80;color:#4ade80;background:rgba(34,197,94,.08);box-shadow:0 0 20px -4px rgba(34,197,94,.4)}
+.btn-pulse{animation:pulseGlow 2.6s ease-in-out infinite}
+@keyframes pulseGlow{
+  0%,100%{box-shadow:0 0 30px -6px rgba(34,197,94,.5)}
+  50%{box-shadow:0 0 54px -2px rgba(34,197,94,.8)}
+}
+
+/* ---------- glassmorphism cards + neon border ---------- */
+.glass,.sec .glass,.glass.card{
+  background:linear-gradient(160deg,rgba(18,40,34,.66),rgba(9,20,18,.8));
+  border:1px solid rgba(80,160,130,.16);
+  backdrop-filter:blur(18px) saturate(1.25);
+  -webkit-backdrop-filter:blur(18px) saturate(1.25);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 26px 60px -26px rgba(0,0,0,.6);
+  transition:border-color .35s var(--ease),box-shadow .35s var(--ease),transform .35s var(--ease);
+}
+.glass:hover{border-color:rgba(74,222,128,.42);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 26px 60px -26px rgba(0,0,0,.8),0 0 34px -8px rgba(34,197,94,.3)}
+
+/* technology cards */
+.tech-card{background:linear-gradient(170deg,rgba(12,18,32,.7),rgba(6,9,16,.9));border-color:rgba(90,140,255,.14)}
+.tech-card h3{color:var(--ink)}
+.tech-card p{color:var(--muted)}
+.tech-card:hover{border-color:rgba(74,222,128,.45);box-shadow:0 26px 54px -18px rgba(0,0,0,.7),0 0 34px -10px rgba(34,197,94,.35)}
+.tc-vis{border-bottom-color:rgba(90,140,255,.1);background:linear-gradient(180deg,rgba(34,197,94,.04),transparent)}
+
+/* ---------- about / facts ---------- */
+.af{
+  background:linear-gradient(160deg,rgba(34,197,94,.07),rgba(255,255,255,.01));
+  border-color:rgba(34,197,94,.22);
+}
+.af:hover{border-color:rgba(74,222,128,.5);box-shadow:0 14px 34px -14px rgba(0,0,0,.7),0 0 26px -8px rgba(34,197,94,.4)}
+.af b{color:#fff}
+.af b::before{background:linear-gradient(135deg,#15803d,#22c55e);box-shadow:0 0 10px rgba(34,197,94,.7)}
+.af span{color:var(--muted)}
+.about-photo-main{border-color:rgba(90,140,255,.2);box-shadow:0 34px 80px -26px rgba(0,0,0,.8),0 0 60px -22px rgba(34,197,94,.3)}
+.about-photo-detail{border-color:rgba(74,222,128,.45)}
+.about-logos img{filter:brightness(0) invert(1) opacity(.7)}
+.about-logos img:hover{filter:brightness(0) invert(1) opacity(1)}
+.about-note{color:var(--faint)}
+
+/* ---------- automotive band ---------- */
+.auto-band img{border-color:rgba(90,140,255,.14);box-shadow:0 34px 80px -26px rgba(0,0,0,.8)}
+.auto-band figcaption{
+  background:linear-gradient(180deg,rgba(4,6,12,.25),rgba(4,6,12,.9));
+  color:#dfe7ff;border-color:rgba(90,140,255,.16);
+}
+
+/* ---------- innovation timeline ---------- */
+.timeline::before{background:linear-gradient(90deg,transparent,rgba(34,197,94,.5),transparent)}
+.tl-step{background:linear-gradient(165deg,rgba(13,20,36,.68),rgba(6,9,16,.8));border-color:rgba(90,140,255,.14)}
+.tl-step:hover{border-color:rgba(74,222,128,.45);box-shadow:0 22px 50px -18px rgba(0,0,0,.7),0 0 30px -10px rgba(34,197,94,.35)}
+.tl-step b{color:#fff}
+.tl-step p{color:var(--muted)}
+.tl-year{background:linear-gradient(120deg,#15803d,#22c55e);box-shadow:0 8px 22px -8px rgba(34,197,94,.8),0 0 0 6px rgba(4,6,12,.9),0 0 0 7px rgba(34,197,94,.35)}
+
+/* ---------- game section ---------- */
+.shot-frame{background:linear-gradient(170deg,#0a0e17,#05070d);border-color:rgba(90,140,255,.14);box-shadow:0 22px 50px -22px rgba(0,0,0,.7)}
+.shot:hover .shot-frame{border-color:rgba(74,222,128,.45);box-shadow:0 26px 60px -16px rgba(0,0,0,.7),0 0 30px -10px rgba(34,197,94,.3)}
+.shot figcaption{color:var(--faint)}
+.game-feats span{background:rgba(255,255,255,.04);border-color:rgba(90,140,255,.14);color:var(--ink-dim)}
+
+/* ---------- gallery ---------- */
+.g-tile{background:#0a0c12;border-color:rgba(90,140,255,.12)}
+.g-tile:hover{border-color:rgba(74,222,128,.45);box-shadow:0 22px 44px -14px rgba(0,0,0,.7),0 0 28px -10px rgba(34,197,94,.3)}
+.g-tile b{background:linear-gradient(180deg,rgba(5,7,12,.55),rgba(5,7,12,.92));color:var(--ink-dim);backdrop-filter:blur(6px)}
+.gt-inner.gt-photo::after{background:linear-gradient(180deg,transparent 55%,rgba(3,4,8,.6))}
+.lightbox{background:rgba(3,4,8,.9)}
+.lb-caption{color:var(--ink-dim)}
+.lb-close{color:var(--muted);border-color:rgba(90,140,255,.2)}
+
+/* ---------- final CTA ---------- */
+.final-cta{
+  background:
+    radial-gradient(90% 140% at 50% -10%,rgba(13,30,64,.9) 0%,rgba(8,19,44,.92) 55%,rgba(4,8,18,.96) 100%);
+  border:1px solid rgba(74,222,128,.18);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 70px -30px rgba(34,197,94,.4);
+}
+.final-cta .kicker{color:#4ade80}
+.final-cta h2{color:#fff}
+.final-cta .cta-sub{color:rgba(226,235,255,.82)}
+
+/* ---------- footer ---------- */
+.site-footer{background:linear-gradient(180deg,transparent,rgba(4,7,14,.7));border-top:1px solid rgba(90,140,255,.1)}
+.foot-brand b{color:var(--ink)}
+.foot-brand em{color:#4ade80}
+.foot-links a{color:var(--muted)}
+.foot-links a:hover{color:#4ade80}
+.foot-note{color:var(--faint)}
+
+/* ---------- MONDO ---------- */
+.mondo-btn{background:linear-gradient(135deg,#15803d,#22c55e);color:#04130a;box-shadow:0 14px 40px -10px rgba(34,197,94,.6)}
+.mondo-btn .mb-ic{background:#04130a;color:#4ade80;box-shadow:0 0 0 2px rgba(4,19,10,.4),0 0 18px rgba(74,222,128,.8)}
+.mondo-panel{background:linear-gradient(170deg,rgba(11,16,28,.97),rgba(5,8,14,.99));border-color:rgba(90,140,255,.16)}
+.mondo-head{background:linear-gradient(135deg,rgba(34,197,94,.16),rgba(11,42,107,.12));border-bottom-color:rgba(90,140,255,.1)}
+.mondo-head b{color:#fff}
+.mondo-head i{color:var(--muted)}
+.mondo-avatar{background:linear-gradient(135deg,#15803d,#22c55e);color:#04130a}
+.mondo-close{color:var(--muted);border-color:rgba(90,140,255,.16)}
+.mondo-close:hover{color:#4ade80;border-color:#4ade80}
+.mondo-msg.bot{background:rgba(255,255,255,.05);border-color:rgba(90,140,255,.12);color:var(--ink-dim)}
+.mondo-msg.bot b{color:#fff}
+.mondo-msg.bot a{color:#4ade80;border-color:rgba(74,222,128,.4)}
+.mondo-msg.user{background:linear-gradient(135deg,#15803d,#22c55e);color:#04130a}
+.mondo-chip{background:rgba(255,255,255,.04);border-color:rgba(90,140,255,.16);color:var(--ink-dim)}
+.mondo-chip:hover{border-color:#4ade80;background:rgba(34,197,94,.12);color:#fff}
+.mondo-inputbar{background:rgba(4,7,13,.6);border-top-color:rgba(90,140,255,.1)}
+.mondo-inputbar input{background:rgba(255,255,255,.04);border-color:rgba(90,140,255,.16);color:var(--ink)}
+.mondo-inputbar input:focus{border-color:#4ade80;box-shadow:0 0 0 3px rgba(34,197,94,.15)}
+.mondo-send{background:linear-gradient(135deg,#15803d,#22c55e);color:#04130a}
+.mondo-typing i{background:#4ade80}
+.mondo-start{background:linear-gradient(135deg,#15803d,#22c55e);color:#04130a !important}
+.mondo-avatar{background:transparent}
+.mondo-avatar svg{box-shadow:0 8px 22px -6px rgba(34,197,94,.55)}
+.mb-ic{background:transparent}
+
+/* ---------- contact page (dark) ---------- */
+.contact-card b{color:var(--ink-dim)}
+.contact-card a{color:var(--ink);border-color:rgba(34,197,94,.4)}
+.contact-card a:hover{color:#4ade80;border-color:#4ade80}
+.contact-form input,.contact-form textarea{background:rgba(8,11,19,.7);border-color:rgba(90,140,255,.2);color:var(--ink)}
+.contact-form input:focus,.contact-form textarea:focus{border-color:#4ade80;box-shadow:0 0 0 4px rgba(34,197,94,.14)}
+.contact-map iframe{filter:invert(.92) hue-rotate(180deg) saturate(.7);background:#0a0c12}
+.cc-label{color:#4ade80}
+.team-leadership img{box-shadow:0 30px 70px -24px rgba(0,0,0,.8)}
+.team-leadership figcaption{color:var(--faint)}
+
+/* ---------- micro polish ---------- */
+.kicker{color:#4ade80}
+.sec-sub{color:var(--muted)}
+.brand-mark{background:var(--grad-brand);color:#04130a;box-shadow:0 0 18px -2px rgba(34,197,94,.5)}
+:focus-visible{outline-color:#4ade80}
+
+/* =====================================================================
+   NEW — PERFORMANCE (animated numbers)
+   ===================================================================== */
+.perf-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.perf-stat{
+  position:relative;overflow:hidden;text-align:center;
+  padding:40px 20px 34px;border-radius:22px;
+}
+.perf-stat::before{
+  content:'';position:absolute;top:0;left:20%;right:20%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(74,222,128,.6),transparent);
+}
+.perf-num{
+  display:block;font-family:var(--font-display);font-weight:700;
+  font-size:clamp(44px,6vw,72px);line-height:1;letter-spacing:-.02em;
+  color:transparent;background:linear-gradient(180deg,#fff 20%,#4ade80);
+  -webkit-background-clip:text;background-clip:text;
+  text-shadow:0 0 40px rgba(74,222,128,.2);
+  font-variant-numeric:tabular-nums;
+}
+.perf-stat span{
+  display:block;margin-top:14px;font-family:var(--font-mono);
+  font-size:10.5px;letter-spacing:.26em;color:var(--muted);text-transform:uppercase;
+}
+.perf-stat:hover{border-color:rgba(74,222,128,.45)}
+@media (max-width:1080px){.perf-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.perf-grid{grid-template-columns:1fr}}
+
+/* =====================================================================
+   NEW — CINEMATIC VISUAL (video-style frame)
+   ===================================================================== */
+.cine-frame{
+  position:relative;border-radius:24px;overflow:hidden;
+  border:1px solid rgba(90,140,255,.2);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.85),0 0 70px -30px rgba(34,197,94,.35);
+}
+.cine-photo{width:100%;height:clamp(360px,62vh,600px);object-fit:cover;display:block;
+  filter:saturate(1.1) brightness(.85) contrast(1.05);
+  animation:cineKen 30s ease-in-out infinite alternate;
+}
+@keyframes cineKen{from{transform:scale(1)}to{transform:scale(1.08)}}
+.cine-overlay{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(4,6,12,.15),transparent 35%,rgba(4,6,12,.5) 75%,rgba(3,4,9,.9)),
+    radial-gradient(70% 60% at 50% 30%,transparent 40%,rgba(3,4,9,.55));
+}
+.cine-frame::after{ /* subtle scanline */
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(180deg,transparent 0 3px,rgba(255,255,255,.015) 3px 4px);
+  opacity:.5;
+}
+.cine-hud{
+  position:absolute;top:18px;left:18px;right:18px;display:flex;align-items:center;gap:10px;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;color:#cfe8d6;
+  text-transform:uppercase;
+}
+.cine-dot{width:8px;height:8px;border-radius:50%;background:#ff5d7a;box-shadow:0 0 10px #ff5d7a;animation:dotPulse 1.4s infinite}
+@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.3}}
+.cine-time{margin-left:auto;opacity:.85}
+.cine-caption{
+  position:absolute;left:22px;right:22px;bottom:22px;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;color:#e7f5ea;line-height:1.6;
+  background:linear-gradient(180deg,rgba(4,6,12,.3),rgba(4,6,12,.85));
+  padding:14px 16px;border-radius:14px;backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.08);
+}
+
+/* =====================================================================
+   NEW — MUNDA INTELLIGENCE (futuristic dashboard)
+   ===================================================================== */
+.intel-dash{
+  display:grid;grid-template-columns:280px 1fr 260px;gap:clamp(22px,4vw,48px);
+  align-items:center;padding:clamp(26px,4vw,52px);border-radius:26px;
+  background:
+    radial-gradient(80% 120% at 20% 0%,rgba(34,197,94,.06),transparent 60%),
+    linear-gradient(160deg,rgba(11,18,34,.72),rgba(5,8,15,.88));
+  border:1px solid rgba(74,222,128,.2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 34px 80px -30px rgba(0,0,0,.85),0 0 60px -24px rgba(34,197,94,.35);
+}
+.intel-core{display:flex;flex-direction:column;align-items:center;gap:14px}
+.intel-ring{position:relative;width:200px;height:200px}
+.intel-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ir-track{fill:none;stroke:rgba(255,255,255,.07);stroke-width:12}
+.ir-arc{
+  fill:none;stroke:url(#intel-grad);stroke-width:12;stroke-linecap:round;
+  stroke-dasharray:527.8;stroke-dashoffset:527.8;
+  transition:stroke-dashoffset 1.8s var(--ease);
+  filter:drop-shadow(0 0 8px rgba(74,222,128,.6));
+}
+.intel-ring-mid{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+}
+.intel-ring-mid b{font-family:var(--font-display);font-size:56px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums}
+.intel-ring-mid span{font-family:var(--font-mono);font-size:9px;letter-spacing:.24em;color:#4ade80}
+.intel-core-label{font-family:var(--font-mono);font-size:9px;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;text-align:center}
+.intel-bars{display:flex;flex-direction:column;gap:18px}
+.intel-bar{display:grid;grid-template-columns:110px 1fr 44px;align-items:center;gap:14px}
+.intel-bar span{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.ib-track{height:9px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.ib-track i{
+  display:block;height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,#15803d,#4ade80);
+  box-shadow:0 0 12px rgba(74,222,128,.6);
+  transition:width 1.6s var(--ease);
+}
+.intel-bar b{font-family:var(--font-mono);font-size:13px;color:var(--cyan);text-align:right}
+.intel-status{display:flex;flex-direction:column;gap:14px}
+.intel-status-row{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.18em;color:var(--muted);
+  padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.03);
+  border:1px solid rgba(90,140,255,.12);text-transform:uppercase;
+}
+.is-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px #4ade80;flex-shrink:0}
+.is-dot.warn{background:#ffb03a;box-shadow:0 0 8px #ffb03a}
+@media (max-width:1080px){.intel-dash{grid-template-columns:1fr;text-align:center}.intel-core,.intel-status{justify-self:center}.intel-bars{width:100%;max-width:520px;justify-self:center}}
+@media (max-width:640px){.intel-bar{grid-template-columns:1fr;gap:7px}.intel-bar b{text-align:left}}
+
+/* =====================================================================
+   CHOOSE YOUR MUNDA — car configurator
+   ===================================================================== */
+.choose{position:relative}
+
+/* ---- model selection ---- */
+.model-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.model-card{
+  position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;
+  padding:34px 18px 26px;border-radius:24px;text-align:center;cursor:pointer;
+  transition:transform .35s var(--ease),border-color .35s,box-shadow .35s;
+}
+.model-card:hover{
+  transform:translateY(-8px);border-color:rgba(74,222,128,.5);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 30px 60px -24px rgba(0,0,0,.85),0 0 44px -10px rgba(34,197,94,.45);
+}
+.mc-car{width:100%;height:96px;display:grid;place-items:center;margin-bottom:6px}
+.mc-car svg{width:min(210px,86%);height:auto;filter:drop-shadow(0 12px 24px rgba(0,0,0,.5))}
+.mc-car path,.mc-car circle{transition:all .35s var(--ease)}
+.model-card:hover .mc-car svg{transform:translateY(-4px) scale(1.04)}
+.model-card:hover .mc-car svg use{opacity:1}
+.mc-name{
+  font-family:var(--font-display);font-size:clamp(40px,5vw,58px);font-weight:700;line-height:1;
+  color:transparent;background:linear-gradient(180deg,#fff 30%,#8fb4ff);
+  -webkit-background-clip:text;background-clip:text;
+}
+.mc-tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.32em;color:var(--cyan);text-transform:uppercase}
+.mc-hint{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.2em;color:var(--faint);text-transform:uppercase;transition:color .3s}
+.model-card:hover .mc-hint{color:var(--cyan)}
+
+/* ---- configurator stage ---- */
+.conf-stage[hidden]{display:none}
+.conf-stage{position:relative;margin-top:26px}
+.conf-stage.show .conf-layout{animation:confZoom .8s var(--ease) both}
+@keyframes confZoom{
+  from{opacity:0;transform:perspective(1200px) translateY(36px) scale(.9) rotateX(5deg);filter:blur(6px)}
+  to{opacity:1;transform:none;filter:blur(0)}
+}
+.conf-back{
+  display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.2em;color:var(--muted);
+  text-transform:uppercase;padding:8px 16px;border-radius:99px;border:1px solid var(--border);
+  transition:all .25s;cursor:pointer;
+}
+.conf-back:hover{color:var(--cyan);border-color:rgba(74,222,128,.5)}
+.conf-layout{display:grid;grid-template-columns:1.35fr 1fr;gap:clamp(20px,3vw,40px);align-items:start}
+.conf-car{
+  position:relative;border-radius:24px;overflow:hidden;
+  border:1px solid rgba(90,140,255,.16);
+  background:linear-gradient(170deg,#0a0f1c,#05070d);
+  box-shadow:0 34px 80px -30px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.06);
+}
+#conf-interior{width:100%;height:auto;display:block}
+.cfg-strip,.cfg-halo{transition:stroke .5s var(--ease),fill .5s var(--ease)}
+#cfg-material path{transition:fill .5s var(--ease)}
+.conf-model{
+  position:absolute;left:20px;top:18px;z-index:2;
+  font-family:var(--font-display);font-weight:700;font-size:30px;color:#fff;
+  letter-spacing:.04em;text-shadow:0 0 24px rgba(0,0,0,.6);
+  padding:6px 16px;border-radius:12px;background:rgba(4,7,13,.5);
+  border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(8px);
+}
+
+.conf-panel{display:flex;flex-direction:column;gap:22px;padding:26px;border-radius:24px}
+.conf-group{display:flex;flex-direction:column;gap:11px}
+.group-label{
+  font-family:var(--font-mono);font-size:9.5px;letter-spacing:.26em;
+  color:var(--muted);text-transform:uppercase;
+}
+
+/* atmosphere */
+.conf-atmos{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.atmos-btn{
+  display:flex;align-items:center;gap:10px;padding:13px 14px;border-radius:14px;
+  border:1px solid var(--border);font-family:var(--font-display);font-weight:600;
+  font-size:11px;letter-spacing:.14em;color:var(--muted);cursor:pointer;
+  transition:all .25s var(--ease);
+}
+.atmos-btn i{width:9px;height:9px;border-radius:50%;background:var(--a,#fff);box-shadow:0 0 10px var(--a,#fff);flex-shrink:0}
+.atmos-btn:hover{color:var(--ink);border-color:rgba(74,222,128,.4)}
+.atmos-btn.active{
+  color:#fff;border-color:var(--a,#4ade80);
+  background:linear-gradient(160deg,color-mix(in srgb,var(--a,#4ade80) 14%,transparent),transparent);
+  box-shadow:0 0 0 1px var(--a,#4ade80),0 8px 22px -8px var(--a,#4ade80);
+}
+
+/* colour swatches */
+.conf-swatches{display:flex;gap:10px;flex-wrap:wrap}
+.conf-swatch{
+  width:34px;height:34px;border-radius:11px;cursor:pointer;
+  background:radial-gradient(circle at 32% 30%,color-mix(in srgb,var(--c) 85%,#fff),var(--c) 60%,color-mix(in srgb,var(--c) 55%,#000));
+  border:1px solid rgba(255,255,255,.14);transition:all .2s var(--ease-back);
+}
+.conf-swatch:hover{transform:scale(1.12)}
+.conf-swatch.active{box-shadow:0 0 0 2.5px var(--bg),0 0 0 4.5px var(--c),0 0 18px -2px var(--c)}
+
+/* materials */
+.conf-mats{display:flex;gap:8px;flex-wrap:wrap}
+.conf-mat{
+  padding:9px 16px;border-radius:99px;border:1px solid var(--border);cursor:pointer;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--muted);transition:all .25s;
+}
+.conf-mat:hover{color:var(--ink);border-color:var(--faint)}
+.conf-mat.active{color:#fff;background:var(--grad-brand);border-color:transparent;box-shadow:0 6px 16px -6px rgba(34,197,94,.8)}
+
+/* features */
+.conf-features{list-style:none;display:grid;gap:8px;padding:0;margin:0}
+.conf-features li{
+  display:flex;align-items:center;gap:9px;
+  font-size:12.5px;color:var(--ink-dim);padding:9px 12px;border-radius:10px;
+  background:rgba(255,255,255,.03);border:1px solid var(--border-soft);
+  animation:fadeUp .4s var(--ease) both;
+}
+.conf-features li::before{content:'✓';color:var(--cyan);font-weight:700}
+.conf-panel .btn-xl{width:100%;margin-top:4px}
+
+/* hidden helper for model grid swap */
+.model-grid.is-hidden{display:none}
+
+@media (max-width:1080px){
+  .model-grid{grid-template-columns:repeat(2,1fr)}
+  .conf-layout{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .model-grid{grid-template-columns:1fr}
+}
+
+/* =====================================================================
+   MUNDA DIGITAL SHOWROOM — cinematic entrance sequence
+   ===================================================================== */
+.site-logo{height:34px;width:auto;display:block;filter:drop-shadow(0 0 14px rgba(74,222,128,.28))}
+
+/* exterior showroom overlay */
+.conf-exterior{
+  position:absolute;inset:0;z-index:5;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  border-radius:24px;border:1px solid rgba(120,170,255,.16);
+  background:radial-gradient(70% 85% at 50% 28%,rgba(30,46,80,.72),rgba(7,11,20,.94));
+  overflow:hidden;opacity:1;transition:opacity .6s var(--ease);
+}
+.conf-exterior[hidden]{display:none}
+.conf-exterior.enter{opacity:0;pointer-events:none}
+.conf-car-ext{width:min(620px,100%);height:auto;display:block}
+.conf-exterior .ce-car{transition:transform 1.25s var(--ease);transform-origin:50% 72%;will-change:transform}
+.conf-exterior.approach .ce-car{transform:scale(1.24)}
+.conf-exterior.enter .ce-car{transform:scale(2.05)}
+
+/* doors + cabin glow */
+.ce-door{transition:transform .85s var(--ease),opacity .5s var(--ease)}
+.ce-door rect:first-child{fill:rgba(255,255,255,.05);stroke:rgba(150,190,255,.14);stroke-width:1}
+.ce-handle{fill:rgba(180,210,255,.4)}
+.ce-glow{fill:#5ff0a0;opacity:0;transition:opacity .55s var(--ease);filter:url(#cfg-soft)}
+.conf-exterior.doors-open .ce-door-l{transform:translate(-26px,22px) rotate(-6deg);opacity:.85}
+.conf-exterior.doors-open .ce-door-r{transform:translate(26px,22px) rotate(6deg);opacity:.85}
+.conf-exterior.doors-open .ce-glow{opacity:.95}
+
+/* welcome caption */
+.conf-welcome{
+  position:absolute;inset:0;z-index:7;display:grid;place-items:center;text-align:center;
+  opacity:0;pointer-events:none;transition:opacity .5s var(--ease);
+  background:radial-gradient(60% 60% at 50% 50%,rgba(4,8,16,.42),rgba(4,8,16,.72));
+}
+.conf-welcome.show{opacity:1}
+.conf-welcome b{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(26px,4.6vw,52px);letter-spacing:.06em;color:#fff;
+  text-shadow:0 0 34px rgba(74,222,128,.75),0 0 80px rgba(34,197,94,.45);
+  animation:welcomePop .75s var(--ease-back) both;
+}
+.conf-welcome span{font-size:clamp(26px,4.6vw,52px);color:#4ade80;font-weight:700;text-shadow:0 0 26px rgba(74,222,128,.8)}
+@keyframes welcomePop{from{opacity:0;transform:translateY(16px) scale(.94)}to{opacity:1;transform:none}}
+
+/* layout + panel fade-in after the entrance */
+.conf-layout{opacity:0;transition:opacity .6s var(--ease)}
+.conf-layout.in{opacity:1}
+.conf-panel{opacity:0;pointer-events:none;transition:opacity .6s var(--ease)}
+.conf-panel.show{opacity:1;pointer-events:auto}
+
+/* interior light-up (staggered via JS) */
+#conf-interior .cfg-strip,#conf-interior .cfg-halo,#conf-interior .cfg-screen,#conf-interior .cfg-power{
+  opacity:0;transition:stroke .5s var(--ease),fill .5s var(--ease),opacity .7s var(--ease);
+}
+#conf-interior .cfg-strip.lit,#conf-interior .cfg-halo.lit,
+#conf-interior .cfg-screen.lit,#conf-interior .cfg-power.lit{opacity:1}
+#conf-interior .cfg-screen.lit{filter:drop-shadow(0 0 6px rgba(74,222,128,.5))}
+#conf-interior .cfg-power.lit{filter:drop-shadow(0 0 5px rgba(74,222,128,.8))}
