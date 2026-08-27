@@ -328,9 +328,9 @@
         if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'hsla(' + p.h + ',90%,72%,' + p.a + ')';
+        ctx.fillStyle = 'hsla(' + p.h + ',70%,46%,' + p.a + ')';
         ctx.shadowBlur = 8;
-        ctx.shadowColor = 'hsla(' + p.h + ',90%,70%,0.7)';
+        ctx.shadowColor = 'hsla(' + p.h + ',70%,44%,0.5)';
         ctx.fill();
       }
       ctx.shadowBlur = 0;
@@ -412,7 +412,7 @@
         if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(120,230,160,' + p.a + ')';
+        ctx.fillStyle = 'rgba(21,128,61,' + p.a + ')';
         ctx.fill();
       }
     })();
